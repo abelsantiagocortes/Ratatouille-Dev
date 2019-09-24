@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChefRegister2">
+
+    <Button
+        android:id="@+id/btn_register3"
+
+        style="@style/btn_txt_white_background_grey"
+        android:text="@string/register"
+        android:layout_marginStart="81dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="81dp"
+        android:layout_marginBottom="58dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView6"
+        app:layout_constraintVertical_bias="0.52" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="34dp"
+        android:layout_marginEnd="148dp"
+        android:alpha="0.25"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:srcCompat="@drawable/chef" />
+
+    <EditText
+        android:id="@+id/textView14"
+        android:layout_width="294dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="63dp"
+        android:background="@drawable/btn_white"
+        android:enabled="true"
+        android:lineSpacingExtra="8sp"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_sub_username10" />
+
+    <EditText
+        android:id="@+id/textView15"
+        android:layout_width="294dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="63dp"
+        android:background="@drawable/btn_white"
+        android:enabled="true"
+        android:lineSpacingExtra="8sp"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_sub_username11" />
+
+    <TextView
+        android:id="@+id/txt_sub_username10"
+        android:layout_marginTop="20dp"
+
+        style="@style/txtView_title1"
+
+
+        android:text="@string/featured_plates"
+        android:textAlignment="viewStart"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
+    <TextView
+        android:id="@+id/txt_sub_username11"
+
+        android:layout_marginTop="25dp"
+        style="@style/txtView_title1"
+
+        android:text="location"
+        android:textAlignment="viewStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.137"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <TextView
+        android:id="@+id/txt_sub_username6"
+        android:layout_marginTop="80dp"
+
+        style="@style/txtView_title1"
+
+        android:text="@string/specialities"
+        android:textAlignment="viewStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.137"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_sub_forgot4" />
+
+    <TextView
+        android:id="@+id/txt_sub_forgot4"
+        android:layout_width="206dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="164dp"
+        android:background="@null"
+        android:ems="10"
+        android:fontFamily="@font/raleway_extrabold"
+        android:inputType="textPersonName"
+        android:text="@string/app_name"
+        android:textAlignment="viewStart"
+        android:textColor="#E2000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="314dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="63dp"
+        android:background="@drawable/spinner"
+        android:entries="@array/specialities"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.371"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_sub_username6" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
