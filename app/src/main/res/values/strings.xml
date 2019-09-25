@@ -25,7 +25,7 @@
     <string name="find_chefs">FIND CHEFS</string>
 
     <string name="welcome">WELCOME</string>
-
+    <string name="foodplates">Looking for someone to cook...</string>
 
 
     <string-array name="specialities">
