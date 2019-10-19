@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "389926078264",
+    "firebase_url": "https://ratatouille-55e9c.firebaseio.com",
+    "project_id": "ratatouille-55e9c",
+    "storage_bucket": "ratatouille-55e9c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389926078264:android:75ffe61a548c25a4aae3cd",
+        "android_client_info": {
+          "package_name": "com.example.ratatouille"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389926078264-0geivu64dic2vv4tscbtln59nflbudps.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ratatouille",
+            "certificate_hash": "c03dd4a0fc6cee55df01334a76fbb31f79c3f6f3"
+          }
+        },
+        {
+          "client_id": "389926078264-l5gkje1rfj6dffonfv8jfc21gf88igs6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjio9m1GMtnov-_lr0Se24hzQm6zzmVxU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "389926078264-l5gkje1rfj6dffonfv8jfc21gf88igs6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
