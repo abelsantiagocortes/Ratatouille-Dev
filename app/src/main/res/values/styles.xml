@@ -36,11 +36,22 @@
 
     <style name="txtView_title1">
 
+    <item name="android:textSize">24sp</item>
+    <item name="android:layout_width">161dp</item>
+    <item name="android:layout_height">34dp</item>
+    <item name="android:fontFamily">@font/raleway</item>
+    <item name="android:ems">10</item>
+
+</style>
+
+    <style name="txtView_titleTabs">
+
         <item name="android:textSize">24sp</item>
         <item name="android:layout_width">161dp</item>
         <item name="android:layout_height">34dp</item>
-        <item name="android:fontFamily">@font/raleway</item>
+        <item name="android:fontFamily">@font/raleway_extrabold</item>
         <item name="android:ems">10</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
 
     </style>
 
