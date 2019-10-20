@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChefRegister2"></activity>
+        <activity android:name=".ClientChefRegister"></activity>
         <activity android:name=".Home" />
         <activity android:name=".Welcome" />
         <activity android:name=".ChefRegister" />
