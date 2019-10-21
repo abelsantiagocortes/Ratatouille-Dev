@@ -52,6 +52,9 @@ public class ClientChefRegister extends AppCompatActivity {
             public void onClick(View view) {
                 if(validateForm())
                 registerChef();
+                Intent in = new Intent(getApplicationContext(), chefTools_Register.class);
+                startActivity(in);
+                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }
         });
     }
