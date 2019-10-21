@@ -7,44 +7,62 @@
     android:id="@+id/background">
 
     <FrameLayout
-        android:layout_width="355dp"
-        android:layout_height="344dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="22dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="4dp">
 
 
         <com.github.siyamed.shapeimageview.RoundedImageView
             android:id="@+id/img_chef"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="293dp"
+            android:layout_height="499dp"
+            android:layout_gravity="center|top"
             android:src="@drawable/plate1_test"
             app:siBorderColor="@color/colorGrisRata"
-            app:siBorderWidth="6dp"
-            app:siRadius="6dp"
-            app:siSquare="true" />
+            app:siBorderWidth="3dp"
+
+            app:siRadius="60dp"
+            app:siSquare="false" />
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:layout_width="179dp"
+            android:layout_height="182dp"
+            android:layout_marginStart="180dp"
+            android:layout_marginTop="370dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/chef1_test"
+            app:siBorderColor="#ffff"
+            app:siBorderWidth="2dp" />
 
         <TextView
             android:id="@+id/txt_locationChef"
             android:layout_width="103dp"
             android:layout_height="35dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="430dp"
+            android:fontFamily="@font/raleway_extrabold"
+            android:textColor="#ffff"
+            android:textSize="24sp"
+            android:text="5 km"
 
-            android:layout_gravity="center" />
+             />
 
         <TextView
             android:id="@+id/txt_nombreChef"
-            android:layout_width="103dp"
-            android:layout_height="35dp"
+            android:layout_width="161dp"
+            android:layout_height="87dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
+            android:fontFamily="@font/raleway_extrabold"
+            android:text="Auguste Gusteau"
+            android:textColor="#ffff"
 
-            android:text="EL ABELARDO" />
+            android:textSize="32sp" />
     </FrameLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>
