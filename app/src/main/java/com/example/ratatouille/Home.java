@@ -25,6 +25,7 @@ public class Home extends AppCompatActivity {
     }
     public void setUpViewPager(ViewPager viewPager){
 
+
         TabViewPagerAdapter tabViewPagerAdapter= new TabViewPagerAdapter(getSupportFragmentManager());
         tabViewPagerAdapter.addFragment(new Chefs_tab(),"Chefs");
         tabViewPagerAdapter.addFragment(new Foodplates_tab(),"Food Plates");

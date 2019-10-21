@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class TabViewPagerAdapter extends FragmentPagerAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -26,6 +25,9 @@ public class TabViewPagerAdapter extends FragmentPagerAdapter {
     public void addFragment(Fragment fragment,String title){
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
+    }
+    public void addFragmentSlider(Fragment fragment){
+        mFragmentList.add(fragment);
     }
 
     @Nullable
