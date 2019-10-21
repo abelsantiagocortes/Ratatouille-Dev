@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "389926078264-o308gsoh0a7fjq2980qkoocfofsqc80l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ratatouille",
+            "certificate_hash": "59de091328fe23031b6c8f5cd7fdc2671f306614"
+          }
+        },
+        {
           "client_id": "389926078264-0geivu64dic2vv4tscbtln59nflbudps.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
