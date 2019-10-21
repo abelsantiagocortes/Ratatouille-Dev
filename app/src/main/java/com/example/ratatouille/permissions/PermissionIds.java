@@ -1,4 +1,4 @@
-package com.example.ratatouille.Permissions;
+package com.example.ratatouille.permissions;
 
 public class PermissionIds {
     public static final  int REQUEST_READ_CONTACTS = 1;

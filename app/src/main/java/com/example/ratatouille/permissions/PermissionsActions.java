@@ -1,4 +1,4 @@
-package com.example.ratatouille.Permissions;
+package com.example.ratatouille.permissions;
 
 import android.Manifest;
 import android.app.Activity;
@@ -59,6 +59,32 @@ public class PermissionsActions {
                 }
                 break;
         }
+    }
+
+    public static boolean checkPermission(Activity context, int permission){
+        switch (permission){
+            case PermissionIds.REQUEST_READ_CONTACTS:
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+                    return true;
+                }
+                return false;
+            case PermissionIds.REQUEST_CAMERA:
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    return true;
+                }
+                return false;
+            case PermissionIds.REQUEST_LOCATION:
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    return true;
+                }
+                return false;
+            case PermissionIds.REQUEST_READ_EXTERNAL_STORAGE:
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    return true;
+                }
+                return false;
+        }
+        return false;
     }
 
 }
