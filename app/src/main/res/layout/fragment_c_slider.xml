@@ -6,43 +6,44 @@
     android:layout_height="match_parent"
     android:id="@+id/background">
 
+    <FrameLayout
+        android:layout_width="355dp"
+        android:layout_height="344dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="22dp">
+
+
+        <com.github.siyamed.shapeimageview.RoundedImageView
+            android:id="@+id/img_chef"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/plate1_test"
+            app:siBorderColor="@color/colorGrisRata"
+            app:siBorderWidth="6dp"
+            app:siRadius="6dp"
+            app:siSquare="true" />
+
+        <TextView
+            android:id="@+id/txt_locationChef"
+            android:layout_width="103dp"
+            android:layout_height="35dp"
+
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/txt_nombreChef"
+            android:layout_width="103dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+
+            android:text="EL ABELARDO" />
+    </FrameLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <FrameLayout
-            android:layout_width="355dp"
-            android:layout_height="344dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="22dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-
-            <ImageView
-                android:id="@+id/img_landing"
-                android:layout_width="match_parent"
-                android:layout_height="313dp"
-                app:srcCompat="@drawable/chef" />
-
-            <TextView
-                android:id="@+id/txt_locationChef"
-                android:layout_width="103dp"
-                android:layout_height="35dp"
-
-                android:layout_gravity="center"/>
-
-            <TextView
-                android:id="@+id/txt_nombreChef"
-                android:layout_width="103dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50dp"
-
-                android:text="EL ABELARDO" />
-        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
