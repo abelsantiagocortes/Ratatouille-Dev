@@ -8,6 +8,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="typ_grey">
+        <item name= "android:textColor">@color/colorGrisRata</item>
+        <item name= "android:textSize">20dp</item>
+        <item name= "android:textAllCaps">true</item>
+        <item name= "android:fontFamily">@font/raleway_extrabold</item>
+    </style>
+    <style name="typ_white">
+        <item name= "android:textColor">#ffffff</item>
+        <item name= "android:textSize">20dp</item>
+        <item name= "android:textAllCaps">true</item>
+        <item name= "android:fontFamily">@font/raleway_extrabold</item>
+    </style>
     <style name="btn_txt_black_background_white">
 
         <item name="android:textAllCaps">false</item>

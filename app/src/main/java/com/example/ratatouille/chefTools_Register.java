@@ -70,8 +70,8 @@ public class chefTools_Register<tagsFire> extends AppCompatActivity {
 
             //Le pone el texto. background, el tipo de texto y el tamaño
             tags.setText(tagsFire.get(i));
-            tags.setBackgroundResource(R.drawable.btn_white);
-            tags.setTextAppearance(getApplicationContext(), R.style.btn_txt_black_background_white);
+            tags.setBackgroundResource(R.drawable.btn_tag);
+            tags.setTextAppearance(getApplicationContext(), R.style.typ_grey);
             tags.setWidth(pixels);
 
             //Click listener de todos los botones tags
@@ -87,7 +87,9 @@ public class chefTools_Register<tagsFire> extends AppCompatActivity {
                     if (click == false) {
                         //Se asegura de que no vayan mas de 5 tags
                         if(canttags<5){
-                            tags.setBackgroundResource(R.drawable.btn_grey);
+                            tags.setBackgroundResource(R.drawable.btn_high_action);
+                            tags.setTextAppearance(getApplicationContext(), R.style.typ_white);
+
                             click = true;
                             if (txt_showselected.getText().toString().equals(".")) {
                                 txt_showselected.setText(tags.getText().toString());
@@ -117,7 +119,8 @@ public class chefTools_Register<tagsFire> extends AppCompatActivity {
                             txt_showselected.setText(withoutTag);
                             canttags--;
                         }
-                        tags.setBackgroundResource(R.drawable.btn_white);
+                        tags.setBackgroundResource(R.drawable.btn_tag);
+                        tags.setTextAppearance(getApplicationContext(), R.style.typ_grey);
 
                         click = false;
 
