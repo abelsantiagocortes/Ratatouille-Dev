@@ -21,6 +21,8 @@ class UserClient {
         this.dir = dir;
         this.tools = new ArrayList<>();
     }
+    public UserClient() {
+    }
 
     public String getName() {
         return name;
