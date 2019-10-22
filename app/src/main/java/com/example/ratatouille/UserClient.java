@@ -14,6 +14,7 @@ class UserClient {
     String description;
     List<String> tools;
     boolean status;
+    String userId;
 
     public UserClient(String name, String dir, int age) {
         this.name = name;
@@ -22,6 +23,14 @@ class UserClient {
         this.tools = new ArrayList<>();
     }
     public UserClient() {
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getName() {
