@@ -158,6 +158,11 @@ public class ClientChefRegister extends AppCompatActivity {
         } else {
             address.setError(null);
         }
+        if (imageUri==null) {
+            Toast.makeText(getApplicationContext(), "No seas tímido, sube una foto",
+                    Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
 
         return valid;
     }
