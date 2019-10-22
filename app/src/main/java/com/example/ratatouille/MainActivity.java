@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 Log.i("Progreso","Terminado");
-                //TODO lanzar actividad de inicio.
                 Intent intent= new Intent(getApplicationContext(),LandingPage.class);
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);

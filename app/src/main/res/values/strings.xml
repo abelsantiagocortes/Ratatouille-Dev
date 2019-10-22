@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Ratatouille</string>
-    <string name="slogan1">restaurant chef in</string>
+    <string name="slogan1">Restaurant chef in</string>
     <string name="slogan2">your house kitchen</string>
 
-    <string name="log_in">log in</string>
+    <string name="log_in">Log in</string>
 
     <string name="user_name">username</string>
     <string name="password">password</string>
@@ -17,10 +17,10 @@
     <string name="specialities">specialities</string>
     <string name="featured_plates">featured plates</string>
     <string name="location">location</string>
-    <string name="register">register</string>
+    <string name="register">Register</string>
 
-    <string name="as_client">as Client</string>
-    <string name="as_chef">as Chef</string>
+    <string name="as_client">As Client</string>
+    <string name="as_chef">As Chef</string>
 
     <string name="find_chefs">FIND CHEFS</string>
 
