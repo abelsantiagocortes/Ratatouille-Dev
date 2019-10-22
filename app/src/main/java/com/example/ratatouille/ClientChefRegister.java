@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,6 +21,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,6 +35,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import com.example.ratatouille.permissions.PermissionsActions;
@@ -53,6 +59,7 @@ public class ClientChefRegister extends AppCompatActivity {
     Button btnReg;
     ImageView agregarFoto;
     private static Uri imageUri = null;
+    private Geocoder mGeocoder = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,11 +82,13 @@ public class ClientChefRegister extends AppCompatActivity {
 
         registerAuth = FirebaseAuth.getInstance();
 
+        mGeocoder = new Geocoder(this);
+
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(validateForm())
-                registerChef();
+                    registerChef();
             }
         });
 
@@ -162,12 +171,17 @@ public class ClientChefRegister extends AppCompatActivity {
 
         FirebaseUser currentUser = registerAuth.getCurrentUser();
         final String userId = currentUser.getUid();
+        LatLng pos = encontrarLatLng(dir_value);
 
         Intent intent = getIntent();
 
         if(intent.getStringExtra("type").equals("chef"))
         {
             UserChef user = new UserChef(name_value,dir_value,age_value);
+            if(pos != null){
+                user.setLat(pos.latitude);
+                user.setLongi(pos.longitude);
+            }
             dbChefs.child(userId).setValue(user);
             storageChefs.child(userId).putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -189,6 +203,10 @@ public class ClientChefRegister extends AppCompatActivity {
         else if (intent.getStringExtra("type").equals("client"))
         {
             UserClient user = new UserClient(name_value,dir_value,age_value);
+            if(pos != null){
+                user.setLat(pos.latitude);
+                user.setLongi(pos.longitude);
+            }
             dbClients.child(userId).setValue(user);
             storageClients.child(userId).putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -206,5 +224,25 @@ public class ClientChefRegister extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private LatLng encontrarLatLng(String dir_value) {
+        if(!dir_value.isEmpty()){
+            try {
+                List<Address> addresses = mGeocoder.getFromLocationName(dir_value, 2);
+                Log.i("Posicion", "Obteniendo");
+                if (addresses != null && !addresses.isEmpty()) {
+                    Address addressResult = addresses.get(0);
+                    LatLng result = new LatLng(addressResult.getLatitude(), addressResult.getLongitude());
+                    Log.i("LatLng",result.toString());
+                    return result;
+                }
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return null;
     }
 }
