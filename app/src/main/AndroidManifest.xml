@@ -33,7 +33,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".ClientChefRegister" />
         <activity android:name=".Home" />
         <activity android:name=".Welcome" />
         <activity android:name=".ChefRegister" />
