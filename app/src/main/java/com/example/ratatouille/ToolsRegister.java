@@ -78,9 +78,6 @@ public class ToolsRegister<tagsFire> extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 registerToolsDB();
-                Intent intent = new Intent(getApplicationContext(),Home.class);
-                startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }
         });
 
@@ -186,6 +183,9 @@ public class ToolsRegister<tagsFire> extends AppCompatActivity {
         {
             dbUsersClients =  dbRats.getReference("userClient");
             dbUsersClients.child(uid).child("tools").setValue(items);
+            Intent intenti = new Intent(getApplicationContext(),Home.class);
+            startActivity(intenti);
+            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
         }
 
 

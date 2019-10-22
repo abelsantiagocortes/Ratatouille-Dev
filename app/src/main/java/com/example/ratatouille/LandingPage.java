@@ -23,7 +23,6 @@ public class LandingPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i =new Intent(v.getContext(),LogIn.class);
-                i.putExtra("landing","yes");
                 startActivity(i);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }
