@@ -8,6 +8,7 @@ class UserClient {
     String name;
     int age;
     int photo;
+    String photoDownloadURL;
     String dir;
     double lat;
     double longi;
@@ -92,5 +93,13 @@ class UserClient {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public String getPhotoDownloadURL() {
+        return photoDownloadURL;
+    }
+
+    public void setPhotoDownloadURL(String photoDownloadURL) {
+        this.photoDownloadURL = photoDownloadURL;
     }
 }

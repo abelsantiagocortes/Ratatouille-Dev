@@ -9,11 +9,13 @@ public class UserChef {
     String name;
     int age;
     int photo;
+    String photoDownloadURL;
     String dir;
     double lat;
     double longi;
     String description;
     List<String> tools;
+
 
     public UserChef(String name,  String dir,int age) {
         this.name = name;
@@ -101,5 +103,11 @@ public class UserChef {
         this.tools = tools;
     }
 
+    public String getPhotoDownloadURL() {
+        return photoDownloadURL;
+    }
 
+    public void setPhotoDownloadURL(String photoDownloadURL) {
+        this.photoDownloadURL = photoDownloadURL;
+    }
 }

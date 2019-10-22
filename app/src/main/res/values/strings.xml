@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ratatouille</string>
+    <string name="app_name">Ratatouille</string>
     <string name="slogan1">restaurant chef in</string>
     <string name="slogan2">your house kitchen</string>
 
@@ -39,4 +39,5 @@
         <item>foreign</item>
         <item>cocktails</item>
     </string-array>
+    <string name="title_activity_maps">Map</string>
 </resources>
