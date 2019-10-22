@@ -52,8 +52,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                tabLayout.setupWithViewPager(viewPager);
-                setUpViewPager();
+                viewPager.setAdapter(setUpViewPager());
             }
 
             @Override

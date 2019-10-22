@@ -34,6 +34,7 @@ public class Chefs_tab extends Fragment{
     private MyViewPagerAdapter adapter;
     private LinearLayout dotsLayout;
     public List<UserChef> listChefs;
+    public List<ClientChefDistance> listOrdered;
     Button btn_back,btn_next;
     FirebaseAuth current;
     DatabaseReference dbUser;
