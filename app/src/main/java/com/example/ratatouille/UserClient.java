@@ -7,7 +7,6 @@ class UserClient {
 
     String name;
     int age;
-    int photo;
     String photoDownloadURL;
     String dir;
     double lat;
@@ -37,14 +36,6 @@ class UserClient {
 
     public void setAge(int age) {
         this.age = age;
-    }
-
-    public int getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(int photo) {
-        this.photo = photo;
     }
 
     public String getDir() {

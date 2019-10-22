@@ -13,6 +13,7 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -165,7 +166,7 @@ public class ClientChefRegister extends AppCompatActivity {
     {
         String name_value = name.getText().toString() ;
         String dir_value = address.getText().toString() ;
-        Intent in = new Intent(getApplicationContext(), ToolsRegister.class);
+
 
         int age_value = Integer.parseInt(age.getText().toString()) ;
 
@@ -183,8 +184,6 @@ public class ClientChefRegister extends AppCompatActivity {
                 user.setLongi(pos.longitude);
             }
             dbChefs.child(userId).setValue(user);
-            in.putExtra("type","chefsi");
-            startActivity(in);
             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             storageChefs.child(userId).putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -197,6 +196,10 @@ public class ClientChefRegister extends AppCompatActivity {
                                     uri.toString();
                             Log.i("URL+1", downloadUrl);
                             dbChefs.child(userId).child("photoDownloadURL").setValue(downloadUrl);
+                            Intent in = new Intent(getApplicationContext(), ToolsRegister.class);
+                            in.putExtra("type","chefsi");
+                            startActivity(in);
+
                         }
                     });
                 }
@@ -211,8 +214,6 @@ public class ClientChefRegister extends AppCompatActivity {
                 user.setLongi(pos.longitude);
             }
             dbClients.child(userId).setValue(user);
-            in.putExtra("type","clienti");
-            startActivity(in);
             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             storageClients.child(userId).putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -225,6 +226,9 @@ public class ClientChefRegister extends AppCompatActivity {
                                     uri.toString();
                             Log.i("URL+1", downloadUrl);
                             dbClients.child(userId).child("photoDownloadURL").setValue(downloadUrl);
+                            Intent in = new Intent(getApplicationContext(), ToolsRegister.class);
+                            in.putExtra("type","clienti");
+                            startActivity(in);
                         }
                     });
                 }

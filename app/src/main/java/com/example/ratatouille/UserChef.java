@@ -8,7 +8,6 @@ public class UserChef {
 
     String name;
     int age;
-    int photo;
     String photoDownloadURL;
     String dir;
     double lat;
@@ -27,7 +26,6 @@ public class UserChef {
     public UserChef(String name, int age, int photo, String dir, double lat, double longi, String description, List<String> tools) {
         this.name = name;
         this.age = age;
-        this.photo = photo;
         this.dir = dir;
         this.lat = lat;
         this.longi = longi;
@@ -53,14 +51,6 @@ public class UserChef {
 
     public void setAge(int age) {
         this.age = age;
-    }
-
-    public int getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(int photo) {
-        this.photo = photo;
     }
 
     public String getDir() {
