@@ -40,11 +40,7 @@ public class LogIn extends AppCompatActivity {
         btn_logins.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"que hices",Toast.LENGTH_SHORT).show();
                 signInUser(frm_email.getText().toString(), frm_password.getText().toString());
-                /*Intent intent= new Intent(view.getContext(),Home.class);
-                startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);*/
             }
         });
     }
@@ -127,12 +123,20 @@ public class LogIn extends AppCompatActivity {
             return false;
         return true;
     }
-    /* Authentication */
-   /* @Override
+
+    @Override
     public void onStart() {
         super.onStart();
         // Revisa si el usuario existe
         FirebaseUser currentUser = loginAuth.getCurrentUser();
         logInUser(currentUser);
-    }*/
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Intent intent;
+        intent = new Intent(getBaseContext(), LandingPage.class);
+        startActivity(intent);
+    }
 }
