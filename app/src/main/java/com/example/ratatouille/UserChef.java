@@ -13,6 +13,7 @@ public class UserChef {
     double lat;
     double longi;
     String description;
+    boolean status;
     List<String> tools;
 
 
@@ -21,6 +22,7 @@ public class UserChef {
         this.age = age;
         this.dir = dir;
         this.tools = new ArrayList<>();
+        this.status = true;
     }
 
     public UserChef(String name, int age, int photo, String dir, double lat, double longi, String description, List<String> tools) {
@@ -99,5 +101,13 @@ public class UserChef {
 
     public void setPhotoDownloadURL(String photoDownloadURL) {
         this.photoDownloadURL = photoDownloadURL;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }
