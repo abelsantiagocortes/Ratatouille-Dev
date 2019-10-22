@@ -33,4 +33,8 @@ public class Home extends AppCompatActivity {
         viewPager.setAdapter(tabViewPagerAdapter);
 
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }

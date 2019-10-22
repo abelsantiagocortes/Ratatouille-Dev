@@ -1,5 +1,6 @@
 package com.example.ratatouille;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedMap;
 
@@ -18,6 +19,7 @@ public class UserChef {
         this.name = name;
         this.age = age;
         this.dir = dir;
+        this.tools = new ArrayList<>();
     }
 
     public UserChef(String name, int age, int photo, String dir, double lat, double longi, String description, List<String> tools) {
@@ -29,6 +31,7 @@ public class UserChef {
         this.longi = longi;
         this.description = description;
         this.tools = tools;
+        this.tools = new ArrayList<>();
     }
 
     public UserChef() {

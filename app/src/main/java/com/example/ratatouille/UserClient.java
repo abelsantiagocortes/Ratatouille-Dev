@@ -1,5 +1,6 @@
 package com.example.ratatouille;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class UserClient {
@@ -18,6 +19,7 @@ class UserClient {
         this.name = name;
         this.age = age;
         this.dir = dir;
+        this.tools = new ArrayList<>();
     }
 
     public String getName() {

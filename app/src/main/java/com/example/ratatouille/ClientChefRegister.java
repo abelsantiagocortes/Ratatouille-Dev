@@ -1,26 +1,18 @@
 package com.example.ratatouille;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.List;
 
 public class ClientChefRegister extends AppCompatActivity {
 
@@ -52,9 +44,6 @@ public class ClientChefRegister extends AppCompatActivity {
             public void onClick(View view) {
                 if(validateForm())
                 registerChef();
-                Intent in = new Intent(getApplicationContext(), chefTools_Register.class);
-                startActivity(in);
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }
         });
     }
@@ -90,6 +79,8 @@ public class ClientChefRegister extends AppCompatActivity {
     {
         String name_value = name.getText().toString() ;
         String dir_value = address.getText().toString() ;
+        Intent in = new Intent(getApplicationContext(), ToolsRegister.class);
+
         int age_value = Integer.parseInt(age.getText().toString()) ;
 
         FirebaseUser currentUser = registerAuth.getCurrentUser();
@@ -100,11 +91,17 @@ public class ClientChefRegister extends AppCompatActivity {
         {
             UserChef user = new UserChef(name_value,dir_value,age_value);
             dbChefs.child(userId).setValue(user);
+            in.putExtra("type","chefsi");
+            startActivity(in);
+            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
         }
         else if (intent.getStringExtra("type").equals("client"))
         {
             UserClient user = new UserClient(name_value,dir_value,age_value);
             dbClients.child(userId).setValue(user);
+            in.putExtra("type","clienti");
+            startActivity(in);
+            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
         }
 
 
