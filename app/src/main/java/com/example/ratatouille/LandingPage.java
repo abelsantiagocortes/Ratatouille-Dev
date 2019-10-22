@@ -16,10 +16,10 @@ public class LandingPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
 
-        Button btn1 = (Button)findViewById(R.id.btn_login);
-        Button btnRegis = (Button)findViewById(R.id.btn_register);
+         btnLogIn = (Button)findViewById(R.id.btn_login);
+         btnRegis = (Button)findViewById(R.id.btn_register);
 
-        btn1.setOnClickListener(new View.OnClickListener() {
+        btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i =new Intent(v.getContext(),LogIn.class);

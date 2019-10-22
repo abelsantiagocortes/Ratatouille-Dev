@@ -7,7 +7,7 @@
     tools:context=".LogIn">
 
     <Button
-        android:id="@+id/btn_loginlanding"
+        android:id="@+id/btn_loginN"
         style="@style/btn_txt_black_background_white"
         android:text="@string/log_in"
         android:layout_marginStart="16dp"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_sub_forgot2" />
 
     <EditText
-        android:id="@+id/textView"
+        android:id="@+id/frm_email"
         android:layout_width="294dp"
         android:layout_height="51dp"
         android:layout_marginStart="16dp"
@@ -58,7 +58,7 @@
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/frm_password" />
 
     <TextView
         android:id="@+id/txt_sub_password"
@@ -73,7 +73,7 @@
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/frm_email" />
 
     <TextView
         android:id="@+id/txt_sub_forgot2"
@@ -100,12 +100,12 @@
         android:contentDescription="fotico"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/frm_password"
         app:srcCompat="@drawable/img_landing" />
 
 
     <EditText
-        android:id="@+id/textView2"
+        android:id="@+id/frm_password"
         android:layout_width="294dp"
         android:layout_height="51dp"
         android:layout_marginStart="16dp"

@@ -1,12 +1,13 @@
 package com.example.ratatouille;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class UserClient {
 
     String name;
     int age;
-    int photo;
+    String photoDownloadURL;
     String dir;
     double lat;
     double longi;
@@ -18,6 +19,9 @@ class UserClient {
         this.name = name;
         this.age = age;
         this.dir = dir;
+        this.tools = new ArrayList<>();
+    }
+    public UserClient() {
     }
 
     public String getName() {
@@ -34,14 +38,6 @@ class UserClient {
 
     public void setAge(int age) {
         this.age = age;
-    }
-
-    public int getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(int photo) {
-        this.photo = photo;
     }
 
     public String getDir() {
@@ -90,5 +86,13 @@ class UserClient {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public String getPhotoDownloadURL() {
+        return photoDownloadURL;
+    }
+
+    public void setPhotoDownloadURL(String photoDownloadURL) {
+        this.photoDownloadURL = photoDownloadURL;
     }
 }

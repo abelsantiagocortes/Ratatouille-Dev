@@ -26,13 +26,12 @@ public class SliderFragment extends Fragment {
         image_chef= view.findViewById(R.id.img_chef);
         n_chef= view.findViewById(R.id.txt_nombreChef);
         loc_chef= view.findViewById(R.id.txt_locationChef);
-        RelativeLayout backgrond= view.findViewById(R.id.background);
 
         if(getArguments()!=null){
-            /*n_chef.setText(getArguments().getString("NameChef"));
+            n_chef.setText(getArguments().getString("NameChef"));
             loc_chef.setText(getArguments().getString("LocChef"));
-            image_chef.setImageResource(getArguments().getInt("plate1_test.png"));
-            */
+            image_chef.setImageResource(getArguments().getInt("ImageChef"));
+
         }
 
         return view;
