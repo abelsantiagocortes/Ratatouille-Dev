@@ -16,8 +16,8 @@ public class LandingPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
 
-        Button btn1 = (Button)findViewById(R.id.btn_login);
-        Button btnRegis = (Button)findViewById(R.id.btn_register);
+        Button btn1 = findViewById(R.id.btn_login);
+        Button btnRegis = findViewById(R.id.btn_register);
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
