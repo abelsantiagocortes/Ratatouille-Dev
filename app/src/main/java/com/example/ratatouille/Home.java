@@ -5,13 +5,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TableLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,6 +31,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
+import java.util.List;
+
 public class Home extends AppCompatActivity {
 
     TabLayout tabLayout;
@@ -30,10 +42,14 @@ public class Home extends AppCompatActivity {
     private FirebaseAuth signOutAuth;
     ImageView imgLogOut;
     EditText direccionIngresada;
+    Geocoder mGeocoder = null;
+    private LatLng latLngDireccion = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        mGeocoder = new Geocoder(this);
         tabLayout=(TabLayout) findViewById(R.id.tabLayout);
         viewPager=(ViewPager) findViewById(R.id.viewPager);
 
@@ -52,6 +68,7 @@ public class Home extends AppCompatActivity {
                     for(DataSnapshot dir : dataSnapshot.getChildren()){
                         Log.i("SP",dir.getValue(UserClient.class).getDir());
                         direccionIngresada.setText(dir.getValue(UserClient.class).getDir());
+                        generarLatLng(dir.getValue(UserClient.class).getDir());
                     }
                 }
 
@@ -91,7 +108,17 @@ public class Home extends AppCompatActivity {
         });
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(setUpViewPager());
-
+        direccionIngresada.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i == EditorInfo.IME_ACTION_DONE){
+                    Log.i("Teclado","Finalización");
+                    String nuevaDireccion = direccionIngresada.getText().toString();
+                    generarLatLng(nuevaDireccion);
+                }
+                return false;
+            }
+        });
 
     }
     public TabViewPagerAdapter setUpViewPager(){
@@ -117,6 +144,22 @@ public class Home extends AppCompatActivity {
 
         }finally {
             super.onDestroy();
+        }
+    }
+    private void generarLatLng(String nuevaDireccion) {
+        if(!nuevaDireccion.isEmpty()){
+            try {
+                List<Address> addresses = mGeocoder.getFromLocationName(nuevaDireccion , 2);
+                Log.i("Posicion","Obteniendo");
+                if (addresses != null && !addresses.isEmpty ()){
+                    Address addressResult = addresses.get(0);
+                    latLngDireccion = new LatLng(addressResult.getLatitude(), addressResult.getLongitude());
+                } else {
+                    Toast.makeText(this, "Dirección no encontrada", Toast.LENGTH_SHORT).show();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
