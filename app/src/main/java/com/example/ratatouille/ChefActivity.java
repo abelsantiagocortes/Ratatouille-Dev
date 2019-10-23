@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -42,8 +43,10 @@ public class ChefActivity extends AppCompatActivity {
     ImageView logOut;
     ImageView iconoChef;
     ListView listaSolicitud;
+    Button btnr;
 
     DatabaseReference dbChefs;
+    DatabaseReference dbNotifs;
     StorageReference storageChef;
 
     FirebaseAuth registerAuth;
@@ -69,6 +72,16 @@ public class ChefActivity extends AppCompatActivity {
             public void onClick(View view) {
                 registerAuth.signOut();
                 Intent intent = new Intent( getApplicationContext(), LogIn.class );
+                startActivity(intent);
+            }
+        });
+
+        btnr=findViewById(R.id.refreshi);
+        btnr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),ChefActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
             }
         });
@@ -105,9 +118,38 @@ public class ChefActivity extends AppCompatActivity {
                 Log.i("LOGINFAILED","CHEF" );
             }
         });
+
         listSolicitudes = new ArrayList<>();
-        Query querySolicitud = FirebaseDatabase.getInstance().getReference("solicitud").orderByChild("idChef").equalTo(uid);
-        querySolicitud.addListenerForSingleValueEvent(valueEventListener);
+        Query soli = FirebaseDatabase.getInstance().getReference("solicitud").orderByChild("idChef").equalTo(uid);
+        soli.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists())
+                {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Solicitud noti = snapshot.getValue(Solicitud.class);
+                        listSolicitudes.add(noti);
+                    }
+                }
+
+                for(int i =0;i<listSolicitudes.size();i++)
+                {
+                    System.out.println(listSolicitudes.get(i).getIdCliente());
+                }
+                ArrayAdapter<Solicitud> adapter = new SolicitudAdapter(getApplicationContext(),listSolicitudes);
+                listaSolicitud.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
 
 
     }
@@ -128,8 +170,10 @@ public class ChefActivity extends AppCompatActivity {
             {
                 System.out.println(listSolicitudes.get(i).getIdCliente());
             }
+
             ArrayAdapter<Solicitud> adapter = new SolicitudAdapter(getApplicationContext(), listSolicitudes);
             listaSolicitud.setAdapter(adapter);
+            listSolicitudes.clear();
 
         }
 

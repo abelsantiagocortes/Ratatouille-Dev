@@ -46,6 +46,7 @@ public class ChefProfile extends AppCompatActivity {
         btn_solicitud = findViewById(R.id.btn_solicitud);
         ids=findViewById(R.id.idchef);
 
+
         Query queryChefData = FirebaseDatabase.getInstance().getReference("userChef").orderByChild("userId").equalTo(id);
         queryChefData.addValueEventListener(new ValueEventListener() {
             @Override

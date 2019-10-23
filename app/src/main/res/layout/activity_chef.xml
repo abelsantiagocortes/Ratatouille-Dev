@@ -50,11 +50,10 @@
 
     <TextView
         android:id="@+id/gravity2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="287dp"
+        android:layout_height="31dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"
         android:background="@null"
         android:ems="10"
         android:fontFamily="@font/raleway_extrabold"
@@ -63,8 +62,6 @@
         android:textAlignment="viewStart"
         android:textColor="#E2000000"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Icon" />
 
@@ -91,5 +88,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gravity2" />
+
+    <Button
+        android:id="@+id/refreshi"
+        style="@style/btn_txt_white_background_grey"
+        android:layout_width="89dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="284dp"
+        android:layout_marginTop="20dp"
+        android:text="Refresh"
+        android:textSize="12dp"
+        app:layout_constraintStart_toStartOf="@+id/gravity2"
+        app:layout_constraintTop_toBottomOf="@+id/Icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
