@@ -19,5 +19,3 @@ _This project is licensed under the MIT License - see the [LICENSE](LICENSE) fil
 * ***Alejandro Castro*** : [kstro96](https://github.com/kstro96)
 * ***Abel Cortés*** : [abelsantiagocortes](https://github.com/abelsantiagocortes)
 * ***Sebastián Osorio*** : [JuanSebastianOG](https://github.com/JuanSebastianOG)
-* ***Edwin Turizo*** : [proyeckt](https://github.com/proyeckt)
-* ***Pablo Pulido*** : [pablopulido2](https://github.com/pablopulido2)
