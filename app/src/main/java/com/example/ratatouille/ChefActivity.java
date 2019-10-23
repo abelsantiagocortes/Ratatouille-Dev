@@ -1,6 +1,7 @@
 package com.example.ratatouille;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,14 +10,18 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Switch;
 
+import com.example.ratatouille.adapters.SolicitudAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,16 +34,20 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChefActivity extends AppCompatActivity {
     Switch disponible;
     ImageView logOut;
     ImageView iconoChef;
+    ListView listaSolicitud;
 
     DatabaseReference dbChefs;
     StorageReference storageChef;
 
     FirebaseAuth registerAuth;
+    private List<Solicitud> listSolicitudes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +61,7 @@ public class ChefActivity extends AppCompatActivity {
         storageChef = dbRatsStorage.getReference();
         disponible = findViewById(R.id.Disponible);
         disponible.setChecked(true);
+        listaSolicitud = findViewById(R.id.ListSolicitud);
 
         logOut = findViewById(R.id.logOut2);
         logOut.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +105,37 @@ public class ChefActivity extends AppCompatActivity {
                 Log.i("LOGINFAILED","CHEF" );
             }
         });
+        listSolicitudes = new ArrayList<>();
+        Query querySolicitud = FirebaseDatabase.getInstance().getReference("solicitud").orderByChild("idChef").equalTo(uid);
+        querySolicitud.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                listSolicitudes.add(dataSnapshot.getValue(Solicitud.class));
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                listSolicitudes.remove(dataSnapshot.getValue(Solicitud.class));
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        ArrayAdapter<Solicitud> adapter = new SolicitudAdapter(this, listSolicitudes);
+        listaSolicitud.setAdapter(adapter);
     }
 
     private Bitmap cargarImagen(DataSnapshot dir, FirebaseStorage dbRatsStorage) {
