@@ -7,6 +7,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -18,9 +19,16 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ratatouille.permissions.PermissionIds;
+import com.example.ratatouille.permissions.PermissionsActions;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,9 +49,14 @@ public class Home extends AppCompatActivity {
     DatabaseReference dbChef;
     private FirebaseAuth signOutAuth;
     ImageView imgLogOut;
+    ImageView location;
     EditText direccionIngresada;
     Geocoder mGeocoder = null;
     private LatLng latLngDireccion = null;
+
+    private static FusedLocationProviderClient mFusedLocationClient;
+    private LocationRequest mLocationRequest;
+    private LocationCallback mLocationCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +68,11 @@ public class Home extends AppCompatActivity {
 
         signOutAuth = FirebaseAuth.getInstance();
         imgLogOut = findViewById(R.id.logOut);
+        location = findViewById(R.id.Location);
         direccionIngresada = findViewById(R.id.DireccionIngresada);
+
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         FirebaseUser user = signOutAuth.getCurrentUser();
         String uid= user.getUid();
@@ -120,7 +137,41 @@ public class Home extends AppCompatActivity {
             }
         });
 
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PermissionsActions.askPermission(Home.this, PermissionIds.REQUEST_LOCATION);
+                direccionNueva();
+            }
+        });
+
     }
+
+    private void direccionNueva() {
+        mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new
+                OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        Log.i("LOCALIZACION", "On success location");
+                        if (location != null) {
+                            try {
+                                List<Address> addresses = mGeocoder.getFromLocation(location.getLatitude(),location.getLongitude(),2);
+                                if(addresses != null && addresses.size() > 0){
+                                    String addressline = "";
+                                    for (int n = 0; n <= addresses.get(0).getMaxAddressLineIndex(); n++) {
+                                        addressline += addresses.get(0).getAddressLine(n) + ", ";
+                                    }
+                                    Log.i(" LOCATION ", addressline);
+                                    direccionIngresada.setText(addressline);
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+    }
+
     public TabViewPagerAdapter setUpViewPager(){
 
         TabViewPagerAdapter tabViewPagerAdapter= new TabViewPagerAdapter(getSupportFragmentManager());
@@ -160,6 +211,15 @@ public class Home extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case PermissionIds.REQUEST_LOCATION:
+                direccionNueva();
+                break;
         }
     }
 }
