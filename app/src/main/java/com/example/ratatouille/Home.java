@@ -168,7 +168,7 @@ public class Home extends AppCompatActivity {
         TabViewPagerAdapter tabViewPagerAdapter= new TabViewPagerAdapter(getSupportFragmentManager());
         tabViewPagerAdapter.addFragment(new Chefs_tab(),"Chefs");
         tabViewPagerAdapter.addFragment(new Foodplates_tab(),"Food Plates");
-        tabViewPagerAdapter.addFragment(new Orders_tab(),"Orders");
+        //tabViewPagerAdapter.addFragment(new Orders_tab(),"Orders");
         return  tabViewPagerAdapter;
 
 
