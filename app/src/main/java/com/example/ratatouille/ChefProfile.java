@@ -44,7 +44,6 @@ public class ChefProfile extends AppCompatActivity {
         name=findViewById(R.id.nameChef);
         description=findViewById(R.id.descriptionChef);
         btn_solicitud = findViewById(R.id.btn_solicitud);
-        ids=findViewById(R.id.idchef);
 
 
         Query queryChefData = FirebaseDatabase.getInstance().getReference("userChef").orderByChild("userId").equalTo(id);
@@ -56,7 +55,6 @@ public class ChefProfile extends AppCompatActivity {
                         chef = dir.getValue(UserChef.class);
                         name.setText(chef.getName());
                         description.setText(chef.getDescription());
-                        ids.setText(chef.getUserId());
                     }
                 }
 
