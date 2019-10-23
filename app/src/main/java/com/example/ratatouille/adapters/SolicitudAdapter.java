@@ -35,7 +35,7 @@ public class SolicitudAdapter extends ArrayAdapter<Solicitud> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.solicitud_item, parent, false);
         }
         TextView cliente = convertView.findViewById(R.id.Cliente);
-        cliente.setText("Cliente: " + solicitud.getNombreCliente());
+        cliente.setText("Cliente: " + solicitud.getIdCliente());
         TextView titulo = convertView.findViewById(R.id.Titulo);
         titulo.setText("Solicitud #" + position);
         return convertView;

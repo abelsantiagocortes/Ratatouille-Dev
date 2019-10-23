@@ -3,23 +3,17 @@ package com.example.ratatouille;
 public class Solicitud {
     private String idCliente;
     private String idChef;
-    private String nombreCliente;
-    private double distancia;
+    //private String nombreCliente;
+    //private double distancia;
 
-    public Solicitud(String idCliente, String idChef, String nombreCliente, double distancia) {
+    public Solicitud(String idCliente, String idChef) {
         this.idCliente = idCliente;
         this.idChef = idChef;
-        this.nombreCliente = nombreCliente;
-        this.distancia = distancia;
+    }
+    public Solicitud() {
+
     }
 
-    public String getNombreCliente() {
-        return nombreCliente;
-    }
-
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
-    }
 
     public String getIdCliente() {
         return idCliente;
@@ -37,11 +31,4 @@ public class Solicitud {
         this.idChef = idChef;
     }
 
-    public double getDistancia() {
-        return distancia;
-    }
-
-    public void setDistancia(double distancia) {
-        this.distancia = distancia;
-    }
 }

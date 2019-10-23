@@ -1,5 +1,6 @@
 package com.example.ratatouille;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,16 +32,22 @@ public class SliderFragment extends Fragment {
         image_plate=view.findViewById(R.id.img_chef);
         loc_chef= view.findViewById(R.id.txt_locationChef);
 
+
         if(getArguments()!=null){
             n_chef.setText(getArguments().getString("NameChef"));
             loc_chef.setText(getArguments().getString("LocChef")+ " km");
-            Bitmap[] img = (Bitmap[]) getArguments().getSerializable("ImageChef");
-            image_chef.setImageBitmap(img[0]);
+            //Bitmap[] img = (Bitmap[]) getArguments().getSerializable("ImageChef");
+
+
+            //image_chef.setImageBitmap(img[0]);
             image_plate.setImageResource(getArguments().getInt("ImagePlate"));
             image_plate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    
+                    Intent intent = new Intent(getContext(),ChefProfile.class);
+                    String userId = getArguments().getString("ChefId");
+                    intent.putExtra("ChefId",userId);
+                    startActivity(intent);
                 }
             });
 

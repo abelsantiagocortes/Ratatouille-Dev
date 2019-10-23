@@ -123,7 +123,7 @@ public class Chefs_tab extends Fragment{
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     UserChef chef = snapshot.getValue(UserChef.class);
                     double distance = distance(chef.getLat(),chef.getLongi(),lat,longi);
-                    if(distance<5)
+                    if(distance<5 && chef.isStatus())
                     {
                         FirebaseUser currentUser = current.getCurrentUser();
                         String userId = currentUser.getUid();
@@ -185,19 +185,20 @@ public class Chefs_tab extends Fragment{
     private void loadViewPager(List<ClientChefDistance>listOrdered){
          adapter= new MyViewPagerAdapter(getFragmentManager());
          for(int i=0;i<listOrdered.size();i++){
-            adapter.addFragment(newInstance(listOrdered.get(i).getChefName(), String.valueOf(listOrdered.get(i).getDistance()),listOrdered.get(i).getImgChef(),images[i]));
+            adapter.addFragment(newInstance(listOrdered.get(i).getChefName(), String.valueOf(listOrdered.get(i).getDistance()),listOrdered.get(i).getImgChef(),images[i],listOrdered.get(i).getIdChef()));
          }
          viewPagerC.setAdapter(adapter);
         listOrdered.clear();
     }
-    private SliderFragment newInstance(String n_chef, String loc_chef, Bitmap[] image, int img){
+    private SliderFragment newInstance(String n_chef, String loc_chef, Bitmap[] image, int img, String chefId){
 
 
         Bundle bundle = new Bundle();
         bundle.putString("NameChef",n_chef);
         bundle.putString("LocChef",loc_chef);
+        bundle.putString("ChefId",chefId);
         bundle.putInt("ImagePlate",img);
-        bundle.putSerializable("ImageChef",image);
+        //bundle.putSerializable("ImageChef",image);
 
         System.out.println("Bundle :");
         System.out.println(n_chef);

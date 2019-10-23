@@ -107,36 +107,37 @@ public class ChefActivity extends AppCompatActivity {
         });
         listSolicitudes = new ArrayList<>();
         Query querySolicitud = FirebaseDatabase.getInstance().getReference("solicitud").orderByChild("idChef").equalTo(uid);
-        querySolicitud.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                listSolicitudes.add(dataSnapshot.getValue(Solicitud.class));
-            }
+        querySolicitud.addListenerForSingleValueEvent(valueEventListener);
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                listSolicitudes.remove(dataSnapshot.getValue(Solicitud.class));
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        ArrayAdapter<Solicitud> adapter = new SolicitudAdapter(this, listSolicitudes);
-        listaSolicitud.setAdapter(adapter);
     }
+
+    ValueEventListener valueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            if (dataSnapshot.exists())
+            {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Solicitud noti = snapshot.getValue(Solicitud.class);
+                    listSolicitudes.add(noti);
+                }
+            }
+
+            for(int i =0;i<listSolicitudes.size();i++)
+            {
+                System.out.println(listSolicitudes.get(i).getIdCliente());
+            }
+            ArrayAdapter<Solicitud> adapter = new SolicitudAdapter(getApplicationContext(), listSolicitudes);
+            listaSolicitud.setAdapter(adapter);
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
 
     private Bitmap cargarImagen(DataSnapshot dir, FirebaseStorage dbRatsStorage) {
         final Bitmap[] bitmap = {null};

@@ -21,10 +21,11 @@
             android:layout_width="293dp"
             android:layout_height="499dp"
             android:layout_gravity="center|top"
+            android:clickable="true"
             android:src="@drawable/plate1_test"
             app:siBorderColor="@color/colorGrisRata"
-            app:siBorderWidth="3dp"
 
+            app:siBorderWidth="3dp"
             app:siRadius="60dp"
             app:siSquare="false" />
 
