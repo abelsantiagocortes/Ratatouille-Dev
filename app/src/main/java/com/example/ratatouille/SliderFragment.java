@@ -37,6 +37,12 @@ public class SliderFragment extends Fragment {
             Bitmap[] img = (Bitmap[]) getArguments().getSerializable("ImageChef");
             image_chef.setImageBitmap(img[0]);
             image_plate.setImageResource(getArguments().getInt("ImagePlate"));
+            image_plate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    
+                }
+            });
 
         }
 
