@@ -3,7 +3,7 @@ package com.example.ratatouille;
 import java.util.ArrayList;
 import java.util.List;
 
-class UserClient {
+public class UserClient {
 
     String name;
     int age;
