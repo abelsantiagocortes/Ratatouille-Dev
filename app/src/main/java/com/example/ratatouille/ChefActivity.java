@@ -148,6 +148,7 @@ public class ChefActivity extends AppCompatActivity {
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                     bitmap[0] = BitmapFactory.decodeFile(localFile.getAbsolutePath());
                     iconoChef.setImageBitmap(bitmap[0]);
+
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

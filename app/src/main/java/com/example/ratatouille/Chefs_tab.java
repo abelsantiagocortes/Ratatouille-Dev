@@ -1,6 +1,8 @@
 package com.example.ratatouille;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,8 +28,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -42,12 +50,15 @@ public class Chefs_tab extends Fragment{
     DatabaseReference dbUser;
     TabLayout tabLayout;
     ViewPager viewPager;
+    DatabaseReference dbChefs;
+    StorageReference storageChef;
     double lat;
     double longi;
     Button btn_refresh;
     List<String> listDistances;
+    FirebaseStorage dbRatsStorage;
 
-    private int[] images={R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger};
+    private int[] images={R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test};
     @Override
 
     public View onCreateView( LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
@@ -68,6 +79,8 @@ public class Chefs_tab extends Fragment{
         current = FirebaseAuth.getInstance();
         FirebaseUser currentUser = current.getCurrentUser();
         String userId = currentUser.getUid();
+        dbRatsStorage = FirebaseStorage.getInstance();
+        storageChef = dbRatsStorage.getReference();
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         DatabaseReference dbUser = ref.child("userClient").child(userId);
@@ -114,11 +127,10 @@ public class Chefs_tab extends Fragment{
                     {
                         FirebaseUser currentUser = current.getCurrentUser();
                         String userId = currentUser.getUid();
-                        ClientChefDistance obj= new ClientChefDistance(userId,chef.getUserId(),chef.getName(),distance);
+
+                        ClientChefDistance obj= new ClientChefDistance(userId,chef.getUserId(),chef.getName(),cargarImagen(snapshot,dbRatsStorage),distance);
                         listOrdered.add(obj);
-                        System.out.println(chef.getName());
-                        System.out.println(chef.getDir());
-                        System.out.println(distance);
+
                     }
 
                 }
@@ -137,6 +149,28 @@ public class Chefs_tab extends Fragment{
 
     };
 
+    private Bitmap[] cargarImagen(DataSnapshot dir, FirebaseStorage dbRatsStorage) {
+        final Bitmap[] bitmap = {null};
+        StorageReference sRf = dbRatsStorage.getReferenceFromUrl(dir.getValue(UserChef.class).getPhotoDownloadURL());
+        try {
+            final File localFile = File.createTempFile("images", "jpg");
+            sRf.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    bitmap[0] = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                }
+            });
+        } catch (IOException e ) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
     public double distance(double lat1, double long1, double lat2, double long2) {
         double latDistance = Math.toRadians(lat1 - lat2);
         double lngDistance = Math.toRadians(long1 - long2);
@@ -151,18 +185,19 @@ public class Chefs_tab extends Fragment{
     private void loadViewPager(List<ClientChefDistance>listOrdered){
          adapter= new MyViewPagerAdapter(getFragmentManager());
          for(int i=0;i<listOrdered.size();i++){
-            adapter.addFragment(newInstance(listOrdered.get(i).getChefName(), String.valueOf(listOrdered.get(i).getDistance()),R.drawable.hamburger));
+            adapter.addFragment(newInstance(listOrdered.get(i).getChefName(), String.valueOf(listOrdered.get(i).getDistance()),listOrdered.get(i).getImgChef(),images[i]));
          }
          viewPagerC.setAdapter(adapter);
         listOrdered.clear();
     }
-    private SliderFragment newInstance(String n_chef,String loc_chef,int image){
+    private SliderFragment newInstance(String n_chef, String loc_chef, Bitmap[] image, int img){
 
 
         Bundle bundle = new Bundle();
         bundle.putString("NameChef",n_chef);
         bundle.putString("LocChef",loc_chef);
-        bundle.putInt("ImageChef",image);
+        bundle.putInt("ImagePlate",img);
+        bundle.putSerializable("ImageChef",image);
 
         System.out.println("Bundle :");
         System.out.println(n_chef);

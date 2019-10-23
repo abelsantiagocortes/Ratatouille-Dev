@@ -29,6 +29,7 @@
             app:siSquare="false" />
 
         <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/img_chef2"
             android:layout_width="179dp"
             android:layout_height="182dp"
             android:layout_marginStart="180dp"

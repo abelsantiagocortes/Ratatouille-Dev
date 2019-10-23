@@ -1,12 +1,31 @@
 package com.example.ratatouille;
 
+import android.graphics.Bitmap;
+
 public class ClientChefDistance implements Comparable<ClientChefDistance>{
 
     String idClient;
     String idChef;
     String chefName;
-    int imgChef;
+    Bitmap[] imgChef;
     double distance;
+
+
+    public Bitmap[] getImgChef() {
+        return imgChef;
+    }
+
+    public void setImgChef(Bitmap[] imgChef) {
+        this.imgChef = imgChef;
+    }
+
+    public ClientChefDistance(String idClient, String idChef, String chefName, Bitmap[] imgChef, double distance) {
+        this.idClient = idClient;
+        this.idChef = idChef;
+        this.chefName = chefName;
+        this.imgChef = imgChef;
+        this.distance = distance;
+    }
 
     public String getIdClient() {
         return idClient;
@@ -24,13 +43,6 @@ public class ClientChefDistance implements Comparable<ClientChefDistance>{
         this.chefName = chefName;
     }
 
-    public int getImgChef() {
-        return imgChef;
-    }
-
-    public void setImgChef(int imgChef) {
-        this.imgChef = imgChef;
-    }
 
     public String getIdChef() {
         return idChef;
