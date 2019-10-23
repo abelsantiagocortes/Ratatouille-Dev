@@ -15,6 +15,7 @@ public class UserChef {
     String description;
     boolean status;
     List<String> tools;
+    String userId;
 
 
     public UserChef(String name,  String dir,int age) {
@@ -37,6 +38,14 @@ public class UserChef {
     }
 
     public UserChef() {
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getName() {
