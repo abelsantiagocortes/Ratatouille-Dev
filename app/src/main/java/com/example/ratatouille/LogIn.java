@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 public class LogIn extends AppCompatActivity {
 
@@ -40,11 +42,7 @@ public class LogIn extends AppCompatActivity {
         btn_logins.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"que hices",Toast.LENGTH_SHORT).show();
                 signInUser(frm_email.getText().toString(), frm_password.getText().toString());
-                /*Intent intent= new Intent(view.getContext(),Home.class);
-                startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);*/
             }
         });
     }
@@ -52,12 +50,15 @@ public class LogIn extends AppCompatActivity {
     private void logInUser(FirebaseUser currentUser){
         Intent intent;
         if(currentUser!=null){
-            String x= getIntent().getStringExtra("landing");
-            if(x.equals("yes"))
-            {
-                intent = new Intent(getBaseContext(), Home.class);
-                startActivity(intent);
-            }
+
+                FirebaseUser user = loginAuth.getCurrentUser();
+                String uid= user.getUid();
+                Query queryChef = FirebaseDatabase.getInstance().getReference("userChef").equalTo(uid);
+                Query queryClient = FirebaseDatabase.getInstance().getReference("userClient").equalTo(uid);
+
+
+                    intent = new Intent(getBaseContext(), Home.class);
+                    startActivity(intent);
 
 
         } else {
@@ -127,12 +128,20 @@ public class LogIn extends AppCompatActivity {
             return false;
         return true;
     }
-    /* Authentication */
-   /* @Override
+
+    @Override
     public void onStart() {
         super.onStart();
         // Revisa si el usuario existe
         FirebaseUser currentUser = loginAuth.getCurrentUser();
         logInUser(currentUser);
-    }*/
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Intent intent;
+        intent = new Intent(getBaseContext(), LandingPage.class);
+        startActivity(intent);
+    }
 }
