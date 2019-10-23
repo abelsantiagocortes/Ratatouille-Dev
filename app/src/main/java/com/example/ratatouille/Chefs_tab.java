@@ -1,5 +1,6 @@
 package com.example.ratatouille;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,11 +37,13 @@ public class Chefs_tab extends Fragment{
     private LinearLayout dotsLayout;
     public List<UserChef> listChefs;
     public List<ClientChefDistance> listOrdered;
-    Button btn_back,btn_next;
     FirebaseAuth current;
     DatabaseReference dbUser;
+    TabLayout tabLayout;
+    ViewPager viewPager;
     double lat;
     double longi;
+    Button btn_refresh;
     List<String> listDistances;
 
     private int[] images={R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger};
@@ -50,10 +54,16 @@ public class Chefs_tab extends Fragment{
 
         viewPagerC= view.findViewById(R.id.viewPagerC);
 
-        dotsLayout= view.findViewById(R.id.LayoutDots);
-        btn_back= view.findViewById(R.id.btn_back);
-        btn_next= view.findViewById(R.id.btn_next);
+        btn_refresh= view.findViewById(R.id.button_ref);
 
+        btn_refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(getContext(),Home.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
+        });
         current = FirebaseAuth.getInstance();
         FirebaseUser currentUser = current.getCurrentUser();
         String userId = currentUser.getUid();
@@ -86,7 +96,7 @@ public class Chefs_tab extends Fragment{
     private void loadNearbyChefs() {
 
         Query query = FirebaseDatabase.getInstance().getReference("userChef");
-        query.addValueEventListener(valueEventListener);
+        query.addListenerForSingleValueEvent(valueEventListener);
     }
 
     ValueEventListener valueEventListener = new ValueEventListener() {
@@ -142,16 +152,22 @@ public class Chefs_tab extends Fragment{
     private void loadViewPager(List<UserChef>listChefs,List<String>listDistances){
          adapter= new MyViewPagerAdapter(getFragmentManager());
          for(int i=0;i<listChefs.size();i++){
-            adapter.addFragment(newInstance(listChefs.get(i).getName(),listDistances.get(i),images[i]));
+            adapter.addFragment(newInstance(listChefs.get(i).getName(),listDistances.get(i),R.drawable.hamburger));
          }
-
          viewPagerC.setAdapter(adapter);
+        listChefs.clear();
     }
     private SliderFragment newInstance(String n_chef,String loc_chef,int image){
+
+
         Bundle bundle = new Bundle();
         bundle.putString("NameChef",n_chef);
         bundle.putString("LocChef",loc_chef);
         bundle.putInt("ImageChef",image);
+
+        System.out.println("Bundle :");
+        System.out.println(n_chef);
+        System.out.println(loc_chef);
 
         SliderFragment fragment=new SliderFragment();
         fragment.setArguments(bundle);

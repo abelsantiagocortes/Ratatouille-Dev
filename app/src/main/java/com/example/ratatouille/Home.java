@@ -7,6 +7,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 
@@ -29,8 +30,8 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        tabLayout=(TabLayout) findViewById(R.id.tabLayout);
-        viewPager=(ViewPager) findViewById(R.id.viewPager);
+        tabLayout= findViewById(R.id.tabLayout);
+        viewPager= findViewById(R.id.viewPager);
 
         signOutAuth = FirebaseAuth.getInstance();
         imgLogOut = findViewById(R.id.logOut);
@@ -46,22 +47,12 @@ public class Home extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-        dbChef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                viewPager.setAdapter(setUpViewPager());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(setUpViewPager());
+
+
+
+
 
 
     }
