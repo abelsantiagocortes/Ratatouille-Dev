@@ -1,6 +1,6 @@
 package com.example.ratatouille;
 
-public class ClientChefDistance {
+public class ClientChefDistance implements Comparable<ClientChefDistance>{
 
     String idClient;
     String idChef;
@@ -53,5 +53,18 @@ public class ClientChefDistance {
         this.idChef = idChef;
         this.chefName = chefName;
         this.distance = distance;
+    }
+
+    @Override
+    public int compareTo(ClientChefDistance o) {
+        if(this.distance<o.distance)
+        {
+            return -1;
+        }
+        else if (this.distance>o.distance)
+        {
+            return 1;
+        }
+        return 0;
     }
 }

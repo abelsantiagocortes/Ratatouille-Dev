@@ -27,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Chefs_tab extends Fragment{
@@ -111,8 +112,6 @@ public class Chefs_tab extends Fragment{
                     double distance = distance(chef.getLat(),chef.getLongi(),lat,longi);
                     if(distance<5)
                     {
-                        //listChefs.add(chef);
-                        //listDistances.add(String.valueOf(distance));
                         FirebaseUser currentUser = current.getCurrentUser();
                         String userId = currentUser.getUid();
                         ClientChefDistance obj= new ClientChefDistance(userId,chef.getUserId(),chef.getName(),distance);
@@ -124,7 +123,7 @@ public class Chefs_tab extends Fragment{
 
                 }
             }
-
+            Collections.sort(listOrdered);
             loadViewPager(listOrdered);
 
         }
