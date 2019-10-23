@@ -4,13 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -19,6 +24,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.IOException;
 
 public class ChefProfile extends AppCompatActivity {
 
@@ -29,6 +40,8 @@ public class ChefProfile extends AppCompatActivity {
     DatabaseReference dbNotifs;
     UserChef chef;
     FirebaseAuth current;
+    ImageView ico;
+    FirebaseStorage dbRatsStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +57,8 @@ public class ChefProfile extends AppCompatActivity {
         name=findViewById(R.id.nameChef);
         description=findViewById(R.id.descriptionChef);
         btn_solicitud = findViewById(R.id.btn_solicitud);
+        ico =findViewById(R.id.imageView7);
+        dbRatsStorage = FirebaseStorage.getInstance();
 
 
         Query queryChefData = FirebaseDatabase.getInstance().getReference("userChef").orderByChild("userId").equalTo(id);
@@ -79,7 +94,50 @@ public class ChefProfile extends AppCompatActivity {
             }
         });
 
+        Query queryChefURL = FirebaseDatabase.getInstance().getReference("userChef").orderByChild("userId").equalTo(id);
+        queryChefURL.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot dir : dataSnapshot.getChildren()){
+                        Log.i("SP",dir.getValue(UserChef.class).getPhotoDownloadURL());
+                        cargarImagen(dir, dbRatsStorage);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.i("LOGINFAILED","CHEF" );
+            }
+        });
 
 
+
+
+
+    }
+    private Bitmap cargarImagen(DataSnapshot dir, FirebaseStorage dbRatsStorage) {
+        final Bitmap[] bitmap = {null};
+        StorageReference sRf = dbRatsStorage.getReferenceFromUrl(dir.getValue(UserChef.class).getPhotoDownloadURL());
+        try {
+            final File localFile = File.createTempFile("images", "jpg");
+            sRf.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    bitmap[0] = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                    ico.setImageBitmap(bitmap[0]);
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                }
+            });
+        } catch (IOException e ) {
+            e.printStackTrace();
+        }
+        return bitmap[0];
     }
 }
