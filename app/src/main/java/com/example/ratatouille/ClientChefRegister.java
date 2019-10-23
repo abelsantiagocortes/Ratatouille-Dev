@@ -1,5 +1,6 @@
 package com.example.ratatouille;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -184,6 +185,7 @@ public class ClientChefRegister extends AppCompatActivity {
         if(intent.getStringExtra("type").equals("chef"))
         {
             UserChef user = new UserChef(name_value,dir_value,age_value);
+            user.setUserId(userId);
             if(pos != null){
                 user.setLat(pos.latitude);
                 user.setLongi(pos.longitude);
@@ -214,6 +216,7 @@ public class ClientChefRegister extends AppCompatActivity {
         else if (intent.getStringExtra("type").equals("client"))
         {
             UserClient user = new UserClient(name_value,dir_value,age_value);
+            user.setUserId(userId);
             if(pos != null){
                 user.setLat(pos.latitude);
                 user.setLongi(pos.longitude);
@@ -259,5 +262,12 @@ public class ClientChefRegister extends AppCompatActivity {
             }
         }
         return null;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(PermissionsActions.checkPermission(this,PermissionIds.REQUEST_READ_EXTERNAL_STORAGE)){
+            seleccionarImagen();
+        }
     }
 }

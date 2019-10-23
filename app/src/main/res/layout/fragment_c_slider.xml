@@ -21,14 +21,16 @@
             android:layout_width="293dp"
             android:layout_height="499dp"
             android:layout_gravity="center|top"
+            android:clickable="true"
             android:src="@drawable/plate1_test"
             app:siBorderColor="@color/colorGrisRata"
-            app:siBorderWidth="3dp"
 
+            app:siBorderWidth="3dp"
             app:siRadius="60dp"
             app:siSquare="false" />
 
         <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/img_chef2"
             android:layout_width="179dp"
             android:layout_height="182dp"
             android:layout_marginStart="180dp"
@@ -62,6 +64,7 @@
             android:textColor="#ffff"
 
             android:textSize="32sp" />
+
     </FrameLayout>
 
 

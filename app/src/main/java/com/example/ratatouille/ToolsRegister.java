@@ -84,7 +84,7 @@ public class ToolsRegister<tagsFire> extends AppCompatActivity {
                     startActivity(intent1);
                     overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                 }else if(intent.getStringExtra("type").equals("chefsi")){
-                    Intent intent1 = new Intent(getApplicationContext(),ChefActivity.class);
+                    Intent intent1 = new Intent(getApplicationContext(),DescripcionChef.class);
                     startActivity(intent1);
                     overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                 }

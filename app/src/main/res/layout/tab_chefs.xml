@@ -76,6 +76,17 @@
         android:text="N"
         android:visibility="gone"/>
 
+    <Button
+        android:id="@+id/button_ref"
+        style="@style/btn_txt_white_background_grey"
+        android:layout_width="108dp"
+        android:layout_height="29dp"
+        android:layout_alignBottom="@+id/textView13"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="23dp"
+        android:layout_marginBottom="-2dp"
+        android:text="Refresh"
+        android:textSize="16dp" />
 
 
 </RelativeLayout>

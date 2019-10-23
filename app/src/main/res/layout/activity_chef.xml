@@ -6,12 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".ChefActivity">
 
+    <ImageView
+        android:id="@+id/logOut2"
+        android:layout_width="28dp"
+        android:layout_height="32dp"
+        android:layout_gravity="right|top"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logout" />
+
     <Switch
         android:id="@+id/Disponible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="152dp"
         android:text="@string/disponible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gravity" />
@@ -20,6 +32,9 @@
         android:id="@+id/gravity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
         android:background="@null"
         android:ems="10"
         android:fontFamily="@font/raleway_extrabold"
@@ -28,8 +43,62 @@
         android:textAlignment="viewStart"
         android:textColor="#E2000000"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/logOut2"
         app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/gravity2"
+        android:layout_width="287dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:background="@null"
+        android:ems="10"
+        android:fontFamily="@font/raleway_extrabold"
+        android:inputType="textPersonName"
+        android:text="@string/solicitudes"
+        android:textAlignment="viewStart"
+        android:textColor="#E2000000"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Icon" />
+
+    <ImageView
+        android:id="@+id/Icon"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gravity" />
+
+    <ListView
+        android:id="@+id/ListSolicitud"
+        android:layout_width="409dp"
+        android:layout_height="351dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gravity2" />
+
+    <Button
+        android:id="@+id/refreshi"
+        style="@style/btn_txt_white_background_grey"
+        android:layout_width="89dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="284dp"
+        android:layout_marginTop="20dp"
+        android:text="Refresh"
+        android:textSize="12dp"
+        app:layout_constraintStart_toStartOf="@+id/gravity2"
+        app:layout_constraintTop_toBottomOf="@+id/Icon" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

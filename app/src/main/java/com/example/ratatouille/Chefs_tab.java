@@ -1,5 +1,8 @@
 package com.example.ratatouille;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +17,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,9 +28,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Chefs_tab extends Fragment{
@@ -34,14 +45,20 @@ public class Chefs_tab extends Fragment{
     private MyViewPagerAdapter adapter;
     private LinearLayout dotsLayout;
     public List<UserChef> listChefs;
-    Button btn_back,btn_next;
+    public List<ClientChefDistance> listOrdered;
     FirebaseAuth current;
     DatabaseReference dbUser;
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    DatabaseReference dbChefs;
+    StorageReference storageChef;
     double lat;
     double longi;
+    Button btn_refresh;
     List<String> listDistances;
+    FirebaseStorage dbRatsStorage;
 
-    private int[] images={R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger};
+    private int[] images={R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test};
     @Override
 
     public View onCreateView( LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
@@ -49,13 +66,21 @@ public class Chefs_tab extends Fragment{
 
         viewPagerC= view.findViewById(R.id.viewPagerC);
 
-        dotsLayout= view.findViewById(R.id.LayoutDots);
-        btn_back= view.findViewById(R.id.btn_back);
-        btn_next= view.findViewById(R.id.btn_next);
+        btn_refresh= view.findViewById(R.id.button_ref);
 
+        btn_refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(getContext(),Home.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
+        });
         current = FirebaseAuth.getInstance();
         FirebaseUser currentUser = current.getCurrentUser();
         String userId = currentUser.getUid();
+        dbRatsStorage = FirebaseStorage.getInstance();
+        storageChef = dbRatsStorage.getReference();
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         DatabaseReference dbUser = ref.child("userClient").child(userId);
@@ -74,8 +99,9 @@ public class Chefs_tab extends Fragment{
 
             }
         });
-        listChefs = new ArrayList<>();
-        listDistances = new ArrayList<>();
+        //listChefs = new ArrayList<>();
+        //listDistances = new ArrayList<>();
+        listOrdered = new ArrayList<>();
         loadNearbyChefs();
 
         return view;
@@ -85,36 +111,32 @@ public class Chefs_tab extends Fragment{
     private void loadNearbyChefs() {
 
         Query query = FirebaseDatabase.getInstance().getReference("userChef");
-        query.addValueEventListener(valueEventListener);
+        query.addListenerForSingleValueEvent(valueEventListener);
     }
 
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            listDistances.clear();
-            listChefs.clear();
+
             if (dataSnapshot.exists())
             {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     UserChef chef = snapshot.getValue(UserChef.class);
                     double distance = distance(chef.getLat(),chef.getLongi(),lat,longi);
-                    if(distance<5)
+                    if(distance<5 && chef.isStatus())
                     {
-                        listChefs.add(chef);
-                        listDistances.add(String.valueOf(distance));
-                        System.out.println(chef.getName());
-                        System.out.println(chef.getDir());
-                        System.out.println(distance);
+                        FirebaseUser currentUser = current.getCurrentUser();
+                        String userId = currentUser.getUid();
+
+                        ClientChefDistance obj= new ClientChefDistance(userId,chef.getUserId(),chef.getName(),cargarImagen(snapshot,dbRatsStorage),distance);
+                        listOrdered.add(obj);
+
                     }
 
                 }
             }
-
-            for(int i =0;i<listChefs.size();i++)
-            {
-                System.out.println(listChefs.get(i).getName());
-            }
-            loadViewPager(listChefs,listDistances);
+            Collections.sort(listOrdered);
+            loadViewPager(listOrdered);
 
         }
 
@@ -127,6 +149,28 @@ public class Chefs_tab extends Fragment{
 
     };
 
+    private Bitmap[] cargarImagen(DataSnapshot dir, FirebaseStorage dbRatsStorage) {
+        final Bitmap[] bitmap = {null};
+        StorageReference sRf = dbRatsStorage.getReferenceFromUrl(dir.getValue(UserChef.class).getPhotoDownloadURL());
+        try {
+            final File localFile = File.createTempFile("images", "jpg");
+            sRf.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    bitmap[0] = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                }
+            });
+        } catch (IOException e ) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
     public double distance(double lat1, double long1, double lat2, double long2) {
         double latDistance = Math.toRadians(lat1 - lat2);
         double lngDistance = Math.toRadians(long1 - long2);
@@ -138,19 +182,27 @@ public class Chefs_tab extends Fragment{
         return Math.round(result*100.0)/100.0;
     }
 
-    private void loadViewPager(List<UserChef>listChefs,List<String>listDistances){
+    private void loadViewPager(List<ClientChefDistance>listOrdered){
          adapter= new MyViewPagerAdapter(getFragmentManager());
-         for(int i=0;i<listChefs.size();i++){
-            adapter.addFragment(newInstance(listChefs.get(i).getName(),listDistances.get(i),images[i]));
+         for(int i=0;i<listOrdered.size();i++){
+            adapter.addFragment(newInstance(listOrdered.get(i).getChefName(), String.valueOf(listOrdered.get(i).getDistance()),listOrdered.get(i).getImgChef(),images[i],listOrdered.get(i).getIdChef()));
          }
-
          viewPagerC.setAdapter(adapter);
+        listOrdered.clear();
     }
-    private SliderFragment newInstance(String n_chef,String loc_chef,int image){
+    private SliderFragment newInstance(String n_chef, String loc_chef, Bitmap[] image, int img, String chefId){
+
+
         Bundle bundle = new Bundle();
         bundle.putString("NameChef",n_chef);
         bundle.putString("LocChef",loc_chef);
-        bundle.putInt("ImageChef",image);
+        bundle.putString("ChefId",chefId);
+        bundle.putInt("ImagePlate",img);
+        //bundle.putSerializable("ImageChef",image);
+
+        System.out.println("Bundle :");
+        System.out.println(n_chef);
+        System.out.println(loc_chef);
 
         SliderFragment fragment=new SliderFragment();
         fragment.setArguments(bundle);

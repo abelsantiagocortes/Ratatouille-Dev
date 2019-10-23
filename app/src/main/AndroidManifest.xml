@@ -18,7 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChefActivity"></activity>
+        <activity android:name=".ChefProfile"></activity>
+        <activity android:name=".DescripcionChef" />
+        <activity android:name=".ChefActivity" />
         <activity android:name=".ToolsRegister" />
         <activity android:name=".ClientChefRegister" />
         <!--
