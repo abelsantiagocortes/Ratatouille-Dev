@@ -24,6 +24,7 @@ public class UserChef {
         this.dir = dir;
         this.tools = new ArrayList<>();
         this.status = true;
+        this.description = "";
     }
 
     public UserChef(String name, int age, int photo, String dir, double lat, double longi, String description, List<String> tools) {
