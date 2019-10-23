@@ -62,7 +62,6 @@ public class Home extends AppCompatActivity {
                 Log.i("LOGINFAILED","CHEF" );
             }
         });
-        direccionIngresada.setText("HOLIIIII");
 
         FirebaseDatabase dbRats = FirebaseDatabase.getInstance();
         dbChef = dbRats.getReference("userChef");
