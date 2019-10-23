@@ -51,7 +51,7 @@ public class LogIn extends AppCompatActivity {
     }
 
     private void logInUser(FirebaseUser currentUser){
-        Intent intent;
+        final Intent intent;
         if(currentUser!=null){
 
                 FirebaseUser user = loginAuth.getCurrentUser();
@@ -81,7 +81,7 @@ public class LogIn extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         UserClient clientito = dataSnapshot.getValue(UserClient.class);
                         if(clientito!=null) {
-                            Log.i("LOGIN", "CLIENTE" + clientito.toString());
+                            Log.i("LOGIN", "CLIENTE");
                             Intent intent = new Intent(getBaseContext(), Home.class);
                             startActivity(intent);
                         }

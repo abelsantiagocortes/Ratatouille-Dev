@@ -1,5 +1,6 @@
 package com.example.ratatouille;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -261,5 +262,12 @@ public class ClientChefRegister extends AppCompatActivity {
             }
         }
         return null;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(PermissionsActions.checkPermission(this,PermissionIds.REQUEST_READ_EXTERNAL_STORAGE)){
+            seleccionarImagen();
+        }
     }
 }

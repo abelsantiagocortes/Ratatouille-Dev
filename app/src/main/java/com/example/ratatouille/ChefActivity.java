@@ -41,4 +41,15 @@ public class ChefActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        try{
+            registerAuth.signOut();
+        }catch (Exception e){
+
+        }finally {
+            super.onBackPressed();
+        }
+    }
 }
