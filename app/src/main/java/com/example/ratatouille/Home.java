@@ -97,12 +97,6 @@ public class Home extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(setUpViewPager());
 
-
-
-
-
-            }
-        });
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(setUpViewPager());
         direccionIngresada.setOnEditorActionListener(new TextView.OnEditorActionListener() {

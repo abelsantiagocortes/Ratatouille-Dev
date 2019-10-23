@@ -85,8 +85,9 @@ public class Chefs_tab extends Fragment{
 
             }
         });
-        listChefs = new ArrayList<>();
-        listDistances = new ArrayList<>();
+        //listChefs = new ArrayList<>();
+        //listDistances = new ArrayList<>();
+        listOrdered = new ArrayList<>();
         loadNearbyChefs();
 
         return view;
@@ -102,8 +103,7 @@ public class Chefs_tab extends Fragment{
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            listDistances.clear();
-            listChefs.clear();
+
             if (dataSnapshot.exists())
             {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -111,8 +111,12 @@ public class Chefs_tab extends Fragment{
                     double distance = distance(chef.getLat(),chef.getLongi(),lat,longi);
                     if(distance<5)
                     {
-                        listChefs.add(chef);
-                        listDistances.add(String.valueOf(distance));
+                        //listChefs.add(chef);
+                        //listDistances.add(String.valueOf(distance));
+                        FirebaseUser currentUser = current.getCurrentUser();
+                        String userId = currentUser.getUid();
+                        ClientChefDistance obj= new ClientChefDistance(userId,chef.getUserId(),chef.getName(),distance);
+                        listOrdered.add(obj);
                         System.out.println(chef.getName());
                         System.out.println(chef.getDir());
                         System.out.println(distance);
@@ -121,11 +125,7 @@ public class Chefs_tab extends Fragment{
                 }
             }
 
-            for(int i =0;i<listChefs.size();i++)
-            {
-                System.out.println(listChefs.get(i).getName());
-            }
-            loadViewPager(listChefs,listDistances);
+            loadViewPager(listOrdered);
 
         }
 
@@ -149,13 +149,13 @@ public class Chefs_tab extends Fragment{
         return Math.round(result*100.0)/100.0;
     }
 
-    private void loadViewPager(List<UserChef>listChefs,List<String>listDistances){
+    private void loadViewPager(List<ClientChefDistance>listOrdered){
          adapter= new MyViewPagerAdapter(getFragmentManager());
-         for(int i=0;i<listChefs.size();i++){
-            adapter.addFragment(newInstance(listChefs.get(i).getName(),listDistances.get(i),R.drawable.hamburger));
+         for(int i=0;i<listOrdered.size();i++){
+            adapter.addFragment(newInstance(listOrdered.get(i).getChefName(), String.valueOf(listOrdered.get(i).getDistance()),R.drawable.hamburger));
          }
          viewPagerC.setAdapter(adapter);
-        listChefs.clear();
+        listOrdered.clear();
     }
     private SliderFragment newInstance(String n_chef,String loc_chef,int image){
 
