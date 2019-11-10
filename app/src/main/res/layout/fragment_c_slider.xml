@@ -44,7 +44,7 @@
             android:id="@+id/txt_locationChef"
             android:layout_width="103dp"
             android:layout_height="35dp"
-            android:layout_marginStart="100dp"
+            android:layout_marginStart="85dp"
             android:layout_marginTop="430dp"
             android:fontFamily="@font/raleway_extrabold"
             android:textColor="#ffff"

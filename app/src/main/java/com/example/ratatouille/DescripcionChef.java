@@ -43,7 +43,8 @@ public class DescripcionChef extends AppCompatActivity {
                 Log.i("DESCRIPCION",des);
                 Log.i("DESCRIPCION",registerAuth.getCurrentUser().getUid());
                 dbChefs.child(userId).child("description").setValue(des);
-                Intent intent1 = new Intent(getApplicationContext(),ChefActivity.class);
+
+                Intent intent1 = new Intent(getApplicationContext(),ChefRecipes.class);
                 startActivity(intent1);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }

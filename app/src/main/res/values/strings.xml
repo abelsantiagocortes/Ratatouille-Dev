@@ -28,6 +28,9 @@
     <string name="foodplates">Looking for someone to cook...</string>
 
 
+    <string name="title_activity_maps">Map</string>
+    <string name="disponible">Disponible</string>
+    <string name="solicitudes">Solicitudes</string>
     <string-array name="specialities">
         <item>breakfast</item>
         <item>lunch</item>
@@ -39,7 +42,4 @@
         <item>foreign</item>
         <item>cocktails</item>
     </string-array>
-    <string name="title_activity_maps">Map</string>
-    <string name="disponible">Disponible</string>
-    <string name="solicitudes">Solicitudes</string>
 </resources>
