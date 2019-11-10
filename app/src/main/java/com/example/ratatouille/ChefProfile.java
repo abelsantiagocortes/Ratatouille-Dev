@@ -118,6 +118,7 @@ public class ChefProfile extends AppCompatActivity {
 
 
     }
+
     private Bitmap cargarImagen(DataSnapshot dir, FirebaseStorage dbRatsStorage) {
         final Bitmap[] bitmap = {null};
         StorageReference sRf = dbRatsStorage.getReferenceFromUrl(dir.getValue(UserChef.class).getPhotoDownloadURL());

@@ -198,6 +198,7 @@ public class Chefs_tab extends Fragment{
         bundle.putString("LocChef",loc_chef);
         bundle.putString("ChefId",chefId);
         bundle.putInt("ImagePlate",img);
+
         //bundle.putSerializable("ImageChef",image);
 
         System.out.println("Bundle :");
