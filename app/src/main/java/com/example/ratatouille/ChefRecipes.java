@@ -20,22 +20,29 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 public class ChefRecipes extends AppCompatActivity {
 
+
+    //Atributos necesarios de Firebase
     FirebaseDatabase dbRats;
     DatabaseReference dbUsersChefs;
     FirebaseAuth registerAuth;
     DatabaseReference dbChefs;
     DatabaseReference dbRecipes;
 
+    //Elementos del GUI para inflar
     GridLayout gridLayout;
     TextView txt_showselected;
     Button btnRegis;
+
+    //Listas manejo de recetas
     List<String> recipe;
+    List<String> recipeids;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +52,10 @@ public class ChefRecipes extends AppCompatActivity {
         gridLayout = (GridLayout) findViewById(R.id.grid_layoutRecipe);
         txt_showselected = (TextView) findViewById(R.id.txt_showselectedR);
         btnRegis= findViewById(R.id.btn_registrar);
+
+        //Memoria para arreglos
         recipe = new ArrayList<String>();
+        recipeids = new ArrayList<String>();
 
 
         dbRats = FirebaseDatabase.getInstance();
@@ -76,6 +86,8 @@ public class ChefRecipes extends AppCompatActivity {
         btnRegis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Metodo que ingresa id de las recetas en Firebase
+                registerToolsDB();
                 Intent intent1 = new Intent(getApplicationContext(),ChefActivity.class);
                 startActivity(intent1);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
@@ -95,7 +107,7 @@ public class ChefRecipes extends AppCompatActivity {
             Map singleRecipe = (Map) entry.getValue();
             //Get name field and append to list
             recipe.add(singleRecipe.get("name").toString());
-
+            recipeids.add(singleRecipe.get("id").toString());
         }
         tagComponents();
 
@@ -139,7 +151,6 @@ public class ChefRecipes extends AppCompatActivity {
 
                     //Si no esta clickeado cambia el estilo y lo pone en el color adecuado
                     if (click == false) {
-                        //Se asegura de que no vayan mas de 5 tags
 
                         tags.setBackgroundResource(R.drawable.btn_high_action);
                         tags.setTextAppearance(getApplicationContext(), R.style.typ_white);
@@ -185,4 +196,29 @@ public class ChefRecipes extends AppCompatActivity {
             gridLayout.addView(tags, childCount);
         }
     }
+    //Ingresa en la base de datos los ids de las recetas de cada chef
+    void registerToolsDB()
+    {
+
+        List<String> items = Arrays.asList(txt_showselected.getText().toString().split("\\W+"));
+
+        List<String> recipesSelected = new ArrayList<>();
+
+        for(int i=0;i<items.size();i++){
+
+
+            for(int j=0;j<recipe.size();j++){
+
+                if(items.get(i).equals(recipe.get(j))){
+                    recipesSelected.add(recipeids.get(j));
+                }
+            }
+
+        }
+        FirebaseUser user = registerAuth.getCurrentUser();
+        String uid= user.getUid();
+        dbUsersChefs = dbRats.getReference("userChef");
+        dbUsersChefs.child(uid).child("recipeIds").setValue(recipesSelected);
+    }
+
 }

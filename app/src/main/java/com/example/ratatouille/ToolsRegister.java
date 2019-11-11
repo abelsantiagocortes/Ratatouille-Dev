@@ -181,7 +181,7 @@ public class ToolsRegister<tagsFire> extends AppCompatActivity {
 
     void registerToolsDB()
     {
-        List<String> items = Arrays.asList(txt_showselected.getText().toString().split("\\s*,\\s*,"));
+        List<String> items = Arrays.asList(txt_showselected.getText().toString().split(" "));
         Intent intent = getIntent();
         FirebaseUser user = registerAuth.getCurrentUser();
         String uid= user.getUid();
