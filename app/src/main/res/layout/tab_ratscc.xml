@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_cantRats" />
 
     <TextView
 
@@ -55,10 +55,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_addRats" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_addRats"
         style="@style/btn_txt_white_background_grey"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_newCant" />
 
     <TextView
 
@@ -100,7 +100,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/txt_cantRats"
         style="@style/txtView_titleTabs"
         android:layout_width="176dp"
         android:layout_height="53dp"
@@ -108,7 +108,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:text="100000"
+        android:text="-"
         android:textAlignment="textEnd"
         android:textSize="36sp"
         app:layout_constraintEnd_toStartOf="@+id/textView17"
@@ -117,7 +117,7 @@
 
     <EditText
         android:paddingLeft="15dp"
-        android:id="@+id/editText3"
+        android:id="@+id/txt_newCant"
         style="@style/btn_txt_black_background_white"
         android:layout_width="0dp"
         android:layout_height="57dp"

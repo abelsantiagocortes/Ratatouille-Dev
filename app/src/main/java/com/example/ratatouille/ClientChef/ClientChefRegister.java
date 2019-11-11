@@ -210,7 +210,7 @@ public class ClientChefRegister extends AppCompatActivity {
         }
         else if (intent.getStringExtra("type").equals("client"))
         {
-            UserClient user = new UserClient(name_value,dir_value,age_value);
+            UserClient user = new UserClient(name_value,dir_value,age_value,0);
             user.setUserId(userId);
             if(pos != null){
                 user.setLat(pos.latitude);

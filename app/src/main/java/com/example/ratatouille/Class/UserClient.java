@@ -15,12 +15,22 @@ public class UserClient {
     List<String> tools;
     boolean status;
     String userId;
+    int cantRats;
 
-    public UserClient(String name, String dir, int age) {
+    public int getCantRats() {
+        return cantRats;
+    }
+
+    public void setCantRats(int cantRats) {
+        this.cantRats = cantRats;
+    }
+
+    public UserClient(String name, String dir, int age, int cantRats) {
         this.name = name;
         this.age = age;
         this.dir = dir;
         this.tools = new ArrayList<>();
+        this.cantRats=cantRats;
     }
     public UserClient() {
     }

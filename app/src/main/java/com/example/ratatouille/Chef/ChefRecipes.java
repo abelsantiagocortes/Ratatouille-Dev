@@ -33,7 +33,6 @@ public class ChefRecipes extends AppCompatActivity {
     DatabaseReference dbUsersChefs;
     FirebaseAuth registerAuth;
     DatabaseReference dbChefs;
-    DatabaseReference dbRecipes;
 
     //Elementos del GUI para inflar
     GridLayout gridLayout;
@@ -64,7 +63,6 @@ public class ChefRecipes extends AppCompatActivity {
         final String userId = currentUser.getUid();
         dbChefs = dbRats.getReference("userChef");
 
-        dbRecipes = dbRats.getReference("userChef");
 
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("recipe");
