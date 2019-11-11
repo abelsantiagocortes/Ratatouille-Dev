@@ -1,4 +1,4 @@
-package com.example.ratatouille;
+package com.example.ratatouille.ClientChef;
 
 import android.graphics.Bitmap;
 

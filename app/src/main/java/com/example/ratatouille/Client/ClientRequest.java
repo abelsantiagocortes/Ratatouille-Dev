@@ -1,8 +1,10 @@
-package com.example.ratatouille;
+package com.example.ratatouille.Client;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.ratatouille.R;
 
 public class ClientRequest extends AppCompatActivity {
 

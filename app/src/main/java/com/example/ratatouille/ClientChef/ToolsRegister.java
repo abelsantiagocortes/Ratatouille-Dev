@@ -1,4 +1,4 @@
-package com.example.ratatouille;
+package com.example.ratatouille.ClientChef;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,8 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.ratatouille.Chef.DescripcionChef;
+import com.example.ratatouille.Client.Home;
+import com.example.ratatouille.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -80,11 +82,11 @@ public class ToolsRegister<tagsFire> extends AppCompatActivity {
                 registerToolsDB();
                 Intent intent = getIntent();
                 if(intent.getStringExtra("type").equals("clienti")){
-                    Intent intent1 = new Intent(getApplicationContext(),Home.class);
+                    Intent intent1 = new Intent(getApplicationContext(), Home.class);
                     startActivity(intent1);
                     overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                 }else if(intent.getStringExtra("type").equals("chefsi")){
-                    Intent intent1 = new Intent(getApplicationContext(),DescripcionChef.class);
+                    Intent intent1 = new Intent(getApplicationContext(), DescripcionChef.class);
                     startActivity(intent1);
                     overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                 }

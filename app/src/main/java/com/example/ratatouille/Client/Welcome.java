@@ -1,4 +1,4 @@
-package com.example.ratatouille;
+package com.example.ratatouille.Client;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,7 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.example.ratatouille.Client.Home;
+import com.example.ratatouille.R;
 
 public class Welcome extends AppCompatActivity {
 
@@ -24,7 +25,7 @@ public class Welcome extends AppCompatActivity {
         wel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i =new Intent(view.getContext(),Home.class);
+                Intent i =new Intent(view.getContext(), Home.class);
                 startActivity(i);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }

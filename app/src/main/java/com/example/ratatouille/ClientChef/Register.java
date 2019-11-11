@@ -1,4 +1,4 @@
-package com.example.ratatouille;
+package com.example.ratatouille.ClientChef;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.example.ratatouille.Chef.ChefRegister;
+import com.example.ratatouille.Client.ClientRegister;
+import com.example.ratatouille.R;
 
 public class Register extends AppCompatActivity {
 
@@ -25,7 +29,7 @@ public class Register extends AppCompatActivity {
         client.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i =new Intent(view.getContext(),ClientRegister.class);
+                Intent i =new Intent(view.getContext(), ClientRegister.class);
                 startActivity(i);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }
@@ -34,7 +38,7 @@ public class Register extends AppCompatActivity {
         chef.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i =new Intent(view.getContext(),ChefRegister.class);
+                Intent i =new Intent(view.getContext(), ChefRegister.class);
                 startActivity(i);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }

@@ -9,13 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChefRecipes"></activity>
-        <activity android:name=".ClientRequest" />
-        <activity android:name=".ChefProfile" />
-        <activity android:name=".DescripcionChef" />
-        <activity android:name=".ChefActivity" />
-        <activity android:name=".ToolsRegister" />
-        <activity android:name=".ClientChefRegister" />
+        <activity android:name=".Chef.ChefRecipes"></activity>
+        <activity android:name=".Client.ClientRequest" />
+        <activity android:name=".Chef.ChefProfile" />
+        <activity android:name=".Chef.DescripcionChef" />
+        <activity android:name=".Chef.ChefActivity" />
+        <activity android:name=".ClientChef.ToolsRegister" />
+        <activity android:name=".ClientChef.ClientChefRegister" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -24,21 +24,21 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-        <activity android:name=".Home" />
-        <activity android:name=".Welcome" />
-        <activity android:name=".ChefRegister" />
-        <activity android:name=".ClientRegister" />
-        <activity android:name=".Register" />
-        <activity android:name=".LogIn" />
-        <activity android:name=".LandingPage" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Client.Home" />
+        <activity android:name=".Client.Welcome" />
+        <activity android:name=".Chef.ChefRegister" />
+        <activity android:name=".Client.ClientRegister" />
+        <activity android:name=".ClientChef.Register" />
+        <activity android:name=".ClientChef.LogIn" />
+        <activity android:name=".ClientChef.LandingPage" />
+        <activity android:name=".ClientChef.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Chefs_tab" />
+        <activity android:name=".Chef.Chefs_tab" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

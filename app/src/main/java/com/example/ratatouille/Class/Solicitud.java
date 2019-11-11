@@ -1,4 +1,4 @@
-package com.example.ratatouille;
+package com.example.ratatouille.Class;
 
 public class Solicitud {
     private String idCliente;

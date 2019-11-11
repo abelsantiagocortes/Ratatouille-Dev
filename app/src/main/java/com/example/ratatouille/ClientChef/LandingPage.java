@@ -1,4 +1,4 @@
-package com.example.ratatouille;
+package com.example.ratatouille.ClientChef;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.ratatouille.R;
 
 public class LandingPage extends AppCompatActivity {
 
@@ -22,7 +24,7 @@ public class LandingPage extends AppCompatActivity {
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =new Intent(v.getContext(),LogIn.class);
+                Intent i =new Intent(v.getContext(), LogIn.class);
                 startActivity(i);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }
@@ -31,7 +33,7 @@ public class LandingPage extends AppCompatActivity {
         btnRegis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =new Intent(v.getContext(),Register.class);
+                Intent i =new Intent(v.getContext(), Register.class);
                 startActivity(i);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }

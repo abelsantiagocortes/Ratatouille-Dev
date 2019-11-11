@@ -1,4 +1,4 @@
-package com.example.ratatouille;
+package com.example.ratatouille.Chef;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,14 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.ratatouille.Class.UserChef;
+import com.example.ratatouille.Class.UserClient;
+import com.example.ratatouille.ClientChef.ClientChefDistance;
+import com.example.ratatouille.Client.Home;
+import com.example.ratatouille.R;
+import com.example.ratatouille.adapters.MyViewPagerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
@@ -71,7 +74,7 @@ public class Chefs_tab extends Fragment{
         btn_refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(getContext(),Home.class);
+                Intent intent= new Intent(getContext(), Home.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
             }

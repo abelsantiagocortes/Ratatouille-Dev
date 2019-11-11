@@ -1,44 +1,28 @@
-package com.example.ratatouille;
+package com.example.ratatouille.Class;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedMap;
 
-public class UserChef {
+public class UserClient {
 
     String name;
     int age;
     String photoDownloadURL;
     String dir;
-    double lat;
-    double longi;
+    public double lat;
+    public double longi;
     String description;
-    boolean status;
     List<String> tools;
+    boolean status;
     String userId;
 
-
-    public UserChef(String name,  String dir,int age) {
+    public UserClient(String name, String dir, int age) {
         this.name = name;
         this.age = age;
         this.dir = dir;
         this.tools = new ArrayList<>();
-        this.status = true;
-        this.description = "";
     }
-
-    public UserChef(String name, int age, int photo, String dir, double lat, double longi, String description, List<String> tools) {
-        this.name = name;
-        this.age = age;
-        this.dir = dir;
-        this.lat = lat;
-        this.longi = longi;
-        this.description = description;
-        this.tools = tools;
-        this.tools = new ArrayList<>();
-    }
-
-    public UserChef() {
+    public UserClient() {
     }
 
     public String getUserId() {
@@ -105,19 +89,19 @@ public class UserChef {
         this.tools = tools;
     }
 
-    public String getPhotoDownloadURL() {
-        return photoDownloadURL;
-    }
-
-    public void setPhotoDownloadURL(String photoDownloadURL) {
-        this.photoDownloadURL = photoDownloadURL;
-    }
-
     public boolean isStatus() {
         return status;
     }
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public String getPhotoDownloadURL() {
+        return photoDownloadURL;
+    }
+
+    public void setPhotoDownloadURL(String photoDownloadURL) {
+        this.photoDownloadURL = photoDownloadURL;
     }
 }

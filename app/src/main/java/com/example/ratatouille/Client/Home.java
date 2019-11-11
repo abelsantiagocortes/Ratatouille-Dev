@@ -1,4 +1,4 @@
-package com.example.ratatouille;
+package com.example.ratatouille.Client;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,23 +12,24 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ratatouille.Chef.Chefs_tab;
+import com.example.ratatouille.Class.UserClient;
+import com.example.ratatouille.ClientChef.LogIn;
+import com.example.ratatouille.R;
+import com.example.ratatouille.adapters.TabViewPagerAdapter;
 import com.example.ratatouille.permissions.PermissionIds;
 import com.example.ratatouille.permissions.PermissionsActions;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;

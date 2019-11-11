@@ -7,21 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.ratatouille.R;
-import com.example.ratatouille.Solicitud;
-import com.example.ratatouille.UserChef;
-import com.example.ratatouille.UserClient;
+import com.example.ratatouille.Class.Solicitud;
+import com.example.ratatouille.Class.UserClient;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SolicitudAdapter extends ArrayAdapter<Solicitud> {

@@ -1,4 +1,4 @@
-package com.example.ratatouille;
+package com.example.ratatouille.ClientChef;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.ProgressBar;
+
+import com.example.ratatouille.ClientChef.LandingPage;
+import com.example.ratatouille.R;
 
 public class MainActivity extends AppCompatActivity {
     ProgressBar progressbar;
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 Log.i("Progreso","Terminado");
-                Intent intent= new Intent(getApplicationContext(),LandingPage.class);
+                Intent intent= new Intent(getApplicationContext(), LandingPage.class);
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                 finish();

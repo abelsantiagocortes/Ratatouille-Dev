@@ -1,4 +1,4 @@
-package com.example.ratatouille;
+package com.example.ratatouille.Chef;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,18 +10,18 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
+import com.example.ratatouille.Chef.ChefActivity;
+import com.example.ratatouille.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -88,7 +88,7 @@ public class ChefRecipes extends AppCompatActivity {
             public void onClick(View v) {
                 //Metodo que ingresa id de las recetas en Firebase
                 registerToolsDB();
-                Intent intent1 = new Intent(getApplicationContext(),ChefActivity.class);
+                Intent intent1 = new Intent(getApplicationContext(), ChefActivity.class);
                 startActivity(intent1);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }

@@ -1,4 +1,4 @@
-package com.example.ratatouille;
+package com.example.ratatouille.Chef;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,10 +10,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ratatouille.Class.Solicitud;
+import com.example.ratatouille.Class.UserChef;
+import com.example.ratatouille.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;

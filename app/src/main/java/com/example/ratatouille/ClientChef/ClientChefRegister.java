@@ -1,4 +1,4 @@
-package com.example.ratatouille;
+package com.example.ratatouille.ClientChef;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,14 +21,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.example.ratatouille.Class.UserChef;
+import com.example.ratatouille.Class.UserClient;
+import com.example.ratatouille.R;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -41,8 +38,6 @@ import java.util.List;
 import com.example.ratatouille.permissions.PermissionsActions;
 import com.example.ratatouille.permissions.PermissionIds;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnPausedListener;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 

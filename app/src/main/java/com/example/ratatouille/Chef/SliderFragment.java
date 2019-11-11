@@ -1,4 +1,4 @@
-package com.example.ratatouille;
+package com.example.ratatouille.Chef;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,14 +8,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.ratatouille.Chef.ChefProfile;
+import com.example.ratatouille.Class.UserChef;
+import com.example.ratatouille.R;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.github.siyamed.shapeimageview.RoundedImageView;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -84,7 +85,7 @@ public class SliderFragment extends Fragment {
             image_plate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getContext(),ChefProfile.class);
+                    Intent intent = new Intent(getContext(), ChefProfile.class);
                     String userId = getArguments().getString("ChefId");
                     intent.putExtra("ChefId",userId);
                     startActivity(intent);
