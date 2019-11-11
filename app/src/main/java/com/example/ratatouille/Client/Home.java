@@ -2,6 +2,7 @@ package com.example.ratatouille.Client;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -164,7 +165,7 @@ public class Home extends AppCompatActivity {
                 });
     }
 
-    public TabViewPagerAdapter setUpViewPager(){
+    public PagerAdapter setUpViewPager(){
 
         TabViewPagerAdapter tabViewPagerAdapter= new TabViewPagerAdapter(getSupportFragmentManager());
         tabViewPagerAdapter.addFragment(new Chefs_tab(),"Chefs");

@@ -49,39 +49,52 @@
     <TextView
         android:id="@+id/nameChef"
         style="@style/btn_txt_black_background_white"
-        android:layout_width="260dp"
-        android:layout_height="71dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="360dp"
+        android:layout_width="299dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="16dp"
         android:gravity="center|center_horizontal|center_vertical"
         android:paddingStart="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/descriptionChef"
+        android:id="@+id/nameChef2"
         style="@style/btn_txt_black_background_white"
-        android:layout_width="280dp"
-        android:layout_height="115dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="88dp"
-        android:padding="20dp"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameChef" />
+        android:layout_width="308dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginEnd="79dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:paddingStart="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/nameChef3"
+        style="@style/btn_txt_black_background_white"
+        android:layout_width="312dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:paddingStart="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_solicitud"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_solicitud"
         style="@style/btn_txt_white_background_grey"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="189dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="28dp"
         android:text="Solicitar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionChef"
-        app:layout_constraintVertical_bias="0.755" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
@@ -89,37 +102,53 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="173dp"
         android:layout_marginEnd="179dp"
-        android:layout_marginBottom="21dp"
+        android:layout_marginBottom="19dp"
         android:text="NOMBRE DEL CHEF"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/nameChef"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="173dp"
         android:layout_marginEnd="179dp"
-        android:layout_marginBottom="23dp"
-        android:text="DESCRIPCIÓN"
+        android:layout_marginBottom="21dp"
+        android:text="EXPERIENCIA"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/descriptionChef"
+        app:layout_constraintBottom_toTopOf="@+id/nameChef2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="173dp"
+        android:layout_marginEnd="179dp"
+        android:layout_marginBottom="18dp"
+        android:text="CERTIFICADOS"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/nameChef3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.468"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="164dp"
-        android:layout_height="144dp"
+        android:layout_width="192dp"
+        android:layout_height="171dp"
         android:layout_marginStart="123dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="124dp"
         android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_sub_forgot3" />
 

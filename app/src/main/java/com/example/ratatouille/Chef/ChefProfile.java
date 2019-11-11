@@ -36,8 +36,8 @@ import java.io.IOException;
 public class ChefProfile extends AppCompatActivity {
 
     TextView name;
-    TextView description;
-    TextView ids;
+    TextView certi;
+    TextView exp;
     Button btn_solicitud;
     DatabaseReference dbNotifs;
     UserChef chef;
@@ -57,7 +57,8 @@ public class ChefProfile extends AppCompatActivity {
         dbNotifs = dbRats.getReference("solicitud");
 
         name=findViewById(R.id.nameChef);
-        description=findViewById(R.id.descriptionChef);
+        exp=findViewById(R.id.nameChef2);
+        certi = findViewById(R.id.nameChef3);
         btn_solicitud = findViewById(R.id.btn_solicitud);
         ico =findViewById(R.id.imageView7);
         dbRatsStorage = FirebaseStorage.getInstance();
@@ -71,7 +72,8 @@ public class ChefProfile extends AppCompatActivity {
                     for(DataSnapshot dir : dataSnapshot.getChildren()){
                         chef = dir.getValue(UserChef.class);
                         name.setText(chef.getName());
-                        description.setText(chef.getDescription());
+                        exp.setText(chef.getExperiencia()+ " " + chef.getAños() + " años");
+                        certi.setText(chef.getCertificados());
                     }
                 }
 

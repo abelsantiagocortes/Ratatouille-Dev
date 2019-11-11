@@ -17,7 +17,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class DescripcionChef extends AppCompatActivity {
-    TextView description;
+    TextView años;
+    TextView experiencias;
+    TextView certificados;
     Button register;
     FirebaseDatabase dbRats;
     DatabaseReference dbUsersChefs;
@@ -28,9 +30,11 @@ public class DescripcionChef extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_descripcion_chef);
-        description = findViewById(R.id.Description);
-        register = findViewById(R.id.RegisterBTN);
+        setContentView(R.layout.activity_chef_register2);
+        años = findViewById(R.id.textView14);
+        experiencias = findViewById(R.id.textView6);
+        certificados = findViewById(R.id.textView15);
+        register = findViewById(R.id.btn_register3);
 
         dbRats = FirebaseDatabase.getInstance();
         registerAuth = FirebaseAuth.getInstance();
@@ -41,10 +45,13 @@ public class DescripcionChef extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String des = description.getText().toString();
-                Log.i("DESCRIPCION",des);
+                String exp = experiencias.getText().toString();
+                String anos = años.getText().toString();
+                String certi = certificados.getText().toString();
                 Log.i("DESCRIPCION",registerAuth.getCurrentUser().getUid());
-                dbChefs.child(userId).child("description").setValue(des);
+                dbChefs.child(userId).child("experiencia").setValue(exp);
+                dbChefs.child(userId).child("años").setValue(anos);
+                dbChefs.child(userId).child("certificados").setValue(certi);
 
                 Intent intent1 = new Intent(getApplicationContext(), ChefRecipes.class);
                 startActivity(intent1);

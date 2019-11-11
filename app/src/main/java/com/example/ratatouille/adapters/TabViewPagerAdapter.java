@@ -1,4 +1,4 @@
-package com.example.ratatouille;
+package com.example.ratatouille.adapters;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
