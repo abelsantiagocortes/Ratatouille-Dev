@@ -9,11 +9,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.ratatouille.R;
 
-public class Orders_tab extends Fragment {
+public class Ratscc_tab extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.tab_orders,container,false);
+        View view = inflater.inflate(R.layout.tab_ratscc,container,false);
         return view;
     }
 }
