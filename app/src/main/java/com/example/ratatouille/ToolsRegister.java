@@ -181,19 +181,26 @@ public class ToolsRegister<tagsFire> extends AppCompatActivity {
 
     void registerToolsDB()
     {
-        List<String> items = Arrays.asList(txt_showselected.getText().toString().split(" "));
+        List<String> itemsSpaces = Arrays.asList(txt_showselected.getText().toString().split("\\W+"));
+        List<String> itemsNoSpaces = new ArrayList<>();
+
+        for(int i=0;i<itemsSpaces.size();i++){
+            if(!itemsSpaces.get(i).equals(""))
+                itemsNoSpaces.add(itemsSpaces.get(i));
+        }
+
         Intent intent = getIntent();
         FirebaseUser user = registerAuth.getCurrentUser();
         String uid= user.getUid();
         if(intent.getStringExtra("type").equals("chefsi"))
         {
             dbUsersChefs =  dbRats.getReference("userChef");
-            dbUsersChefs.child(uid).child("tools").setValue(items);
+            dbUsersChefs.child(uid).child("tools").setValue(itemsNoSpaces);
         }
         else if (intent.getStringExtra("type").equals("clienti"))
         {
             dbUsersClients =  dbRats.getReference("userClient");
-            dbUsersClients.child(uid).child("tools").setValue(items);
+            dbUsersClients.child(uid).child("tools").setValue(itemsNoSpaces);
             Intent intenti = new Intent(getApplicationContext(),Home.class);
             startActivity(intenti);
             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);

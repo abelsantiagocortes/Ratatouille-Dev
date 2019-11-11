@@ -111,7 +111,6 @@ public class ChefRecipes extends AppCompatActivity {
         }
         tagComponents();
 
-
     }
 
 

@@ -82,6 +82,7 @@ public class LogIn extends AppCompatActivity {
                         UserClient clientito = dataSnapshot.getValue(UserClient.class);
                         if(clientito!=null) {
                             Log.i("LOGIN", "CLIENTE");
+
                             Intent intent = new Intent(getBaseContext(), Home.class);
                             startActivity(intent);
                         }
