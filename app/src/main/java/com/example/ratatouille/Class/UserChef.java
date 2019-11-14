@@ -12,7 +12,9 @@ public class UserChef {
     String dir;
     double lat;
     double longi;
-    String description;
+    String experiencia;
+    String certificados;
+    String años;
     boolean status;
     List<String> tools;
     String userId;
@@ -24,18 +26,8 @@ public class UserChef {
         this.dir = dir;
         this.tools = new ArrayList<>();
         this.status = true;
-        this.description = "";
-    }
-
-    public UserChef(String name, int age, int photo, String dir, double lat, double longi, String description, List<String> tools) {
-        this.name = name;
-        this.age = age;
-        this.dir = dir;
-        this.lat = lat;
-        this.longi = longi;
-        this.description = description;
-        this.tools = tools;
-        this.tools = new ArrayList<>();
+        this.experiencia = "";
+        this.certificados = "";
     }
 
     public UserChef() {
@@ -89,20 +81,36 @@ public class UserChef {
         this.longi = longi;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public List<String> getTools() {
         return tools;
     }
 
     public void setTools(List<String> tools) {
         this.tools = tools;
+    }
+
+    public String getExperiencia() {
+        return experiencia;
+    }
+
+    public void setExperiencia(String experiencia) {
+        this.experiencia = experiencia;
+    }
+
+    public String getCertificados() {
+        return certificados;
+    }
+
+    public void setCertificados(String certificados) {
+        this.certificados = certificados;
+    }
+
+    public String getAños() {
+        return años;
+    }
+
+    public void setAños(String años) {
+        this.años = años;
     }
 
     public String getPhotoDownloadURL() {

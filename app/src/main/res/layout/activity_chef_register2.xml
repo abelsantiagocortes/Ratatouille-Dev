@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChefRegister2">
+    tools:context=".Chef.DescripcionChef">
 
     <Button
         android:id="@+id/btn_register3"
@@ -39,8 +39,8 @@
 
     <EditText
         android:id="@+id/textView14"
-        android:layout_width="294dp"
-        android:layout_height="51dp"
+        android:layout_width="180dp"
+        android:layout_height="45dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="63dp"
@@ -52,7 +52,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_sub_username10" />
+        app:layout_constraintTop_toBottomOf="@+id/txtAños" />
+
+    <EditText
+        android:id="@+id/textView6"
+        android:layout_width="294dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="63dp"
+        android:background="@drawable/btn_white"
+        android:enabled="true"
+        android:lineSpacingExtra="8sp"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtExperiencia" />
 
     <EditText
         android:id="@+id/textView15"
@@ -69,30 +86,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_sub_username11" />
+        app:layout_constraintTop_toBottomOf="@+id/txtCertificados" />
 
     <TextView
-        android:id="@+id/txt_sub_username10"
-        android:layout_marginTop="20dp"
+        android:id="@+id/txtAños"
 
         style="@style/txtView_title1"
 
 
-        android:text="@string/featured_plates"
+        android:layout_width="268dp"
+        android:layout_height="41dp"
+
+        android:layout_marginTop="78dp"
+        android:text="años de experiencia"
         android:textAlignment="viewStart"
-
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintHorizontal_bias="0.251"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toTopOf="@+id/textView6" />
 
     <TextView
-        android:id="@+id/txt_sub_username11"
+        android:id="@+id/txtCertificados"
 
-        android:layout_marginTop="25dp"
         style="@style/txtView_title1"
+        android:layout_marginTop="25dp"
 
-        android:text="location"
+        android:text="certificados"
         android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.137"
@@ -100,15 +119,15 @@
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <TextView
-        android:id="@+id/txt_sub_username6"
-        android:layout_marginTop="80dp"
-
+        android:id="@+id/txtExperiencia"
         style="@style/txtView_title1"
 
-        android:text="@string/specialities"
+        android:layout_marginTop="64dp"
+
+        android:text="experiencia"
         android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.137"
+        app:layout_constraintHorizontal_bias="0.136"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_sub_forgot4" />
 
@@ -131,21 +150,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="314dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="63dp"
-        android:background="@drawable/spinner"
-        android:entries="@array/specialities"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.371"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_sub_username6" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
