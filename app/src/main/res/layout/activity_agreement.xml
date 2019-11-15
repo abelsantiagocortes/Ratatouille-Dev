@@ -57,13 +57,13 @@
         android:orientation="horizontal">
 
         <EditText
+            android:fontFamily="@font/raleway_extrabold"
             android:id="@+id/txtreceta"
             android:layout_width="219dp"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="90dp"
-            android:ems="14"
-            android:fontFamily="@font/raleway"
+            android:ems="18"
             android:gravity="center_horizontal"
             android:hapticFeedbackEnabled="true"
             android:inputType="textPersonName"
@@ -71,7 +71,8 @@
             android:textColorHighlight="#90000000"
             android:textColorLink="#90000000"
             android:textCursorDrawable="@color/colorGrisRata"
-            android:textSize="20sp" />
+            android:textSize="23sp"
+            android:textAllCaps="true"/>
 
         <ImageView
             android:id="@+id/btn_add"
@@ -212,7 +213,7 @@
                     android:background="?android:attr/listDivider" />
 
                 <Button
-                    android:id="@+id/button12"
+                    android:id="@+id/btn_toolsAgr"
                     style="@style/btn_txt_white_background_grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

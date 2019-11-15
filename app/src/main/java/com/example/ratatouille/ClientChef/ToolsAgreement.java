@@ -17,44 +17,41 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IngredsAgreement extends AppCompatActivity {
+public class ToolsAgreement extends AppCompatActivity {
 
     Recipe receta;
-    List<String> inge;
+    List<String> uten;
 
     GridLayout gridLayout;
     TextView txt_showselected;
-    Button btn_acptIngre;
-
+    Button btn_utenAgree;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ingreds_agreement);
-
-        inge = new ArrayList<>();
-        gridLayout =  findViewById(R.id.grid_layoutRecipe2);
-        txt_showselected =  findViewById(R.id.txt_showselectedR2);
+        setContentView(R.layout.activity_tools_agreement);
+        uten = new ArrayList<>();
+        gridLayout =  findViewById(R.id.grid_layoutToolsAgre);
+        txt_showselected =  findViewById(R.id.txt_showselectedTools);
         receta = (Recipe) getIntent().getSerializableExtra("REP");
-        btn_acptIngre =  findViewById(R.id.btn_acptIngre);
+        btn_utenAgree =  findViewById(R.id.btn_utenAgree);
 
-        btn_acptIngre.setOnClickListener(new View.OnClickListener() {
+        btn_utenAgree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent2 = new Intent( getApplicationContext(), Agreement.class );
                 intent2.putExtra("REP", (Serializable) receta);
-
                 startActivity(intent2);
             }
         });
-        inge = receta.getIngredients();
+        uten = receta.getTools();
         tagComponents();
-    }
 
+    }
 
     void tagComponents() {
 
         //Se crea la cantidad de botones necesarios para representar los tags
-        for (int i = 0; i < inge.size(); i++) {
+        for (int i = 0; i < uten.size(); i++) {
             //Reset Grid Layout
 
             // Cantidad de hijos del GridLayout.
@@ -70,7 +67,7 @@ public class IngredsAgreement extends AppCompatActivity {
             int pixels = (int) (104 * scale + 0.5f);
 
             //Le pone el texto. background, el tipo de texto y el tamaño
-            tags.setText(inge.get(i));
+            tags.setText(uten.get(i));
             tags.setBackgroundResource(R.drawable.btn_tag);
             tags.setTextAppearance(getApplicationContext(), R.style.typ_grey);
             tags.setWidth(pixels);

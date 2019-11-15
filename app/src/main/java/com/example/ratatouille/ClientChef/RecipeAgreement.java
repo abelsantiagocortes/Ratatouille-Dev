@@ -66,7 +66,6 @@ public class RecipeAgreement extends AppCompatActivity {
         queryChef.addListenerForSingleValueEvent(valueEventListener2);
 
 
-
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

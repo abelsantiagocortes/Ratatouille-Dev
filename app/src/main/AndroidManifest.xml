@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ClientChef.IngredsAgreement"></activity>
+        <activity android:name=".ClientChef.ToolsAgreement"></activity>
+        <activity android:name=".ClientChef.IngredsAgreement" />
         <activity android:name=".ClientChef.RecipeAgreement" />
         <activity android:name=".ClientChef.Agreement" />
         <activity android:name=".Chef.ChefRecipes" />

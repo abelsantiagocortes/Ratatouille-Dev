@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ClientChef.IngredsAgreement">
+    tools:context=".ClientChef.ToolsAgreement">
 
     <TextView
         android:id="@+id/titleRats"
@@ -30,14 +30,14 @@
 
         android:layout_marginTop="48dp"
         android:gravity="center"
-        android:text="Ingredientes de Receta"
+        android:text="Utensilios de Receta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.403"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleRats" />
 
     <TextView
-        android:id="@+id/txt_showselectedR2"
+        android:id="@+id/txt_showselectedTools"
         android:layout_width="0dp"
         android:layout_height="89dp"
         android:layout_marginStart="8dp"
@@ -52,14 +52,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <Button
-        android:id="@+id/btn_acptIngre"
+        android:id="@+id/btn_utenAgree"
         style="@style/btn_txt_white_background_grey"
         android:layout_width="314dp"
         android:layout_height="64dp"
         android:layout_marginStart="56dp"
         android:layout_marginEnd="57dp"
         android:layout_marginBottom="60dp"
-        android:text="Elegir Ingredientes"
+        android:text="Elegir Utensilios"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.294"
@@ -79,7 +79,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_showselectedR2"
+        app:layout_constraintTop_toBottomOf="@+id/txt_showselectedTools"
         app:layout_constraintVertical_bias="0.0">
 
         <ScrollView
@@ -87,7 +87,7 @@
             android:layout_height="match_parent">
 
             <GridLayout
-                android:id="@+id/grid_layoutRecipe2"
+                android:id="@+id/grid_layoutToolsAgre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
