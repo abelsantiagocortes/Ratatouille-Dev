@@ -29,39 +29,46 @@
     <TextView
         android:id="@+id/nameChef"
         style="@android:style/Widget.DeviceDefault.Light.TextView"
-        android:layout_width="299dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginBottom="216dp"
+        android:layout_width="147dp"
+        android:layout_height="141dp"
+        android:layout_marginStart="224dp"
+        android:layout_marginBottom="72dp"
+        android:font="@font/raleway_extrabold"
+        android:fontFamily="@font/raleway_extrabold"
         android:gravity="center|center_horizontal|center_vertical"
         android:paddingStart="10dp"
+        android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.272"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/nameChef2"
-        style="@style/btn_txt_black_background_white"
+
         android:layout_width="310dp"
         android:layout_height="111dp"
         android:layout_marginStart="72dp"
         android:layout_marginEnd="79dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="60dp"
         android:gravity="center|center_horizontal|center_vertical"
         android:paddingStart="10dp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView7"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.455"
+        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/nameChef3"
-        style="@style/btn_txt_black_background_white"
+
         android:layout_width="311dp"
         android:layout_height="149dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="16dp"
         android:gravity="center|center_horizontal|center_vertical"
         android:paddingStart="10dp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_solicitud"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -82,12 +89,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="173dp"
         android:layout_marginEnd="179dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="4dp"
+        android:font="@font/raleway_extrabold"
+        android:fontFamily="@font/raleway_extrabold"
         android:text="EXPERIENCIA"
-        android:textSize="20dp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/nameChef2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.469"
+        app:layout_constraintHorizontal_bias="0.916"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -97,23 +106,45 @@
         android:layout_marginStart="173dp"
         android:layout_marginEnd="179dp"
         android:layout_marginBottom="12dp"
+        android:font="@font/raleway_extrabold"
+        android:fontFamily="@font/raleway_extrabold"
         android:text="CERTIFICADOS"
-        android:textSize="20dp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/nameChef3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintHorizontal_bias="0.815"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="192dp"
-        android:layout_height="171dp"
-        android:layout_marginStart="123dp"
-        android:layout_marginEnd="124dp"
-        android:layout_marginBottom="22dp"
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/chefin"
+        android:layout_width="202dp"
+        android:layout_height="212dp"
+        android:layout_marginEnd="172dp"
+        android:layout_marginBottom="44dp"
         app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="391dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="1dp"
+        android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.456"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="391dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

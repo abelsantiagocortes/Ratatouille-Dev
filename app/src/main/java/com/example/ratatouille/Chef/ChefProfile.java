@@ -15,7 +15,10 @@ import android.widget.TextView;
 
 import com.example.ratatouille.Class.Solicitud;
 import com.example.ratatouille.Class.UserChef;
+import com.example.ratatouille.ClientChef.Agreement;
+import com.example.ratatouille.ClientChef.RecipeAgreement;
 import com.example.ratatouille.R;
+import com.github.siyamed.shapeimageview.CircularImageView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +35,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 public class ChefProfile extends AppCompatActivity {
 
@@ -42,7 +46,7 @@ public class ChefProfile extends AppCompatActivity {
     DatabaseReference dbNotifs;
     UserChef chef;
     FirebaseAuth current;
-    ImageView ico;
+    CircularImageView ico;
     FirebaseStorage dbRatsStorage;
 
     @Override
@@ -60,7 +64,7 @@ public class ChefProfile extends AppCompatActivity {
         exp=findViewById(R.id.nameChef2);
         certi = findViewById(R.id.nameChef3);
         btn_solicitud = findViewById(R.id.btn_solicitud);
-        ico =findViewById(R.id.imageView7);
+        ico =findViewById(R.id.chefin);
         dbRatsStorage = FirebaseStorage.getInstance();
 
 
@@ -95,6 +99,10 @@ public class ChefProfile extends AppCompatActivity {
 
                 String key=dbNotifs.push().getKey();
                 dbNotifs.child(key).setValue(notif);
+
+                Intent intent2 = new Intent( getApplicationContext(), RecipeAgreement.class );
+                intent2.putExtra("ChefObj", (Serializable) chef);
+                startActivity(intent2);
             }
         });
 

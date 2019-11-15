@@ -47,6 +47,7 @@ public class RecipeAgreement extends AppCompatActivity {
     List<String> nameRecipes = new ArrayList<>();
     Boolean max=false;
     Recipe chosen;
+    UserChef chefSelected;
 
 
     @Override
@@ -59,14 +60,25 @@ public class RecipeAgreement extends AppCompatActivity {
         btnAccept= findViewById(R.id.btn_aceptarReceta);
         btnInfo= findViewById(R.id.buttonInfo);
 
+        chefSelected = (UserChef) getIntent().getSerializableExtra("ChefObj");
+
+        String chefId = chefSelected.getUserId();
+
         Query queryRecipe = FirebaseDatabase.getInstance().getReference("recipe");
         queryRecipe.addListenerForSingleValueEvent(valueEventListener1);
 
-        Query queryChef = FirebaseDatabase.getInstance().getReference("userChef").orderByChild("userId").equalTo("BgtYQ69dO6XYAVR6PabB48m6co62");
+        Query queryChef = FirebaseDatabase.getInstance().getReference("userChef").orderByKey().equalTo("phQIrYLtuXbK3z3QPkkqM1ZA1qc2");
         queryChef.addListenerForSingleValueEvent(valueEventListener2);
 
-
         btnInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
+        btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

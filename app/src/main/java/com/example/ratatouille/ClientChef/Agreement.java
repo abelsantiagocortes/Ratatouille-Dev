@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ratatouille.Class.Recipe;
+import com.example.ratatouille.Class.UserChef;
 import com.example.ratatouille.R;
 
 import java.io.Serializable;
@@ -19,6 +20,7 @@ public class Agreement extends AppCompatActivity {
     ImageView btnRecipe;
     Button btnIngreds;
     Recipe receta;
+    UserChef chefSolicitado;
     Button btn_toolsAgr;
     TextView txtreceta;
     @Override
