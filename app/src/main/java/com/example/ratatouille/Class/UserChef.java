@@ -1,10 +1,10 @@
 package com.example.ratatouille.Class;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedMap;
 
-public class UserChef {
+public class UserChef implements Serializable {
 
     String name;
     int age;
@@ -17,14 +17,16 @@ public class UserChef {
     String años;
     boolean status;
     List<String> tools;
+    List<String> recipeIds;
     String userId;
 
 
-    public UserChef(String name,  String dir,int age) {
+    public UserChef(String name, String dir,int age) {
         this.name = name;
         this.age = age;
         this.dir = dir;
         this.tools = new ArrayList<>();
+        this.recipeIds = new ArrayList<>();
         this.status = true;
         this.experiencia = "";
         this.certificados = "";
@@ -33,11 +35,20 @@ public class UserChef {
     public UserChef() {
     }
 
+
     public String getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public List<String> getRecipeIds() {
+        return recipeIds;
+    }
+
+    public void setRecipeIds(List<String> recipeIds) {
+        this.recipeIds = recipeIds;
+    }
+
+        public void setUserId(String userId) {
         this.userId = userId;
     }
 

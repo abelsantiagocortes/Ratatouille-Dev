@@ -1,8 +1,9 @@
 package com.example.ratatouille.Class;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Recipe {
+public class Recipe implements Serializable {
 
     String description;
     String id;
@@ -10,6 +11,9 @@ public class Recipe {
     String name;
     List<String> tools;
     String foodType;
+
+    public Recipe() {
+    }
 
     public String getFoodType() {
         return foodType;

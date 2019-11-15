@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
-import com.example.ratatouille.Chef.ChefActivity;
 import com.example.ratatouille.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -49,7 +48,7 @@ public class ChefRecipes extends AppCompatActivity {
         setContentView(R.layout.activity_chef_recipes);
 
         gridLayout = (GridLayout) findViewById(R.id.grid_layoutRecipe);
-        txt_showselected = (TextView) findViewById(R.id.txt_showselectedR);
+        txt_showselected = (TextView) findViewById(R.id.txt_showselectedR2);
         btnRegis= findViewById(R.id.btn_registrar);
 
         //Memoria para arreglos
