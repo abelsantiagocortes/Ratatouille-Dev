@@ -27,6 +27,7 @@ public class ClientChefDistance implements Comparable<ClientChefDistance>{
         this.distance = distance;
     }
 
+
     public String getIdClient() {
         return idClient;
     }

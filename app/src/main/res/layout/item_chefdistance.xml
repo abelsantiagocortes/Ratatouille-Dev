@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:orientation="horizontal">
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+
+        android:layout_marginTop="20dp"
+        android:layout_width="104dp"
+        android:layout_height="107dp"
+
+        android:src="@drawable/loguin" />
+
+    <LinearLayout
+        android:layout_width="270dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="30dp">
+
+        <TextView
+            android:id="@+id/txt_nameChef"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:text="Nombre"
+            android:textSize="30sp" />
+        <TextView
+            android:id="@+id/txt_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="Distancia: "
+            android:textSize="25dp" />
+
+
+        <Button
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/button"
+            style="@style/btn_txt_white_background_grey"
+            android:layout_width="113dp"
+            android:layout_height="38dp"
+            android:text="Ver perfil"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

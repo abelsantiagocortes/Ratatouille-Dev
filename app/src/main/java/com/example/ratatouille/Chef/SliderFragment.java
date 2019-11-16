@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.ratatouille.Chef.ChefProfile;
 import com.example.ratatouille.Class.UserChef;
 import com.example.ratatouille.R;
 import com.github.siyamed.shapeimageview.CircularImageView;
@@ -45,7 +44,7 @@ public class SliderFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.fragment_c_slider,container,false);
-        image_chef= view.findViewById(R.id.img_chef2);
+        image_chef= view.findViewById(R.id.imgChefRecipe);
         n_chef= view.findViewById(R.id.txt_nombreChef);
         image_plate=view.findViewById(R.id.img_chef);
         loc_chef= view.findViewById(R.id.txt_locationChef);
