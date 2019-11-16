@@ -126,8 +126,15 @@ public class ChefbyFood extends AppCompatActivity {
                 for (DataSnapshot snapshoti : dataSnapshot.getChildren()) {
                     final UserChef chef = snapshoti.getValue(UserChef.class);
                     final double distance = distance(chef.getLat(),chef.getLongi(),lati,longit);
-                    List<String> recipeIds = chef.getRecipeIds();
 
+                    boolean vale=validarChefFoodType(chef);
+                    if(vale){
+                        FirebaseUser currentUser = current.getCurrentUser();
+                        String userId = currentUser.getUid();
+
+                        ClientChefDistance obj= new ClientChefDistance(userId,chef.getUserId(),chef.getName(),cargarImagen(snapshoti,dbRatsStorage),distance);
+                        listOrdered.add(obj);
+                    }
                     //  Saca todas las recetas para mirar si alguna tiene
 
                 }
@@ -146,10 +153,13 @@ public class ChefbyFood extends AppCompatActivity {
 
     };
 
-    private boolean validacionChefRecipe(Recipe recipe) {
-
-        if(recipe.getFoodType().equals(type)){
-            return true;
+    private boolean validarChefFoodType(UserChef chef) {
+        List<String> foodTypeChef = new ArrayList<>();
+        foodTypeChef=chef.getFoodType();
+        for (int i=0;i<foodTypeChef.size();i++){
+            if(foodTypeChef.get(i).equals(type)){
+                return true;
+            }
         }
         return false;
     }
