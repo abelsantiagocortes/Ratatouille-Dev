@@ -116,56 +116,40 @@ public class RecipeAgreement extends AppCompatActivity {
             public void onClick(View view) {
                 if (!txt_showselected.getText().toString().equals("")) {
 
-                for(int x=0;x<recipeObj.size();x++)
-                {
-                    if(txt_showselected.getText().toString().replaceAll("\\s+","").equals(recipeObj.get(x).getName()))
-                    {
-                        chosen = recipeObj.get(x);
-                    }
-                }
-                        dbRats = FirebaseDatabase.getInstance();
-                        dbAgreements = dbRats.getReference("agreements");
-                        acuerdo = new Agree();
-                        acuerdo.setReceta(chosen);
-                        acuerdo.setIdChef(chefId);
-                        acuerdo.setIdClient(userId);
-                        String id = dbAgreements.push().getKey();
-                        acuerdo.setAgreementId(id);
-                        FirebaseDatabase dbRats = FirebaseDatabase.getInstance();
-                        dbNotifs = dbRats.getReference("solicitud");
-
-                        String key=dbNotifs.push().getKey();
-                        Solicitud notif = new Solicitud(userId,chefId,key);
-
-                        dbNotifs.child(key).setValue(notif);
-                        acuerdo.setSolicitudId(key);
-
-                        dbAgreements.child(id).setValue(acuerdo);
-
-
-
-                        Intent intent2 = new Intent( getApplicationContext(), AgreementClass.class );
-                        intent2.putExtra("Agreement", (Serializable) acuerdo);
-                        startActivity(intent2);
-
+                    for (int x = 0; x < recipeObj.size(); x++) {
                         if (txt_showselected.getText().toString().replaceAll("\\s+", "").equals(recipeObj.get(x).getName())) {
                             chosen = recipeObj.get(x);
                         }
                     }
-
-                    Intent intent2 = new Intent(getApplicationContext(), AgreementClass.class);
+                    dbRats = FirebaseDatabase.getInstance();
+                    dbAgreements = dbRats.getReference("agreements");
                     acuerdo = new Agree();
                     acuerdo.setReceta(chosen);
+                    acuerdo.setIdChef(chefId);
+                    acuerdo.setIdClient(userId);
+                    String id = dbAgreements.push().getKey();
+                    acuerdo.setAgreementId(id);
+                    FirebaseDatabase dbRats = FirebaseDatabase.getInstance();
+                    dbNotifs = dbRats.getReference("solicitud");
+
+                    String key = dbNotifs.push().getKey();
+                    Solicitud notif = new Solicitud(userId, chefId, key);
+
+                    dbNotifs.child(key).setValue(notif);
+                    acuerdo.setSolicitudId(key);
+
+                    dbAgreements.child(id).setValue(acuerdo);
+                    Intent intent2 = new Intent(getApplicationContext(), AgreementClass.class);
                     intent2.putExtra("Agreement", (Serializable) acuerdo);
                     startActivity(intent2);
-
                 }else{
                     Toast.makeText(getApplicationContext(),"Debe escoger receta para continuar",Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
+                }
+            });
 
-    }
+
+}
 
     private void recipesChef() {
 
