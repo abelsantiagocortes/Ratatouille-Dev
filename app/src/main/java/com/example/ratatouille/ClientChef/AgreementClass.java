@@ -188,6 +188,7 @@ public class AgreementClass extends AppCompatActivity {
                     if(acuerdo.isClienteAccept()&& acuerdo.isChefAccept())
                     {
                         confri.setEnabled(true);
+                        confri.setVisibility(View.VISIBLE);
 
                     }
                     else
