@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.ratatouille.Class.Agree;
 import com.example.ratatouille.Class.Recipe;
+import com.example.ratatouille.Class.Solicitud;
 import com.example.ratatouille.Class.UserChef;
 import com.example.ratatouille.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +35,7 @@ public class RecipeAgreement extends AppCompatActivity {
     FirebaseDatabase dbRats;
     DatabaseReference dbAgreements;
     FirebaseAuth registerAuth;
+    DatabaseReference dbNotifs;
     FirebaseUser user;
 
 
@@ -108,7 +110,19 @@ public class RecipeAgreement extends AppCompatActivity {
                         acuerdo.setIdClient(userId);
                         String id = dbAgreements.push().getKey();
                         acuerdo.setAgreementId(id);
+                        FirebaseDatabase dbRats = FirebaseDatabase.getInstance();
+                        dbNotifs = dbRats.getReference("solicitud");
+
+                        String key=dbNotifs.push().getKey();
+                        Solicitud notif = new Solicitud(userId,chefId,key);
+
+                        dbNotifs.child(key).setValue(notif);
+                        acuerdo.setSolicitudId(key);
+
                         dbAgreements.child(id).setValue(acuerdo);
+
+
+
                         Intent intent2 = new Intent( getApplicationContext(), AgreementClass.class );
                         intent2.putExtra("Agreement", (Serializable) acuerdo);
                         startActivity(intent2);

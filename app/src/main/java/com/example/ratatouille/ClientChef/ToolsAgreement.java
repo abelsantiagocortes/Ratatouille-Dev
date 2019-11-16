@@ -192,8 +192,8 @@ public class ToolsAgreement extends AppCompatActivity {
                         itemsNoSpaces.add(itemsSpaces.get(i));
                 }
                 dbAgreements =  dbRats.getReference("agreements");
-                dbAgreements.child(acu.getAgreementId()).child("ingreChef").setValue(itemsNoSpaces);
-                acu.setIngreClient(itemsNoSpaces);
+                dbAgreements.child(acu.getAgreementId()).child("toolsChef").setValue(itemsNoSpaces);
+                acu.setToolsChef(itemsNoSpaces);
                 Intent intent2 = new Intent( getApplicationContext(), AgreementClass.class );
                 intent2.putExtra("Agreement", (Serializable) acu);
                 startActivity(intent2);

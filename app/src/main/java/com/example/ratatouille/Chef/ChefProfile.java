@@ -90,13 +90,6 @@ public class ChefProfile extends AppCompatActivity {
         btn_solicitud.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                current = FirebaseAuth.getInstance();
-                FirebaseUser currentUser = current.getCurrentUser();
-                String userId = currentUser.getUid();
-                Solicitud notif = new Solicitud(userId,chef.getUserId());
-
-                String key=dbNotifs.push().getKey();
-                dbNotifs.child(key).setValue(notif);
 
                 Intent intent2 = new Intent( getApplicationContext(), RecipeAgreement.class );
                 intent2.putExtra("ChefObj", (Serializable) chef);

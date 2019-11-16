@@ -14,6 +14,15 @@ public class Agree implements Serializable {
     boolean chefAccept;
     Recipe receta;
     String agreementId;
+    String solicitudId;
+
+    public String getSolicitudId() {
+        return solicitudId;
+    }
+
+    public void setSolicitudId(String solicitudId) {
+        this.solicitudId = solicitudId;
+    }
 
     public String getAgreementId() {
         return agreementId;
@@ -32,6 +41,7 @@ public class Agree implements Serializable {
         clienteAccept= false;
         chefAccept= false;
     }
+
 
     public List<String> getIngreChef() {
         return ingreChef;

@@ -49,20 +49,6 @@ public class AgreementClass extends AppCompatActivity {
         Query queryAgree = FirebaseDatabase.getInstance().getReference("agreements").orderByChild("agreementId").equalTo(acu.getAgreementId());
         queryAgree.addListenerForSingleValueEvent(valueEventListener);
 
-        String[] mobileArray = {"Java","C++","C#","CSS",
-                "HTML","XML",".Net","VisualBasic", "SQL", "Python", "PHP"};
-
-
-
-        ArrayAdapter adapter2 = new ArrayAdapter<String>(this, R.layout.activity_listview, mobileArray);
-        ListView listView2 = (ListView) findViewById(R.id.inChefList);
-        listView2.setAdapter(adapter2);
-
-
-
-        ArrayAdapter adapter4 = new ArrayAdapter<String>(this, R.layout.activity_listview, mobileArray);
-        ListView listView4 = (ListView) findViewById(R.id.toolsChefList);
-        listView4.setAdapter(adapter4);
 
         txtreceta.setText(acu.getReceta().getName());
 
@@ -119,9 +105,39 @@ public class AgreementClass extends AppCompatActivity {
                         str2[j] = arr2.get(j);
                     }
 
-                    ArrayAdapter adapter3 = new ArrayAdapter<String>(getApplicationContext(), R.layout.activity_listview, arr2);
-                    ListView listView3 =  findViewById(R.id.toolsClientList);
+                    ArrayAdapter adapter2 = new ArrayAdapter<String>(getApplicationContext(), R.layout.activity_listview, arr2);
+                    ListView listView2 =  findViewById(R.id.toolsClientList);
+                    listView2.setAdapter(adapter2);
+
+                    ArrayList<String> arr3 = new ArrayList<String>(acuerdo.getIngreChef());
+                    String str3[] = new String[arr.size()];
+                    // ArrayList to Array Conversion
+                    for (int j = 0; j < arr3.size(); j++) {
+
+                        // Assign each value to String array
+                        str3[j] = arr3.get(j);
+                    }
+
+                    ArrayAdapter adapter3 = new ArrayAdapter<String>(getApplicationContext(), R.layout.activity_listview, arr3);
+
+                    ListView listView3 =  findViewById(R.id.inChefList);
+
                     listView3.setAdapter(adapter3);
+
+
+                    ArrayList<String> arr4 = new ArrayList<String>(acuerdo.getToolsChef());
+                    String str4[] = new String[arr.size()];
+                    // ArrayList to Array Conversion
+                    for (int j = 0; j < arr4.size(); j++) {
+
+                        // Assign each value to String array
+                        str4[j] = arr4.get(j);
+                    }
+
+                    ArrayAdapter adapter4 = new ArrayAdapter<String>(getApplicationContext(), R.layout.activity_listview, arr4);
+                    ListView listView4 =  findViewById(R.id.toolsChefList);
+                    listView4.setAdapter(adapter4);
+
 
                 }
 
