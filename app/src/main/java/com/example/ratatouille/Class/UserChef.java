@@ -19,17 +19,9 @@ public class UserChef implements Serializable {
     List<String> tools;
     List<String> recipeIds;
     String userId;
-    List<String> foodType;
+    List<String> foodTypes;
 
-    public List<String> getFoodType() {
-        return foodType;
-    }
-
-    public void setFoodType(List<String> foodType) {
-        this.foodType = foodType;
-    }
-
-    public UserChef(String name, int age, String photoDownloadURL, String dir, double lat, double longi, String experiencia, String certificados, String años, boolean status, List<String> tools, List<String> recipeIds, String userId, List<String> foodType) {
+    public UserChef(String name, int age, String photoDownloadURL, String dir, double lat, double longi, String experiencia, String certificados, String años, boolean status, List<String> tools, List<String> recipeIds, String userId, List<String> foodTypes) {
         this.name = name;
         this.age = age;
         this.photoDownloadURL = photoDownloadURL;
@@ -43,7 +35,15 @@ public class UserChef implements Serializable {
         this.tools = tools;
         this.recipeIds = recipeIds;
         this.userId = userId;
-        this.foodType = foodType;
+        this.foodTypes = foodTypes;
+    }
+
+    public List<String> getFoodTypes() {
+        return foodTypes;
+    }
+
+    public void setFoodTypes(List<String> foodTypes) {
+        this.foodTypes = foodTypes;
     }
 
     public UserChef(String name, String dir, int age) {

@@ -1,16 +1,29 @@
 package com.example.ratatouille.adapters;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ratatouille.Class.UserChef;
 import com.example.ratatouille.ClientChef.ClientChefDistance;
 import com.example.ratatouille.R;
 import com.github.siyamed.shapeimageview.CircularImageView;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class ChefsAdapter  extends RecyclerView.Adapter<ChefsAdapter.MyViewHolder> {
@@ -30,9 +43,11 @@ public class ChefsAdapter  extends RecyclerView.Adapter<ChefsAdapter.MyViewHolde
         public MyViewHolder(LinearLayout v) {
             super(v);
 
-            chefPhoto =  v.findViewById(R.id.imgChefRecipe);
+            chefPhoto =  v.findViewById(R.id.imgChef);
             distance =  v.findViewById(R.id.txt_distance);
             chefName =  v.findViewById(R.id.txt_nameChef);
+            chefName.setMovementMethod(new ScrollingMovementMethod());
+
 
         }
     }
@@ -55,12 +70,26 @@ public class ChefsAdapter  extends RecyclerView.Adapter<ChefsAdapter.MyViewHolde
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
        // holder.chefPhoto.setImageBitmap(clientChefDistances.get(position).getImgChef());
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        storageRef.child("images/userChef/" + clientChefDistances.get(position).getIdChef()).getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bMap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                holder.chefPhoto.setImageBitmap(bMap);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                System.out.println("No se pudo");
+            }
+        });
+
         holder.chefName.setText(clientChefDistances.get(position).getChefName());
-        holder.distance.setText(String.valueOf(clientChefDistances.get(position).getDistance()));
+        holder.distance.setText(String.valueOf(clientChefDistances.get(position).getDistance())+" km");
 
     }
 

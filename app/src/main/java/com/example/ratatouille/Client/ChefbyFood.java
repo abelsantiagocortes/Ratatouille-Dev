@@ -47,8 +47,8 @@ public class ChefbyFood extends AppCompatActivity {
     FirebaseAuth current;
     FirebaseStorage dbRatsStorage;
     StorageReference storageChef;
-    double lati;
-    double longit;
+    public double lati;
+    public double longit;
     UserClient currentUser;
     List<Recipe> recipes;
     String type;
@@ -87,6 +87,7 @@ public class ChefbyFood extends AppCompatActivity {
         current = FirebaseAuth.getInstance();
         FirebaseUser currentUser = current.getCurrentUser();
         String userId = currentUser.getUid();
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         DatabaseReference dbUser = ref.child("userClient").child(userId);
 
@@ -95,12 +96,13 @@ public class ChefbyFood extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserClient user;
                 user = dataSnapshot.getValue(UserClient.class);
-                lati=user.getLat();
-                longit=user.getLongi();
-                //Se saca la lista de chefs dependiendo del foodType que le llega en el intent
+                lati=user.lat;
+                longit=user.longi;
+
                 loadNearbyChefs();
 
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -155,7 +157,7 @@ public class ChefbyFood extends AppCompatActivity {
 
     private boolean validarChefFoodType(UserChef chef) {
         List<String> foodTypeChef = new ArrayList<>();
-        foodTypeChef=chef.getFoodType();
+        foodTypeChef=chef.getFoodTypes();
         for (int i=0;i<foodTypeChef.size();i++){
             if(foodTypeChef.get(i).equals(type)){
                 return true;

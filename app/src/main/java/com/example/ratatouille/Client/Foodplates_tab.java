@@ -40,54 +40,70 @@ public class Foodplates_tab extends Fragment {
         btn_break.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent in= new Intent(getContext(),ChefbyFood.class);
+                in.putExtra("foodType","breakfast");
+                startActivity(in);
             }
         });
 
         btn_lunch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent in= new Intent(getContext(),ChefbyFood.class);
+                in.putExtra("foodType","lunch");
+                startActivity(in);
             }
         });
 
         btn_dinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent in= new Intent(getContext(),ChefbyFood.class);
+                in.putExtra("foodType","dinner");
+                startActivity(in);
             }
         });
 
         btn_vege.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent in= new Intent(getContext(),ChefbyFood.class);
+                in.putExtra("foodType","vegetarian");
+                startActivity(in);
             }
         });
         btn_protein.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent in= new Intent(getContext(),ChefbyFood.class);
+                in.putExtra("foodType","protein");
+                startActivity(in);
             }
         });
         btn_dessert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent in= new Intent(getContext(),ChefbyFood.class);
+                in.putExtra("foodType","cocktails");
+                startActivity(in);
             }
         });
 
         btn_col.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent in= new Intent(getContext(),ChefbyFood.class);
+                in.putExtra("foodType","colombian");
+                startActivity(in);
             }
         });
 
         btn_foreign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent in= new Intent(getContext(),ChefbyFood.class);
+                in.putExtra("foodType","foreign");
+                startActivity(in);
             }
         });
 
@@ -95,7 +111,7 @@ public class Foodplates_tab extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent in= new Intent(getContext(),ChefbyFood.class);
-                in.putExtra("foodType","dinner");
+                in.putExtra("foodType","cocktails");
                 startActivity(in);
             }
         });
