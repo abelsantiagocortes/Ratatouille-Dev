@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Client.RecipeDescription">
+
+    <TextView
+        android:id="@+id/txt_sub_forgot5"
+        android:layout_width="206dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="164dp"
+        android:background="@null"
+        android:ems="10"
+        android:fontFamily="@font/raleway_extrabold"
+        android:inputType="textPersonName"
+        android:text="@string/app_name"
+        android:textAlignment="viewStart"
+        android:textColor="#E2000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_nameRecipe"
+        style="@android:style/Widget.DeviceDefault.Light.TextView"
+        android:layout_width="173dp"
+        android:layout_height="92dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="41dp"
+        android:font="@font/raleway_extrabold"
+        android:fontFamily="@font/raleway_extrabold"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:inputType="textMultiLine"
+        android:paddingStart="10dp"
+        android:text="ratatouille"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/txtDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_recipe" />
+
+    <Button
+        android:id="@+id/btn_volver"
+        style="@style/btn_txt_white_background_grey"
+        android:layout_width="189dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="8dp"
+        android:text="Volver"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_recipeIng" />
+
+    <TextView
+        android:id="@+id/txtDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:font="@font/raleway_extrabold"
+        android:fontFamily="@font/raleway_extrabold"
+        android:text="Descripción"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_recipe" />
+
+
+    <TextView
+        android:id="@+id/txt_recipeUten"
+        android:layout_width="342dp"
+        android:layout_height="83dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:font="@font/raleway"
+        android:inputType="textMultiLine"
+        android:padding="15dp"
+        android:text="hola,como,estas,gegeg,qye ,te,duces,,como,estas,gegeg,qye ,te,duces, perru"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTools" />
+
+    <TextView
+        android:id="@+id/txt_recipeIng"
+        android:layout_width="342dp"
+        android:layout_height="83dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:font="@font/raleway"
+        android:inputType="textMultiLine"
+        android:padding="15dp"
+        android:text="hola,como,estas,gegeg,qye ,te,duces,,como,estas,gegeg,qye ,te,duces, perru"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <TextView
+        android:padding="15dp"
+        android:text="hola,como,estas,gegeg,qye ,te,duces,,como,estas,gegeg,qye ,te,duces, perru"
+        android:id="@+id/txt_recipeDes"
+        android:layout_width="0dp"
+        android:layout_height="102dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:font="@font/raleway"
+        android:inputType="textMultiLine"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
+
+    <TextView
+        android:id="@+id/txtTools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:font="@font/raleway_extrabold"
+        android:fontFamily="@font/raleway_extrabold"
+        android:text="Utensilios"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_recipeDes" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:font="@font/raleway_extrabold"
+        android:fontFamily="@font/raleway_extrabold"
+        android:text="Ingredientes "
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_recipeUten" />
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/img_recipe"
+        android:layout_width="142dp"
+        android:layout_height="128dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="6dp"
+        android:src="@drawable/recipeimg"
+        app:layout_constraintEnd_toStartOf="@+id/txt_nameRecipe"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_sub_forgot5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
