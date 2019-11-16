@@ -1,5 +1,6 @@
 package com.example.ratatouille.ClientChef;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,15 +9,24 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.ProgressBar;
 
+import com.example.ratatouille.Chef.ChefActivity;
+import com.example.ratatouille.Class.UserChef;
+import com.example.ratatouille.Class.UserClient;
 import com.example.ratatouille.Client.Home;
 import com.example.ratatouille.ClientChef.LandingPage;
 import com.example.ratatouille.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     ProgressBar progressbar;
     private int progreso = 0;
+    private FirebaseAuth loginAuth;
 
     private int delayMillis = 30;
     private Handler handler = new Handler();
@@ -25,46 +35,64 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         progressbar = findViewById(R.id.progressBar);
-        new Thread(new Runnable() {
-            public void run() {
-                while (progreso < 100) {
-                    progreso += 1;
-                    // Update the progress bar and display the
-                    //current value in the text view
-                    handler.post(new Runnable() {
-                        public void run() {
-                            progressbar.setProgress(progreso);
-                        }
-                    });
-                    try {
-                        // Sleep for 200 milliseconds.
-                        Thread.sleep(delayMillis);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Log.i("Progreso","Terminado");
+
 
                 FirebaseAuth fbAuth= FirebaseAuth.getInstance();
 
                 FirebaseUser user = fbAuth.getCurrentUser();
-                if(user==null)
+                if(user!=null)
                 {
-                    Intent intent= new Intent(getApplicationContext(), LandingPage.class);
-                    startActivity(intent);
-                    overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                    loginAuth = FirebaseAuth.getInstance();
+                    user = loginAuth.getCurrentUser();
+                    String uid= user.getUid();
+                    Query queryChef = FirebaseDatabase.getInstance().getReference("userChef").orderByChild("userId").equalTo(uid);
+                    Query queryClient = FirebaseDatabase.getInstance().getReference("userClient").orderByChild("userId").equalTo(uid);
+                    queryChef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            UserChef chefsito = dataSnapshot.getValue(UserChef.class);
+                            if(chefsito!=null) {
+
+                                Intent intent = new Intent(getBaseContext(), ChefActivity.class);
+                                startActivity(intent);
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Log.i("LOGINFAILED","CHEF" );
+                        }
+                    });
+
+                    queryClient.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            UserClient clientito = dataSnapshot.getValue(UserClient.class);
+                            if(clientito!=null) {
+
+                                Intent intent = new Intent(getBaseContext(), Home.class);
+                                startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Log.i("LOGINFAILED","CLIENTE");
+                        }
+                    });
 
                 }else{
-                    Intent intent2 = new Intent(getBaseContext(), Home.class);
+                    Intent intent2 = new Intent(getBaseContext(), LandingPage.class);
                     startActivity(intent2);
                     overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
 
                 }
 
-                finish();
 
 
-            }
-        }).start();
+
+
+
     }
 }
