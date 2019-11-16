@@ -19,9 +19,34 @@ public class UserChef implements Serializable {
     List<String> tools;
     List<String> recipeIds;
     String userId;
+    List<String> foodType;
 
+    public List<String> getFoodType() {
+        return foodType;
+    }
 
-    public UserChef(String name, String dir,int age) {
+    public void setFoodType(List<String> foodType) {
+        this.foodType = foodType;
+    }
+
+    public UserChef(String name, int age, String photoDownloadURL, String dir, double lat, double longi, String experiencia, String certificados, String años, boolean status, List<String> tools, List<String> recipeIds, String userId, List<String> foodType) {
+        this.name = name;
+        this.age = age;
+        this.photoDownloadURL = photoDownloadURL;
+        this.dir = dir;
+        this.lat = lat;
+        this.longi = longi;
+        this.experiencia = experiencia;
+        this.certificados = certificados;
+        this.años = años;
+        this.status = status;
+        this.tools = tools;
+        this.recipeIds = recipeIds;
+        this.userId = userId;
+        this.foodType = foodType;
+    }
+
+    public UserChef(String name, String dir, int age) {
         this.name = name;
         this.age = age;
         this.dir = dir;

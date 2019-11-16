@@ -129,30 +129,7 @@ public class ChefbyFood extends AppCompatActivity {
                     List<String> recipeIds = chef.getRecipeIds();
 
                     //  Saca todas las recetas para mirar si alguna tiene
-                    for(int i=0;i<recipeIds.size();i++){
-                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("recipe").child(recipeIds.get(i));
 
-                        ref.addListenerForSingleValueEvent(
-                                new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        Recipe recipe;
-                                        recipe = dataSnapshot.getValue(Recipe.class);
-                                        Boolean cumpleTipos = validacionChefRecipe(recipe);
-                                        if(cumpleTipos==true) {
-                                            FirebaseUser currentUser = current.getCurrentUser();
-                                            String userId = currentUser.getUid();
-                                            ClientChefDistance obj = new ClientChefDistance(userId, chef.getUserId(), chef.getName(), distance);
-                                            listOrdered.add(obj);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-                                        //handle databaseError
-                                    }
-                                });
-                    }
                 }
             }
             Collections.sort(listOrdered);
