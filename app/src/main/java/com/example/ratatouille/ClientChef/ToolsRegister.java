@@ -46,7 +46,7 @@ public class ToolsRegister<tagsFire> extends AppCompatActivity {
         //Se infla el gridlayout y el textview de los tags
         gridLayout = (GridLayout) findViewById(R.id.grid_layout);
         txt_showselected = (TextView) findViewById(R.id.txt_showselected);
-        btnRegis= findViewById(R.id.button2);
+        btnRegis= findViewById(R.id.btn_lunch);
         tools = new ArrayList<String>();
 
         dbRats = FirebaseDatabase.getInstance();

@@ -61,7 +61,7 @@ public class ChefProfile extends AppCompatActivity {
         name=findViewById(R.id.nameChef);
         exp=findViewById(R.id.nameChef2);
         certi = findViewById(R.id.nameChef3);
-        btn_solicitud = findViewById(R.id.btn_solicitud);
+        btn_solicitud = findViewById(R.id.btn_volver);
         ico =findViewById(R.id.chefin);
         dbRatsStorage = FirebaseStorage.getInstance();
 

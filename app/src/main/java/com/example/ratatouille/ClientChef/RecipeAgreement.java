@@ -15,6 +15,7 @@ import com.example.ratatouille.Class.Agree;
 import com.example.ratatouille.Class.Recipe;
 import com.example.ratatouille.Class.Solicitud;
 import com.example.ratatouille.Class.UserChef;
+import com.example.ratatouille.Client.RecipeDescription;
 import com.example.ratatouille.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -85,7 +86,26 @@ public class RecipeAgreement extends AppCompatActivity {
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+               if(!txt_showselected.getText().toString().equals("")){
+                   for(int x=0;x<recipeObj.size();x++)
+                   {
 
+                       if(txt_showselected.getText().toString().replaceAll("\\s+","").equals(recipeObj.get(x).getName()))
+                       {
+                           chosen = recipeObj.get(x);
+                       }
+                   }
+                   Intent intent2 = new Intent( getApplicationContext(), RecipeDescription.class );
+                   Bundle bu= new Bundle();
+                   bu.putSerializable("Recipe", (Serializable) chosen);
+                   bu.putSerializable("Chef", (Serializable) chefSelected);
+
+                   intent2.putExtra("Bundle", bu);
+
+                   startActivity(intent2);
+               }else{
+                   Toast.makeText(getApplicationContext(),"Debe escoger receta para ver su descripción",Toast.LENGTH_SHORT).show();
+               }
 
             }
         });
@@ -94,6 +114,7 @@ public class RecipeAgreement extends AppCompatActivity {
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!txt_showselected.getText().toString().equals("")) {
 
                 for(int x=0;x<recipeObj.size();x++)
                 {
@@ -127,6 +148,20 @@ public class RecipeAgreement extends AppCompatActivity {
                         intent2.putExtra("Agreement", (Serializable) acuerdo);
                         startActivity(intent2);
 
+                        if (txt_showselected.getText().toString().replaceAll("\\s+", "").equals(recipeObj.get(x).getName())) {
+                            chosen = recipeObj.get(x);
+                        }
+                    }
+
+                    Intent intent2 = new Intent(getApplicationContext(), AgreementClass.class);
+                    acuerdo = new Agree();
+                    acuerdo.setReceta(chosen);
+                    intent2.putExtra("Agreement", (Serializable) acuerdo);
+                    startActivity(intent2);
+
+                }else{
+                    Toast.makeText(getApplicationContext(),"Debe escoger receta para continuar",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -257,7 +292,7 @@ public class RecipeAgreement extends AppCompatActivity {
                             String withTag = txt_showselected.getText().toString();
 
                             String withoutTag = withTag.replace(tags.getText().toString(), "");
-                            txt_showselected.setText(withoutTag);
+                            txt_showselected.setText("");
                             first = true;
 
 

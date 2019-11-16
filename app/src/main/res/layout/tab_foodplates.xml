@@ -23,85 +23,85 @@
         tools:context=".GridLayoutActivity">
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/btn_break"
             android:layout_width="110dp"
             android:layout_height="163dp"
             android:layout_margin="7dp"
             android:background="@drawable/breakfast"
-            app:layout_constraintBaseline_toBaselineOf="@+id/button2"
+            app:layout_constraintBaseline_toBaselineOf="@+id/btn_lunch"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btn_lunch"
             android:layout_width="110dp"
             android:layout_height="163dp"
             android:layout_margin="7dp"
             android:background="@drawable/lunch"
-            app:layout_constraintStart_toEndOf="@+id/button1"
+            app:layout_constraintStart_toEndOf="@+id/btn_break"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btn_dinner"
             android:layout_width="110dp"
             android:layout_height="163dp"
             android:layout_margin="7dp"
             android:background="@drawable/dinner"
-            app:layout_constraintBaseline_toBaselineOf="@+id/button2"
-            app:layout_constraintStart_toEndOf="@+id/button2" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/btn_lunch"
+            app:layout_constraintStart_toEndOf="@+id/btn_lunch" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/btn_vege"
             android:layout_width="110dp"
             android:layout_height="163dp"
             android:layout_margin="7dp"
             android:background="@drawable/vegetarian"
-            app:layout_constraintBaseline_toBaselineOf="@+id/button2"
+            app:layout_constraintBaseline_toBaselineOf="@+id/btn_lunch"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/btn_protein"
             android:layout_width="110dp"
             android:layout_height="163dp"
             android:layout_margin="7dp"
             android:background="@drawable/protein"
-            app:layout_constraintStart_toEndOf="@+id/button1"
+            app:layout_constraintStart_toEndOf="@+id/btn_break"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/btn_dessert"
             android:layout_width="110dp"
             android:layout_height="163dp"
             android:layout_margin="7dp"
             android:background="@drawable/dessert"
-            app:layout_constraintBaseline_toBaselineOf="@+id/button2"
-            app:layout_constraintStart_toEndOf="@+id/button2" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/btn_lunch"
+            app:layout_constraintStart_toEndOf="@+id/btn_lunch" />
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/btn_col"
             android:layout_width="110dp"
             android:layout_height="163dp"
             android:layout_margin="7dp"
             android:background="@drawable/colombian"
-            app:layout_constraintBaseline_toBaselineOf="@+id/button2"
+            app:layout_constraintBaseline_toBaselineOf="@+id/btn_lunch"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/button8"
+            android:id="@+id/btn_foreign"
             android:layout_width="110dp"
             android:layout_height="163dp"
             android:layout_margin="7dp"
             android:background="@drawable/foreign"
-            app:layout_constraintStart_toEndOf="@+id/button1"
+            app:layout_constraintStart_toEndOf="@+id/btn_break"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/button9"
+            android:id="@+id/btn_cocktails"
             android:layout_width="110dp"
             android:layout_height="163dp"
             android:layout_margin="7dp"
             android:background="@drawable/cocktails"
-            app:layout_constraintBaseline_toBaselineOf="@+id/button2"
-            app:layout_constraintStart_toEndOf="@+id/button2" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/btn_lunch"
+            app:layout_constraintStart_toEndOf="@+id/btn_lunch" />
 
 
     </GridLayout>

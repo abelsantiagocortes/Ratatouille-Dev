@@ -8,8 +8,11 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.ProgressBar;
 
+import com.example.ratatouille.Client.Home;
 import com.example.ratatouille.ClientChef.LandingPage;
 import com.example.ratatouille.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     ProgressBar progressbar;
@@ -41,10 +44,26 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 Log.i("Progreso","Terminado");
-                Intent intent= new Intent(getApplicationContext(), LandingPage.class);
-                startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+
+                FirebaseAuth fbAuth= FirebaseAuth.getInstance();
+
+                FirebaseUser user = fbAuth.getCurrentUser();
+                if(user==null)
+                {
+                    Intent intent= new Intent(getApplicationContext(), LandingPage.class);
+                    startActivity(intent);
+                    overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+
+                }else{
+                    Intent intent2 = new Intent(getBaseContext(), Home.class);
+                    startActivity(intent2);
+                    overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+
+                }
+
                 finish();
+
+
             }
         }).start();
     }
