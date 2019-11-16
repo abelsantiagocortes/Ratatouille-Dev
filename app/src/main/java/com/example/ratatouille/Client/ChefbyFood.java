@@ -157,7 +157,7 @@ public class ChefbyFood extends AppCompatActivity {
 
     private boolean validarChefFoodType(UserChef chef) {
         List<String> foodTypeChef = new ArrayList<>();
-        foodTypeChef=chef.getFoodType();
+        foodTypeChef=chef.getFoodTypes();
         for (int i=0;i<foodTypeChef.size();i++){
             if(foodTypeChef.get(i).equals(type)){
                 return true;

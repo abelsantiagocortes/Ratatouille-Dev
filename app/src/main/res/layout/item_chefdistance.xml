@@ -6,6 +6,8 @@
 
     <com.github.siyamed.shapeimageview.CircularImageView
 
+        android:id="@+id/imgChef"
+
         android:layout_marginTop="20dp"
         android:layout_width="104dp"
         android:layout_height="107dp"
@@ -22,16 +24,17 @@
             android:id="@+id/txt_nameChef"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:text="Nombre"
-            android:textSize="30sp" />
+            android:text="Nomdasdasdasdasdbre"
+            android:inputType="text"
+            android:layout_marginTop="20dp"
+            android:textSize="25dp" />
         <TextView
             android:id="@+id/txt_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:text="Distancia: "
-            android:textSize="25dp" />
+            android:textSize="20dp" />
 
 
         <Button
