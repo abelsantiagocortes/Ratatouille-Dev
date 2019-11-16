@@ -1,5 +1,6 @@
 package com.example.ratatouille.adapters;
 
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -58,7 +59,7 @@ public class ChefsAdapter  extends RecyclerView.Adapter<ChefsAdapter.MyViewHolde
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-       // holder.chefPhoto.setImageBitmap(clientChefDistances.get(position).getImgChef());
+      //  holder.chefPhoto.setImageBitmap(clientChefDistances.get(position).getImgChef()[0]);
         holder.chefName.setText(clientChefDistances.get(position).getChefName());
         holder.distance.setText(String.valueOf(clientChefDistances.get(position).getDistance()));
 
