@@ -50,7 +50,7 @@
         android:layout_height="111dp"
         android:layout_marginStart="72dp"
         android:layout_marginEnd="79dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="56dp"
         android:gravity="center|center_horizontal|center_vertical"
         android:paddingStart="10dp"
         android:textSize="24sp"

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
+import com.example.ratatouille.Class.Agree;
 import com.example.ratatouille.Class.Recipe;
 import com.example.ratatouille.R;
 
@@ -20,6 +21,7 @@ import java.util.List;
 public class IngredsAgreement extends AppCompatActivity {
 
     Recipe receta;
+    Agree acu;
     List<String> inge;
 
     GridLayout gridLayout;
@@ -34,14 +36,18 @@ public class IngredsAgreement extends AppCompatActivity {
         inge = new ArrayList<>();
         gridLayout =  findViewById(R.id.grid_layoutRecipe2);
         txt_showselected =  findViewById(R.id.txt_showselectedR2);
-        receta = (Recipe) getIntent().getSerializableExtra("REP");
+        acu = new Agree();
+        acu = (Agree) getIntent().getSerializableExtra("Agreement");
+        receta = acu.getReceta();
         btn_acptIngre =  findViewById(R.id.btn_acptIngre);
 
         btn_acptIngre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent2 = new Intent( getApplicationContext(), Agreement.class );
-                intent2.putExtra("REP", (Serializable) receta);
+
+
+                Intent intent2 = new Intent( getApplicationContext(), AgreementClass.class );
+                intent2.putExtra("Agreement", (Serializable) acu);
 
                 startActivity(intent2);
             }

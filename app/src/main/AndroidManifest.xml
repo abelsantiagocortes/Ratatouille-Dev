@@ -17,7 +17,7 @@
         <activity android:name=".ClientChef.ToolsAgreement"></activity>
         <activity android:name=".ClientChef.IngredsAgreement" />
         <activity android:name=".ClientChef.RecipeAgreement" />
-        <activity android:name=".ClientChef.Agreement" />
+        <activity android:name=".ClientChef.AgreementClass" />
         <activity android:name=".Chef.ChefRecipes" />
         <activity android:name=".Client.ClientRequest" />
         <activity android:name=".Chef.ChefProfile" />

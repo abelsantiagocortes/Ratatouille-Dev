@@ -10,12 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ratatouille.Class.Solicitud;
 import com.example.ratatouille.Class.UserChef;
-import com.example.ratatouille.ClientChef.Agreement;
 import com.example.ratatouille.ClientChef.RecipeAgreement;
 import com.example.ratatouille.R;
 import com.github.siyamed.shapeimageview.CircularImageView;

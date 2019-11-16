@@ -9,18 +9,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ratatouille.Class.Agree;
 import com.example.ratatouille.Class.Recipe;
 import com.example.ratatouille.Class.UserChef;
 import com.example.ratatouille.R;
 
 import java.io.Serializable;
 
-public class Agreement extends AppCompatActivity {
+public class AgreementClass extends AppCompatActivity {
 
     ImageView btnRecipe;
     Button btnIngreds;
-    Recipe receta;
     UserChef chefSolicitado;
+    Agree acu;
     Button btn_toolsAgr;
     TextView txtreceta;
     @Override
@@ -28,28 +29,23 @@ public class Agreement extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agreement);
 
-        btnRecipe= findViewById(R.id.btn_add);
+        acu = new Agree();
         btnIngreds=findViewById(R.id.buttonInge);
         btn_toolsAgr =findViewById(R.id.btn_toolsAgr);
         txtreceta =findViewById(R.id.txtreceta);
 
-        receta = (Recipe) getIntent().getSerializableExtra("REP");
 
-        txtreceta.setText(receta.getName());
-        btnRecipe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent2 = new Intent( getApplicationContext(), Agreement.class );
-                intent2.putExtra("REP", (Serializable) receta);
-                startActivity(intent2);
-            }
-        });
+        acu=((Agree) getIntent().getSerializableExtra("Agreement"));
+
+
+        txtreceta.setText(acu.getReceta().getName());
+
         btnIngreds.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent intent2 = new Intent( getApplicationContext(), IngredsAgreement.class );
-                intent2.putExtra("REP", (Serializable) receta);
+                intent2.putExtra("Agreement", (Serializable) acu);
                 startActivity(intent2);
 
             }
@@ -59,7 +55,7 @@ public class Agreement extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent2 = new Intent( getApplicationContext(), ToolsAgreement.class );
-                intent2.putExtra("REP", (Serializable) receta);
+                intent2.putExtra("Agreement", (Serializable) acu);
                 startActivity(intent2);
 
             }

@@ -11,6 +11,7 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ratatouille.Class.Agree;
 import com.example.ratatouille.Class.Recipe;
 import com.example.ratatouille.Class.UserChef;
 import com.example.ratatouille.R;
@@ -39,6 +40,7 @@ public class RecipeAgreement extends AppCompatActivity {
     TextView txt_showselected;
     Button btnAccept;
     Button btnInfo;
+    Agree acuerdo;
 
     //Listas manejo de recetas
     List<String> recipe;
@@ -48,6 +50,7 @@ public class RecipeAgreement extends AppCompatActivity {
     Boolean max=false;
     Recipe chosen;
     UserChef chefSelected;
+
 
 
     @Override
@@ -67,12 +70,22 @@ public class RecipeAgreement extends AppCompatActivity {
         Query queryRecipe = FirebaseDatabase.getInstance().getReference("recipe");
         queryRecipe.addListenerForSingleValueEvent(valueEventListener1);
 
-        Query queryChef = FirebaseDatabase.getInstance().getReference("userChef").orderByKey().equalTo("phQIrYLtuXbK3z3QPkkqM1ZA1qc2");
+        Query queryChef = FirebaseDatabase.getInstance().getReference("userChef").orderByKey().equalTo(chefId);
         queryChef.addListenerForSingleValueEvent(valueEventListener2);
+
+        for(int x=0;x<recipeObj.size();x++)
+        {
+
+            if(txt_showselected.getText().toString().replaceAll("\\s+","").equals(recipeObj.get(x).getName()))
+            {
+                chosen = recipeObj.get(x);
+            }
+        }
 
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
             }
         });
@@ -82,18 +95,10 @@ public class RecipeAgreement extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                        Intent intent2 = new Intent( getApplicationContext(), Agreement.class );
-
-                for(int x=0;x<recipeObj.size();x++)
-                {
-
-                        if(txt_showselected.getText().toString().replaceAll("\\s+","").equals(recipeObj.get(x).getName()))
-                        {
-                            chosen = recipeObj.get(x);
-                        }
-                }
-
-                        intent2.putExtra("REP", (Serializable) chosen);
+                        Intent intent2 = new Intent( getApplicationContext(), AgreementClass.class );
+                        acuerdo = new Agree();
+                        acuerdo.setReceta(chosen);
+                        intent2.putExtra("Agreement", (Serializable) acuerdo);
                         startActivity(intent2);
 
             }
