@@ -38,7 +38,7 @@ public class ToolsAgreement extends AppCompatActivity {
         btn_utenAgree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent2 = new Intent( getApplicationContext(), Agreement.class );
+                Intent intent2 = new Intent( getApplicationContext(), AgreementClass.class );
                 intent2.putExtra("REP", (Serializable) receta);
                 startActivity(intent2);
             }
