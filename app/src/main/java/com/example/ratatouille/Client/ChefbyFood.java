@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import com.example.ratatouille.Class.Recipe;
 import com.example.ratatouille.Class.UserChef;
 import com.example.ratatouille.Class.UserClient;
 import com.example.ratatouille.ClientChef.ClientChefDistance;
@@ -33,6 +34,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class ChefbyFood extends AppCompatActivity {
 
@@ -41,19 +43,27 @@ public class ChefbyFood extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    String foodType = getIntent().getStringExtra("foodType");
-    public List<ClientChefDistance> listOrdered = new ArrayList<>();
+    public List<ClientChefDistance> listOrdered ;
     FirebaseAuth current;
     FirebaseStorage dbRatsStorage;
     StorageReference storageChef;
-    double lat;
-    double longi;
+    double lati;
+    double longit;
+    UserClient currentUser;
+    List<Recipe> recipes;
+    String type;
 
+    boolean cumpleTipo=false;
+
+    List<String> recipe;
+    List<String> recipeids;
+    List<String> recipeTypes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chefby_food);
+         type = getIntent().getStringExtra("foodType");
 
         recyclerView = (RecyclerView) findViewById(R.id.rcy_chefs);
 
@@ -67,6 +77,12 @@ public class ChefbyFood extends AppCompatActivity {
         dbRatsStorage = FirebaseStorage.getInstance();
         storageChef = dbRatsStorage.getReference();
 
+        listOrdered=new ArrayList<>();
+        //Memoria para arreglos
+        recipe = new ArrayList<String>();
+        recipeids = new ArrayList<String>();
+        recipeTypes = new ArrayList<String>();
+
         //Cosas de firebase necesarias
         current = FirebaseAuth.getInstance();
         FirebaseUser currentUser = current.getCurrentUser();
@@ -79,25 +95,22 @@ public class ChefbyFood extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserClient user;
                 user = dataSnapshot.getValue(UserClient.class);
-                lat=user.lat;
-                longi=user.longi;
-            }
+                lati=user.getLat();
+                longit=user.getLongi();
+                //Se saca la lista de chefs dependiendo del foodType que le llega en el intent
+                loadNearbyChefs();
 
+            }
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
-        //Se saca la lista de chefs dependiendo del foodType que le llega en el intent
-        loadNearbyChefs();
 
         // specify an adapter (see also next example)
-        mAdapter = new ChefsAdapter(listOrdered);
-        recyclerView.setAdapter(mAdapter);
+
 
     }
-
-
     private void loadNearbyChefs() {
 
         Query query = FirebaseDatabase.getInstance().getReference("userChef");
@@ -110,22 +123,27 @@ public class ChefbyFood extends AppCompatActivity {
 
             if (dataSnapshot.exists())
             {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    UserChef chef = snapshot.getValue(UserChef.class);
-                    double distance = distance(chef.getLat(),chef.getLongi(),lat,longi);
-                    if(distance<5 && chef.isStatus())
-                    {
+                for (DataSnapshot snapshoti : dataSnapshot.getChildren()) {
+                    final UserChef chef = snapshoti.getValue(UserChef.class);
+                    final double distance = distance(chef.getLat(),chef.getLongi(),lati,longit);
+
+                    boolean vale=validarChefFoodType(chef);
+                    if(vale){
                         FirebaseUser currentUser = current.getCurrentUser();
                         String userId = currentUser.getUid();
 
-                        ClientChefDistance obj= new ClientChefDistance(userId,chef.getUserId(),chef.getName(),cargarImagen(snapshot,dbRatsStorage),distance);
+                        ClientChefDistance obj= new ClientChefDistance(userId,chef.getUserId(),chef.getName(),cargarImagen(snapshoti,dbRatsStorage),distance);
                         listOrdered.add(obj);
-
                     }
+                    //  Saca todas las recetas para mirar si alguna tiene
 
                 }
             }
             Collections.sort(listOrdered);
+
+            mAdapter = new ChefsAdapter(listOrdered);
+            recyclerView.setAdapter(mAdapter);
+
         }
 
         @Override
@@ -133,9 +151,20 @@ public class ChefbyFood extends AppCompatActivity {
 
         }
 
-
-
     };
+
+    private boolean validarChefFoodType(UserChef chef) {
+        List<String> foodTypeChef = new ArrayList<>();
+        foodTypeChef=chef.getFoodType();
+        for (int i=0;i<foodTypeChef.size();i++){
+            if(foodTypeChef.get(i).equals(type)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
     private Bitmap[] cargarImagen(DataSnapshot dir, FirebaseStorage dbRatsStorage) {
         final Bitmap[] bitmap = {null};

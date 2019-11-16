@@ -1,9 +1,11 @@
 package com.example.ratatouille.Chef;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,8 +23,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ChefRecipes extends AppCompatActivity {
 
@@ -41,6 +46,7 @@ public class ChefRecipes extends AppCompatActivity {
     //Listas manejo de recetas
     List<String> recipe;
     List<String> recipeids;
+    List<String> foodTypes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,7 @@ public class ChefRecipes extends AppCompatActivity {
         //Memoria para arreglos
         recipe = new ArrayList<String>();
         recipeids = new ArrayList<String>();
+        foodTypes = new ArrayList<String>();
 
 
         dbRats = FirebaseDatabase.getInstance();
@@ -105,6 +112,7 @@ public class ChefRecipes extends AppCompatActivity {
             //Get name field and append to list
             recipe.add(singleRecipe.get("name").toString());
             recipeids.add(singleRecipe.get("id").toString());
+            foodTypes.add(singleRecipe.get("foodType").toString());
         }
         tagComponents();
 
@@ -193,12 +201,14 @@ public class ChefRecipes extends AppCompatActivity {
         }
     }
     //Ingresa en la base de datos los ids de las recetas de cada chef
+    @RequiresApi(api = Build.VERSION_CODES.N)
     void registerToolsDB()
     {
 
         List<String> items = Arrays.asList(txt_showselected.getText().toString().split("\\W+"));
 
         List<String> recipesSelected = new ArrayList<>();
+        List<String> foodTypeRecipes = new ArrayList<>();
 
         for(int i=0;i<items.size();i++){
 
@@ -207,14 +217,23 @@ public class ChefRecipes extends AppCompatActivity {
 
                 if(items.get(i).equals(recipe.get(j))){
                     recipesSelected.add(recipeids.get(j));
+                    foodTypeRecipes.add(foodTypes.get(j));
                 }
+
             }
 
         }
+
+        Set<String> hashSet = new HashSet<String>(foodTypeRecipes);
+        foodTypeRecipes.clear();
+        foodTypeRecipes.addAll(hashSet);
+
         FirebaseUser user = registerAuth.getCurrentUser();
         String uid= user.getUid();
         dbUsersChefs = dbRats.getReference("userChef");
         dbUsersChefs.child(uid).child("recipeIds").setValue(recipesSelected);
+        dbUsersChefs.child(uid).child("foodTypes").setValue(foodTypeRecipes);
+
     }
 
 }
