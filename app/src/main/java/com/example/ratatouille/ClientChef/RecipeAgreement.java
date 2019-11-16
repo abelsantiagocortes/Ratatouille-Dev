@@ -16,6 +16,7 @@ import com.example.ratatouille.Class.Recipe;
 import com.example.ratatouille.Class.UserChef;
 import com.example.ratatouille.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,9 +32,10 @@ public class RecipeAgreement extends AppCompatActivity {
 
     //Atributos necesarios de Firebase
     FirebaseDatabase dbRats;
-    DatabaseReference dbUsersChefs;
+    DatabaseReference dbAgreements;
     FirebaseAuth registerAuth;
-    DatabaseReference dbChefs;
+    FirebaseUser user;
+
 
     //Elementos del GUI para inflar
     GridLayout gridLayout;
@@ -52,7 +54,6 @@ public class RecipeAgreement extends AppCompatActivity {
     UserChef chefSelected;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +66,11 @@ public class RecipeAgreement extends AppCompatActivity {
 
         chefSelected = (UserChef) getIntent().getSerializableExtra("ChefObj");
 
-        String chefId = chefSelected.getUserId();
+        final String chefId = chefSelected.getUserId();
+
+        registerAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = registerAuth.getCurrentUser();
+        final String userId = currentUser.getUid();
 
         Query queryRecipe = FirebaseDatabase.getInstance().getReference("recipe");
         queryRecipe.addListenerForSingleValueEvent(valueEventListener1);
@@ -73,14 +78,7 @@ public class RecipeAgreement extends AppCompatActivity {
         Query queryChef = FirebaseDatabase.getInstance().getReference("userChef").orderByKey().equalTo(chefId);
         queryChef.addListenerForSingleValueEvent(valueEventListener2);
 
-        for(int x=0;x<recipeObj.size();x++)
-        {
 
-            if(txt_showselected.getText().toString().replaceAll("\\s+","").equals(recipeObj.get(x).getName()))
-            {
-                chosen = recipeObj.get(x);
-            }
-        }
 
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,9 +93,23 @@ public class RecipeAgreement extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                        Intent intent2 = new Intent( getApplicationContext(), AgreementClass.class );
+                for(int x=0;x<recipeObj.size();x++)
+                {
+                    if(txt_showselected.getText().toString().replaceAll("\\s+","").equals(recipeObj.get(x).getName()))
+                    {
+                        chosen = recipeObj.get(x);
+                    }
+                }
+                        dbRats = FirebaseDatabase.getInstance();
+                        dbAgreements = dbRats.getReference("agreements");
                         acuerdo = new Agree();
                         acuerdo.setReceta(chosen);
+                        acuerdo.setIdChef(chefId);
+                        acuerdo.setIdClient(userId);
+                        String id = dbAgreements.push().getKey();
+                        acuerdo.setAgreementId(id);
+                        dbAgreements.child(id).setValue(acuerdo);
+                        Intent intent2 = new Intent( getApplicationContext(), AgreementClass.class );
                         intent2.putExtra("Agreement", (Serializable) acuerdo);
                         startActivity(intent2);
 
@@ -121,9 +133,7 @@ public class RecipeAgreement extends AppCompatActivity {
 
         tagComponents();
 
-
     }
-
 
     ValueEventListener valueEventListener1= new ValueEventListener() {
         @Override
@@ -165,11 +175,6 @@ public class RecipeAgreement extends AppCompatActivity {
 
         }
     };
-
-
-
-
-
 
     void tagComponents()
     {

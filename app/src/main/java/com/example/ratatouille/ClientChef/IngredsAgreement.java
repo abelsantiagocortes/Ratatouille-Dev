@@ -1,21 +1,36 @@
 package com.example.ratatouille.ClientChef;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
+import com.example.ratatouille.Chef.ChefActivity;
 import com.example.ratatouille.Class.Agree;
 import com.example.ratatouille.Class.Recipe;
+import com.example.ratatouille.Class.UserChef;
+import com.example.ratatouille.Class.UserClient;
+import com.example.ratatouille.Client.Home;
 import com.example.ratatouille.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class IngredsAgreement extends AppCompatActivity {
@@ -23,10 +38,14 @@ public class IngredsAgreement extends AppCompatActivity {
     Recipe receta;
     Agree acu;
     List<String> inge;
-
+    FirebaseAuth loginAuth;
     GridLayout gridLayout;
     TextView txt_showselected;
+    DatabaseReference dbAgreements;
     Button btn_acptIngre;
+    boolean  tipo;
+    FirebaseAuth registerAuth;
+    FirebaseDatabase dbRats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,22 +59,26 @@ public class IngredsAgreement extends AppCompatActivity {
         acu = (Agree) getIntent().getSerializableExtra("Agreement");
         receta = acu.getReceta();
         btn_acptIngre =  findViewById(R.id.btn_acptIngre);
+        registerAuth = FirebaseAuth.getInstance();
+        dbRats = FirebaseDatabase.getInstance();
 
         btn_acptIngre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                loginAuth = FirebaseAuth.getInstance();
+                FirebaseUser user = loginAuth.getCurrentUser();
+                String uid= user.getUid();
+                Query queryChef = FirebaseDatabase.getInstance().getReference("userChef").orderByChild("userId").equalTo(uid);
+                Query queryClient = FirebaseDatabase.getInstance().getReference("userClient").orderByChild("userId").equalTo(uid);
+                queryClient.addListenerForSingleValueEvent(valueEventListener1);
+                queryChef.addListenerForSingleValueEvent(valueEventListener2);
 
-                Intent intent2 = new Intent( getApplicationContext(), AgreementClass.class );
-                intent2.putExtra("Agreement", (Serializable) acu);
-
-                startActivity(intent2);
             }
         });
         inge = receta.getIngredients();
         tagComponents();
     }
-
 
     void tagComponents() {
 
@@ -135,4 +158,61 @@ public class IngredsAgreement extends AppCompatActivity {
             gridLayout.addView(tags, childCount);
         }
     }
+
+    ValueEventListener valueEventListener1 = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            if (dataSnapshot.exists())
+            {
+                List<String> itemsSpaces = Arrays.asList(txt_showselected.getText().toString().split("\\W+"));
+                List<String> itemsNoSpaces = new ArrayList<>();
+
+                for(int i=0;i<itemsSpaces.size();i++){
+                    if(!itemsSpaces.get(i).equals(""))
+                        itemsNoSpaces.add(itemsSpaces.get(i));
+                }
+                dbAgreements =  dbRats.getReference("agreements");
+                dbAgreements.child(acu.getAgreementId()).child("ingreClient").setValue(itemsNoSpaces);
+                acu.setIngreClient(itemsNoSpaces);
+                Intent intent2 = new Intent( getApplicationContext(), AgreementClass.class );
+                intent2.putExtra("Agreement", (Serializable) acu);
+                startActivity(intent2);
+            }
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+    ValueEventListener valueEventListener2 = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            if (dataSnapshot.exists())
+            {
+                List<String> itemsSpaces = Arrays.asList(txt_showselected.getText().toString().split("\\W+"));
+                List<String> itemsNoSpaces = new ArrayList<>();
+
+                for(int i=0;i<itemsSpaces.size();i++){
+                    if(!itemsSpaces.get(i).equals(""))
+                        itemsNoSpaces.add(itemsSpaces.get(i));
+                }
+                dbAgreements =  dbRats.getReference("agreements");
+                dbAgreements.child(acu.getAgreementId()).child("ingreChef").setValue(itemsNoSpaces);
+                acu.setIngreClient(itemsNoSpaces);
+                Intent intent2 = new Intent( getApplicationContext(), AgreementClass.class );
+                intent2.putExtra("Agreement", (Serializable) acu);
+                startActivity(intent2);
+            }
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
 }

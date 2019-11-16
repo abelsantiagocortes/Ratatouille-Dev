@@ -13,6 +13,15 @@ public class Agree implements Serializable {
     boolean clienteAccept;
     boolean chefAccept;
     Recipe receta;
+    String agreementId;
+
+    public String getAgreementId() {
+        return agreementId;
+    }
+
+    public void setAgreementId(String agreementId) {
+        this.agreementId = agreementId;
+    }
 
     public Agree() {
         ingreChef = new ArrayList<>();
