@@ -6,8 +6,28 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <style name="pop_up">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="btn_highAction">
+        <item name="android:background">@drawable/btn_high_action</item>
+        <item name= "android:layout_width">280dp</item>
+        <item name= "android:layout_height">60dp</item>
+
+        <!-- Color Attributes-->
+        <item name= "android:textColor">@color/clr_justWhite</item>
+
+
+
+    </style>
 
     <style name="typ_grey">
         <item name= "android:textColor">@color/colorGrisRata</item>

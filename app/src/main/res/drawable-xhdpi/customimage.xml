@@ -4,5 +4,4 @@
     <item android:drawable="@drawable/search_bar"  android:state_focused="false" />
 
 
-
 </selector>

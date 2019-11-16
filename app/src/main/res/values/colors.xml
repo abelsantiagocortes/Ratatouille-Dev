@@ -5,4 +5,9 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorGrisRata">#878787</color>
     <color name="colorFondo">#00008577</color>
+    <color name="clr_kindaGrey">#C1C1C1</color>
+    <color name="clr_quiteGrey">#9B9B9B</color>
+    <color name="clr_veryGrey">#2D2D2D</color>
+    <color name="clr_justWhite">#FFFFFF</color>
+    <color name="clr_suiraPurple">#4B2C70</color>
 </resources>

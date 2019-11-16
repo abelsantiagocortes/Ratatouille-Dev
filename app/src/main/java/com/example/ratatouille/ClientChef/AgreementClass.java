@@ -16,6 +16,7 @@ import com.example.ratatouille.Class.Agree;
 import com.example.ratatouille.Class.Recipe;
 import com.example.ratatouille.Class.UserChef;
 import com.example.ratatouille.R;
+import com.example.ratatouille.adapters.PopUpAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -58,6 +59,7 @@ public class AgreementClass extends AppCompatActivity {
         confri=findViewById(R.id.btn_confirmar);
         dbRats = FirebaseDatabase.getInstance();
 
+
         acu=((Agree) getIntent().getSerializableExtra("Agreement"));
 
         Query queryAgree = FirebaseDatabase.getInstance().getReference("agreements").orderByChild("agreementId").equalTo(acu.getAgreementId());
@@ -99,9 +101,18 @@ public class AgreementClass extends AppCompatActivity {
         chek1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbAgreements =  dbRats.getReference("agreements");
-                dbAgreements.child(acu.getAgreementId()).child("clienteAccept").setValue(true);
-                acu.setClienteAccept(true);
+                if(chek1.isChecked())
+                {
+                    dbAgreements =  dbRats.getReference("agreements");
+                    dbAgreements.child(acu.getAgreementId()).child("clienteAccept").setValue(true);
+                    acu.setClienteAccept(true);
+                }
+                else
+                {
+                    dbAgreements =  dbRats.getReference("agreements");
+                    dbAgreements.child(acu.getAgreementId()).child("clienteAccept").setValue(false);
+                    acu.setClienteAccept(false);
+                }
             }
         });
 
@@ -113,14 +124,35 @@ public class AgreementClass extends AppCompatActivity {
                 {
                     dbAgreements =  dbRats.getReference("agreements");
                     dbAgreements.child(acu.getAgreementId()).child("chefAccept").setValue(true);
-                    acu.setClienteAccept(true);
+                    acu.setChefAccept(true);
                 }
                 else
                 {
                     dbAgreements =  dbRats.getReference("agreements");
                     dbAgreements.child(acu.getAgreementId()).child("chefAccept").setValue(false);
-                    acu.setClienteAccept(false);
+                    acu.setChefAccept(false);
                 }
+
+            }
+        });
+
+        confri.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Bundle bund = new Bundle();
+
+                String msn = new String("Gracias por Confirmar tu Orden  \n \n \n  ");
+                String btnMsn = new String("Ver Mapa");
+                String activityName = new String("Home");
+
+                Intent intent= new Intent(getApplicationContext(), PopUpAdapter.class);
+
+                bund.putString("mensaje", msn);
+                bund.putString("contenidoBoton", btnMsn);
+                bund.putString("sender", activityName );
+                intent.putExtras(bund);
+                startActivity(intent);
 
             }
         });
@@ -185,17 +217,14 @@ public class AgreementClass extends AppCompatActivity {
                         chek1.setChecked(false);
                     }
 
-                    if(acuerdo.isClienteAccept()&& acuerdo.isChefAccept())
+                    if(chek1.isChecked()&&chek2.isChecked())
                     {
-                        confri.setEnabled(true);
                         confri.setVisibility(View.VISIBLE);
-
                     }
                     else
                     {
                         confri.setVisibility(View.GONE);
                     }
-
 
                 }
 
