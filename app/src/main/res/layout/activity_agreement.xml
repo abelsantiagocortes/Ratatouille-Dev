@@ -59,7 +59,7 @@
         <EditText
             android:id="@+id/txtreceta"
             android:layout_width="220dp"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_gravity="center"
             android:layout_marginStart="90dp"
             android:ems="18"
@@ -163,7 +163,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="169dp"
+                android:layout_height="124dp"
                 android:orientation="horizontal">
 
                 <ListView
@@ -181,12 +181,15 @@
 
             <Button
                 android:id="@+id/buttonInge"
-                style="@style/btn_txt_white_background_grey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/btn_txt_black_background_white"
+                android:layout_width="139dp"
+                android:layout_height="35dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
-                android:text="Elegir" />
+                android:text="Elegir"
+                android:textSize="24sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -212,7 +215,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="166dp"
+                    android:layout_height="120dp"
                     android:orientation="horizontal">
 
                     <ListView
@@ -236,17 +239,54 @@
 
                 <Button
                     android:id="@+id/btn_toolsAgr"
-                    style="@style/btn_txt_white_background_grey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/btn_txt_black_background_white"
+                    android:layout_width="134dp"
+                    android:layout_height="35dp"
                     android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="1"
-                    android:text="Elegir" />
+                    android:text="Elegir"
+                    android:textSize="24sp" />
 
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkClient"
+            android:layout_width="139dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_weight="1"
+            android:text="CheckBox" />
+
+        <CheckBox
+            android:id="@+id/checkChef"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="CheckBox" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_confirmar"
+        style="@style/btn_txt_white_background_grey"
+        android:layout_width="222dp"
+        android:layout_height="42dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:text="CONFIRMAR" />
 
 </LinearLayout>
 

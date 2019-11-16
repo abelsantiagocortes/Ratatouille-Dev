@@ -47,6 +47,7 @@ public class Agree implements Serializable {
         return ingreChef;
     }
 
+
     public void setIngreChef(List<String> ingreChef) {
         this.ingreChef = ingreChef;
     }
