@@ -148,8 +148,6 @@ public class Chefs_tab extends Fragment{
 
         }
 
-
-
     };
 
     private Bitmap[] cargarImagen(DataSnapshot dir, FirebaseStorage dbRatsStorage) {

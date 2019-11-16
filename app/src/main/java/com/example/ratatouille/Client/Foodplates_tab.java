@@ -95,7 +95,7 @@ public class Foodplates_tab extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent in= new Intent(getContext(),ChefbyFood.class);
-                in.putExtra("foodType","cocktails");
+                in.putExtra("foodType","dinner");
                 startActivity(in);
             }
         });
