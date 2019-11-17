@@ -24,23 +24,19 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
-    //ProgressBar progressbar;
     private int progreso = 0;
     private FirebaseAuth loginAuth;
 
-    private int delayMillis = 30;
-    private Handler handler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       //progressbar = findViewById(R.id.progressBar);
 
         Thread background = new Thread() {
             public void run() {
                 try {
                     // Thread will sleep for 5 seconds
-                    sleep(5*1000);
+                    sleep(3*1000);
 
                     // After 5 seconds redirect to another intent
 
@@ -62,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     Intent intent = new Intent(getBaseContext(), ChefActivity.class);
                                     startActivity(intent);
+                                    overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);    
                                 }
 
                             }
@@ -80,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     Intent intent = new Intent(getBaseContext(), Home.class);
                                     startActivity(intent);
+                                    overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                                 }
                             }
 
@@ -97,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     //Remove activity
-                    finish();
+                    //finish();
                 } catch (Exception e) {
                 }
             }
