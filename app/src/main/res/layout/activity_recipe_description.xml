@@ -32,8 +32,8 @@
         android:layout_width="173dp"
         android:layout_height="92dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="72dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="41dp"
         android:font="@font/raleway_extrabold"
         android:fontFamily="@font/raleway_extrabold"
         android:gravity="center|center_horizontal|center_vertical"
@@ -41,9 +41,47 @@
         android:paddingStart="10dp"
         android:text="ratatouille"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/txtDescription"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/img_recipe" />
+        app:layout_constraintStart_toEndOf="@+id/img_recipe"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/cantrats"
+        style="@android:style/Widget.DeviceDefault.Light.TextView"
+        android:layout_width="70dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginBottom="80dp"
+        android:font="@font/raleway_extrabold"
+        android:fontFamily="@font/raleway_extrabold"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:inputType="textMultiLine"
+        android:paddingStart="25dp"
+        android:text="40"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/txt_recipeDes"
+        app:layout_constraintStart_toEndOf="@+id/img_recipe"
+        app:layout_constraintTop_toBottomOf="@+id/txt_nameRecipe"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/cantrats2"
+        style="@android:style/Widget.DeviceDefault.Light.TextView"
+        android:layout_width="84dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:font="@font/raleway_extrabold"
+        android:fontFamily="@font/raleway"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:inputType="textMultiLine"
+        android:paddingStart="0dp"
+        android:paddingLeft="0dp"
+        android:text="Rat$"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/cantrats"
+        app:layout_constraintTop_toBottomOf="@+id/txt_nameRecipe" />
 
     <Button
         android:id="@+id/btn_volver"
@@ -73,7 +111,7 @@
     <TextView
         android:id="@+id/txt_recipeUten"
         android:layout_width="342dp"
-        android:layout_height="83dp"
+        android:layout_height="97dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
@@ -89,8 +127,8 @@
 
     <TextView
         android:id="@+id/txt_recipeIng"
-        android:layout_width="342dp"
-        android:layout_height="83dp"
+        android:layout_width="339dp"
+        android:layout_height="119dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
