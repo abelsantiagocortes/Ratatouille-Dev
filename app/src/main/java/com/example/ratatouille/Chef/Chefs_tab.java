@@ -61,7 +61,7 @@ public class Chefs_tab extends Fragment{
     List<String> listDistances;
     FirebaseStorage dbRatsStorage;
 
-    private int[] images={R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test};
+    private int[] images={R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.pasta,R.drawable.asadito,R.drawable.salmon,R.drawable.meat,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.pasta,R.drawable.asadito,R.drawable.salmon,R.drawable.meat,R.drawable.hamburger,R.drawable.egg,R.drawable.plate1_test,R.drawable.pasta,R.drawable.asadito,R.drawable.salmon,R.drawable.meat};
     @Override
 
     public View onCreateView( LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
