@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.example.ratatouille.Class.Agree;
 import com.example.ratatouille.Class.Recipe;
 import com.example.ratatouille.Class.UserChef;
+import com.example.ratatouille.Class.UserClient;
+import com.example.ratatouille.Client.Home;
 import com.example.ratatouille.R;
 import com.example.ratatouille.adapters.PopUpAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,8 +45,14 @@ public class AgreementClass extends AppCompatActivity {
     FirebaseAuth loginAuth;
     CheckBox chek1;
     CheckBox chek2;
+    FirebaseAuth current;
     FirebaseDatabase dbRats;
     Button confri;
+    TextView rats;
+    TextView rr;
+    DatabaseReference dbUsersClients;
+    DatabaseReference dbClients;
+    int cant;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,12 +66,17 @@ public class AgreementClass extends AppCompatActivity {
         chek2=findViewById(R.id.checkChef);
         confri=findViewById(R.id.btn_confirmar);
         dbRats = FirebaseDatabase.getInstance();
+        rats=findViewById(R.id.titleRats);
+        rr=findViewById(R.id.ratcss);
+
 
 
         acu=((Agree) getIntent().getSerializableExtra("Agreement"));
 
         Query queryAgree = FirebaseDatabase.getInstance().getReference("agreements").orderByChild("agreementId").equalTo(acu.getAgreementId());
         queryAgree.addValueEventListener(valueEventListener);
+
+        rr.setText(String.valueOf(acu.getReceta().getPrice()));
 
 
         txtreceta.setText(acu.getReceta().getName());
@@ -139,6 +152,12 @@ public class AgreementClass extends AppCompatActivity {
         confri.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                current = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = current.getCurrentUser();
+                String userId = currentUser.getUid();
+                dbUsersClients = dbRats.getReference("userClient");
+                cant= cant - acu.getReceta().getPrice();
+                dbUsersClients.child(userId).child("cantRats").setValue(cant);
 
                 Bundle bund = new Bundle();
 
@@ -152,7 +171,18 @@ public class AgreementClass extends AppCompatActivity {
                 bund.putString("contenidoBoton", btnMsn);
                 bund.putString("sender", activityName );
                 intent.putExtras(bund);
+
                 startActivity(intent);
+
+            }
+        });
+
+        rats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent2 = new Intent( getApplicationContext(), Home.class );
+                startActivity(intent2);
 
             }
         });
@@ -245,6 +275,11 @@ public class AgreementClass extends AppCompatActivity {
             if (dataSnapshot.exists())
             {
                 chek2.setEnabled(false);
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    UserClient c = snapshot.getValue(UserClient.class);
+                    cant=c.getCantRats();
+                }
+
 
 
             }

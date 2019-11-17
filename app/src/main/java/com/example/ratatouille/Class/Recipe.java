@@ -11,6 +11,25 @@ public class Recipe implements Serializable {
     String name;
     List<String> tools;
     String foodType;
+    int price;
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public Recipe(String description, String id, List<String> ingredients, String name, List<String> tools, String foodType, int price) {
+        this.description = description;
+        this.id = id;
+        this.ingredients = ingredients;
+        this.name = name;
+        this.tools = tools;
+        this.foodType = foodType;
+        this.price = price;
+    }
 
     public Recipe() {
     }
@@ -23,14 +42,6 @@ public class Recipe implements Serializable {
         this.foodType = foodType;
     }
 
-    public Recipe(String description, String id, List<String> ingredients, String name, List<String> tools, String foodType) {
-        this.description = description;
-        this.id = id;
-        this.ingredients = ingredients;
-        this.name = name;
-        this.tools = tools;
-        this.foodType = foodType;
-    }
 
     public String getDescription() {
         return description;

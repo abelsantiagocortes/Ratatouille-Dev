@@ -7,20 +7,44 @@
     android:orientation="vertical"
     tools:context=".ClientChef.AgreementClass">
 
-    <TextView
-        android:id="@+id/titleRats"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="164dp"
-        android:ems="10"
-        android:fontFamily="@font/raleway_extrabold"
-        android:inputType="textPersonName"
-        android:text="ratatouille"
-        android:textAlignment="viewStart"
-        android:textColor="#E2000000"
-        android:textSize="24sp" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/titleRats"
+            android:layout_width="124dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:fontFamily="@font/raleway_extrabold"
+            android:inputType="textPersonName"
+            android:text="ratatouille"
+            android:textAlignment="viewStart"
+            android:textColor="#E2000000"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/ratcss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/raleway_extrabold"
+            android:textSize="36sp" />
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/raleway"
+            android:text=" rat$"
+            android:textSize="18sp" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView18"
@@ -56,13 +80,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <EditText
+        <TextView
             android:id="@+id/txtreceta"
             android:layout_width="220dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginStart="90dp"
-            android:editable="false"
             android:ems="18"
             android:fontFamily="@font/raleway_extrabold"
             android:gravity="center_horizontal"

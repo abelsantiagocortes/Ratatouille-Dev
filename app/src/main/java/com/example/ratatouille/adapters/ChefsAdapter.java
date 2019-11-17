@@ -1,17 +1,22 @@
 package com.example.ratatouille.adapters;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ratatouille.Chef.ChefProfile;
 import com.example.ratatouille.Class.UserChef;
+import com.example.ratatouille.ClientChef.AgreementClass;
 import com.example.ratatouille.ClientChef.ClientChefDistance;
 import com.example.ratatouille.R;
 import com.github.siyamed.shapeimageview.CircularImageView;
@@ -24,6 +29,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 public class ChefsAdapter  extends RecyclerView.Adapter<ChefsAdapter.MyViewHolder> {
@@ -39,6 +45,7 @@ public class ChefsAdapter  extends RecyclerView.Adapter<ChefsAdapter.MyViewHolde
         CircularImageView chefPhoto;
         TextView distance;
         TextView chefName;
+        Button btnProfile;
 
         public MyViewHolder(LinearLayout v) {
             super(v);
@@ -47,6 +54,7 @@ public class ChefsAdapter  extends RecyclerView.Adapter<ChefsAdapter.MyViewHolde
             distance =  v.findViewById(R.id.txt_distance);
             chefName =  v.findViewById(R.id.txt_nameChef);
             chefName.setMovementMethod(new ScrollingMovementMethod());
+            btnProfile =v.findViewById(R.id.buttonPerfil);
 
 
         }
@@ -71,6 +79,7 @@ public class ChefsAdapter  extends RecyclerView.Adapter<ChefsAdapter.MyViewHolde
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
+        final int p = position;
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
        // holder.chefPhoto.setImageBitmap(clientChefDistances.get(position).getImgChef());
@@ -90,6 +99,18 @@ public class ChefsAdapter  extends RecyclerView.Adapter<ChefsAdapter.MyViewHolde
 
         holder.chefName.setText(clientChefDistances.get(position).getChefName());
         holder.distance.setText(String.valueOf(clientChefDistances.get(position).getDistance())+" km");
+
+        holder.btnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent2 = new Intent( view.getContext(), ChefProfile.class );
+                intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent2.putExtra("ChefId",  clientChefDistances.get(p).getIdChef());
+                view.getContext().startActivity(intent2);
+            }
+        });
+
+
 
     }
 
