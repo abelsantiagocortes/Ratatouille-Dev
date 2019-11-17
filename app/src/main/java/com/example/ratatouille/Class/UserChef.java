@@ -20,6 +20,15 @@ public class UserChef implements Serializable {
     List<String> recipeIds;
     String userId;
     List<String> foodTypes;
+    int cantRats;
+
+    public int getCantRats() {
+        return cantRats;
+    }
+
+    public void setCantRats(int cantRats) {
+        this.cantRats = cantRats;
+    }
 
     public UserChef(String name, int age, String photoDownloadURL, String dir, double lat, double longi, String experiencia, String certificados, String años, boolean status, List<String> tools, List<String> recipeIds, String userId, List<String> foodTypes) {
         this.name = name;
@@ -36,6 +45,7 @@ public class UserChef implements Serializable {
         this.recipeIds = recipeIds;
         this.userId = userId;
         this.foodTypes = foodTypes;
+        this.cantRats=0;
     }
 
     public List<String> getFoodTypes() {

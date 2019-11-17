@@ -51,8 +51,9 @@ public class AgreementClass extends AppCompatActivity {
     TextView rats;
     TextView rr;
     DatabaseReference dbUsersClients;
-    DatabaseReference dbClients;
+    DatabaseReference dbUsersChefs;
     int cant;
+    int cant2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,9 +86,11 @@ public class AgreementClass extends AppCompatActivity {
         FirebaseUser user = loginAuth.getCurrentUser();
         String uid= user.getUid();
         Query queryChef = FirebaseDatabase.getInstance().getReference("userChef").orderByChild("userId").equalTo(uid);
+        Query queryChef2 = FirebaseDatabase.getInstance().getReference("userChef").orderByChild("userId").equalTo(acu.getIdChef());
         Query queryClient = FirebaseDatabase.getInstance().getReference("userClient").orderByChild("userId").equalTo(uid);
         queryClient.addListenerForSingleValueEvent(valueEventListener1);
         queryChef.addListenerForSingleValueEvent(valueEventListener2);
+        queryChef2.addListenerForSingleValueEvent(valueEventListener3);
 
 
         btnIngreds.setOnClickListener(new View.OnClickListener() {
@@ -156,8 +159,12 @@ public class AgreementClass extends AppCompatActivity {
                 FirebaseUser currentUser = current.getCurrentUser();
                 String userId = currentUser.getUid();
                 dbUsersClients = dbRats.getReference("userClient");
+                dbUsersChefs = dbRats.getReference("userChef");
                 cant= cant - acu.getReceta().getPrice();
+                cant2= cant2+ acu.getReceta().getPrice();
+
                 dbUsersClients.child(userId).child("cantRats").setValue(cant);
+                dbUsersChefs.child(acu.getIdChef()).child("cantRats").setValue(cant2);
 
                 Bundle bund = new Bundle();
 
@@ -299,6 +306,25 @@ public class AgreementClass extends AppCompatActivity {
             {
                 chek1.setEnabled(false);
                 confri.setVisibility(View.GONE);
+            }
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+    ValueEventListener valueEventListener3 = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            if (dataSnapshot.exists())
+            {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    UserChef c = snapshot.getValue(UserChef.class);
+                    cant2=c.getCantRats();
+                }
             }
 
         }

@@ -25,6 +25,8 @@ public class RecipeDescription extends AppCompatActivity {
     TextView txt_recipeDes;
     TextView txt_recipeUten;
     TextView txt_recipeIng;
+    TextView txt_cant;
+
     Button btn_volver;
 
 
@@ -40,6 +42,7 @@ public class RecipeDescription extends AppCompatActivity {
         txt_recipeUten=findViewById(R.id.txt_recipeUten);
         txt_recipeIng=findViewById(R.id.txt_recipeIng);
         btn_volver=findViewById(R.id.btn_volver);
+        txt_cant=findViewById(R.id.cantrats);
 
         img_recipe=findViewById(R.id.img_recipe);
 
@@ -77,9 +80,7 @@ public class RecipeDescription extends AppCompatActivity {
         }
         txt_recipeIng.setText(inges);
         txt_recipeUten.setText(tools);
-
-
-
+        txt_cant.setText(String.valueOf(recipeDes.getPrice()));
 
     }
 }
