@@ -55,7 +55,7 @@ public class Ratscc_tab extends Fragment {
                     FirebaseUser currentUser = current.getCurrentUser();
                     String userId = currentUser.getUid();
                     dbUsersClients = dbRats.getReference("userClient");
-                    int newCant=cant+ Integer.parseInt(txt_newCant.getText().toString());
+                    int newCant=(cant+ (Integer.parseInt(txt_newCant.getText().toString()))/1000);
                     dbUsersClients.child(userId).child("cantRats").setValue(newCant);
                     txt_cantRats.setText(String.valueOf(newCant));
                     cant=newCant;
