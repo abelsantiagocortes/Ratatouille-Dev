@@ -24,7 +24,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
-    ProgressBar progressbar;
+    //ProgressBar progressbar;
     private int progreso = 0;
     private FirebaseAuth loginAuth;
 
@@ -34,65 +34,76 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        progressbar = findViewById(R.id.progressBar);
+       //progressbar = findViewById(R.id.progressBar);
 
+        Thread background = new Thread() {
+            public void run() {
+                try {
+                    // Thread will sleep for 5 seconds
+                    sleep(5*1000);
 
-                FirebaseAuth fbAuth= FirebaseAuth.getInstance();
+                    // After 5 seconds redirect to another intent
 
-                FirebaseUser user = fbAuth.getCurrentUser();
-                if(user!=null)
-                {
-                    loginAuth = FirebaseAuth.getInstance();
-                    user = loginAuth.getCurrentUser();
-                    String uid= user.getUid();
-                    Query queryChef = FirebaseDatabase.getInstance().getReference("userChef").orderByChild("userId").equalTo(uid);
-                    Query queryClient = FirebaseDatabase.getInstance().getReference("userClient").orderByChild("userId").equalTo(uid);
-                    queryChef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            UserChef chefsito = dataSnapshot.getValue(UserChef.class);
-                            if(chefsito!=null) {
+                    FirebaseAuth fbAuth= FirebaseAuth.getInstance();
 
-                                Intent intent = new Intent(getBaseContext(), ChefActivity.class);
-                                startActivity(intent);
+                    FirebaseUser user = fbAuth.getCurrentUser();
+                    if(user!=null)
+                    {
+                        loginAuth = FirebaseAuth.getInstance();
+                        user = loginAuth.getCurrentUser();
+                        String uid= user.getUid();
+                        Query queryChef = FirebaseDatabase.getInstance().getReference("userChef").orderByChild("userId").equalTo(uid);
+                        Query queryClient = FirebaseDatabase.getInstance().getReference("userClient").orderByChild("userId").equalTo(uid);
+                        queryChef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                UserChef chefsito = dataSnapshot.getValue(UserChef.class);
+                                if(chefsito!=null) {
+
+                                    Intent intent = new Intent(getBaseContext(), ChefActivity.class);
+                                    startActivity(intent);
+                                }
+
                             }
 
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            Log.i("LOGINFAILED","CHEF" );
-                        }
-                    });
-
-                    queryClient.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            UserClient clientito = dataSnapshot.getValue(UserClient.class);
-                            if(clientito!=null) {
-
-                                Intent intent = new Intent(getBaseContext(), Home.class);
-                                startActivity(intent);
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                Log.i("LOGINFAILED","CHEF" );
                             }
-                        }
+                        });
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            Log.i("LOGINFAILED","CLIENTE");
-                        }
-                    });
+                        queryClient.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                UserClient clientito = dataSnapshot.getValue(UserClient.class);
+                                if(clientito!=null) {
 
-                }else{
-                    Intent intent2 = new Intent(getBaseContext(), LandingPage.class);
-                    startActivity(intent2);
-                    overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                                    Intent intent = new Intent(getBaseContext(), Home.class);
+                                    startActivity(intent);
+                                }
+                            }
 
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                Log.i("LOGINFAILED","CLIENTE");
+                            }
+                        });
+
+                    }else{
+                        Intent intent2 = new Intent(getBaseContext(), LandingPage.class);
+                        startActivity(intent2);
+                        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+
+                    }
+
+                    //Remove activity
+                    finish();
+                } catch (Exception e) {
                 }
-
-
-
-
-
+            }
+        };
+        // start thread
+        background.start();
 
     }
 }
