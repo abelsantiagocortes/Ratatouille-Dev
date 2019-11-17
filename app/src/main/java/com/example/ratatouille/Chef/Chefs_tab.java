@@ -184,7 +184,7 @@ public class Chefs_tab extends Fragment{
     }
 
     private void loadViewPager(List<ClientChefDistance>listOrdered){
-         adapter= new MyViewPagerAdapter(getFragmentManager());
+         adapter= new MyViewPagerAdapter(getChildFragmentManager());
          for(int i=0;i<listOrdered.size();i++){
             adapter.addFragment(newInstance(listOrdered.get(i).getChefName(), String.valueOf(listOrdered.get(i).getDistance()),listOrdered.get(i).getImgChef(),images[i],listOrdered.get(i).getIdChef()));
          }
