@@ -93,7 +93,6 @@ public class Home extends AppCompatActivity {
                         generarLatLng(dir.getValue(UserClient.class).getDir());
                     }
                 }
-
             }
 
             @Override
@@ -116,15 +115,35 @@ public class Home extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(setUpViewPager());
 
-        tabLayout.setupWithViewPager(viewPager);
-        viewPager.setAdapter(setUpViewPager());
         direccionIngresada.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if(i == EditorInfo.IME_ACTION_DONE){
                     Log.i("Teclado","Finalización");
-                    String nuevaDireccion = direccionIngresada.getText().toString();
-                    generarLatLng(nuevaDireccion);
+                    final String nuevaDireccion = direccionIngresada.getText().toString();
+                    FirebaseUser user = signOutAuth.getCurrentUser();
+                    String uid= user.getUid();
+                    Query queryClientDireccion = FirebaseDatabase.getInstance().getReference("userClient").orderByChild("userId").equalTo(uid);
+                    queryClientDireccion.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.exists()){
+                                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                    snapshot.getRef().child("dir").setValue(nuevaDireccion);
+                                    generarLatLng(nuevaDireccion);
+                                    snapshot.getRef().child("lat").setValue(latLngDireccion.latitude);
+                                    snapshot.getRef().child("longi").setValue(latLngDireccion.longitude);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Log.i("CHANGE ADDRESS","FAILED" );
+                        }
+                    });
+                    tabLayout.setupWithViewPager(viewPager);
+                    viewPager.setAdapter(setUpViewPager());
                 }
                 return false;
             }
@@ -156,6 +175,28 @@ public class Home extends AppCompatActivity {
                                     }
                                     Log.i(" LOCATION ", addressline);
                                     direccionIngresada.setText(addressline);
+                                    FirebaseUser user = signOutAuth.getCurrentUser();
+                                    String uid= user.getUid();
+                                    final String address = addressline;
+                                    Query queryClientDireccion = FirebaseDatabase.getInstance().getReference("userClient").orderByChild("userId").equalTo(uid);
+                                    queryClientDireccion.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if(dataSnapshot.exists()){
+                                                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                                    snapshot.getRef().child("dir").setValue(address);
+                                                    generarLatLng(address);
+                                                    snapshot.getRef().child("lat").setValue(latLngDireccion.latitude);
+                                                    snapshot.getRef().child("longi").setValue(latLngDireccion.longitude);
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            Log.i("CHANGE ADDRESS","FAILED" );
+                                        }
+                                    });
                                 }
                             }catch (Exception e){
                                 e.printStackTrace();
@@ -163,6 +204,8 @@ public class Home extends AppCompatActivity {
                         }
                     }
                 });
+        tabLayout.setupWithViewPager(viewPager);
+        viewPager.setAdapter(setUpViewPager());
     }
 
     public PagerAdapter setUpViewPager(){
