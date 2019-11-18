@@ -177,6 +177,7 @@ public class AgreementClass extends AppCompatActivity {
                 bund.putString("mensaje", msn);
                 bund.putString("contenidoBoton", btnMsn);
                 bund.putString("sender", activityName );
+                bund.putSerializable("Agreement", acu);
                 intent.putExtras(bund);
 
                 startActivity(intent);
@@ -193,10 +194,6 @@ public class AgreementClass extends AppCompatActivity {
 
             }
         });
-
-
-
-
 
     }
     ValueEventListener valueEventListener = new ValueEventListener() {

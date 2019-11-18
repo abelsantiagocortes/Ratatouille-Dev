@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.ratatouille.Class.Agree;
 import com.example.ratatouille.R;
 
 public class PopUpAdapter extends AppCompatActivity {
@@ -59,10 +61,13 @@ public class PopUpAdapter extends AppCompatActivity {
     private void senderNew( String sendActivity )
     {
         System.out.println(sendActivity);
-        String activityToStart = "com.example.ratatouille.Client.Home";
+        String activityToStart = "com.example.ratatouille.Map.MapsActivity";
         try {
             Class<?> aac = Class.forName(activityToStart);
             Intent intent = new Intent(this, aac);
+            Bundle bund = new Bundle();
+            bund.putSerializable("Agreement",getIntent().getSerializableExtra("Agreement"));
+            intent.putExtras(bund);
             startActivity(intent);
         } catch (ClassNotFoundException ignored) {
         }

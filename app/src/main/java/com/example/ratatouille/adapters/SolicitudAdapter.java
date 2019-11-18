@@ -73,7 +73,6 @@ public class SolicitudAdapter extends ArrayAdapter<Solicitud> {
                         nombre = noti.getName();
                         TextView cliente = finalConvertView.findViewById(R.id.Cliente);
                         cliente.setText("Cliente: " +  nombre);
-
                     }
                 }
 

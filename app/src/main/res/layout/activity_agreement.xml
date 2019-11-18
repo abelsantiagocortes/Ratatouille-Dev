@@ -294,54 +294,54 @@
 
             </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkClient"
+                android:layout_width="15dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:scaleX="1.70"
+                android:scaleY="1.70"
+                android:textColorHighlight="#03A9F4"
+                android:textColorLink="#03A9F4" />
+
+            <View
+                android:id="@+id/divider6"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#969595" />
+
+            <CheckBox
+                android:id="@+id/checkChef"
+                android:layout_width="6dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_weight="1"
+                android:checked="false"
+                android:scaleX="1.70"
+                android:scaleY="1.70" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_confirmar"
+            style="@style/btn_txt_white_background_grey"
+            android:layout_width="269dp"
+            android:layout_height="79dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Confirmar Orden" />
+
         </LinearLayout>
     </ScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/checkClient"
-            android:layout_width="15dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_weight="1"
-            android:checked="false"
-            android:scaleX="1.70"
-            android:scaleY="1.70"
-            android:textColorHighlight="#03A9F4"
-            android:textColorLink="#03A9F4" />
-
-        <View
-            android:id="@+id/divider6"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#969595" />
-
-        <CheckBox
-            android:id="@+id/checkChef"
-            android:layout_width="6dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_weight="1"
-            android:checked="false"
-            android:scaleX="1.70"
-            android:scaleY="1.70" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_confirmar"
-        style="@style/btn_txt_white_background_grey"
-        android:layout_width="269dp"
-        android:layout_height="79dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="Confirmar Orden" />
 
 </LinearLayout>
 
