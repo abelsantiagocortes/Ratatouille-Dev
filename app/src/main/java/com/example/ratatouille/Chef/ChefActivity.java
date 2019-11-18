@@ -65,7 +65,7 @@ public class ChefActivity extends AppCompatActivity {
         dbChefs = dbRats.getReference("userChef");
         storageChef = dbRatsStorage.getReference();
         disponible = findViewById(R.id.Disponible);
-        disponible.setChecked(true);
+
         listaSolicitud = findViewById(R.id.ListSolicitud);
 
         logOut = findViewById(R.id.logOut2);
@@ -110,6 +110,7 @@ public class ChefActivity extends AppCompatActivity {
                     for(DataSnapshot dir : dataSnapshot.getChildren()){
                         Log.i("SP",dir.getValue(UserChef.class).getPhotoDownloadURL());
                         cargarImagen(dir, dbRatsStorage);
+                        disponible.setChecked(dir.getValue(UserChef.class).getStatus());
                     }
                 }
 
