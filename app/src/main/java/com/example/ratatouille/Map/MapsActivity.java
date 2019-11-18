@@ -3,6 +3,12 @@ package com.example.ratatouille.Map;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.ratatouille.Class.Agree;
 import com.example.ratatouille.Class.Solicitud;
 import com.example.ratatouille.Class.UserChef;
@@ -11,12 +17,14 @@ import com.example.ratatouille.R;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -29,6 +37,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,6 +47,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.maps.android.PolyUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     //Atributos necesarios de Firebase
@@ -55,11 +74,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
     private LocationCallback mLocationCallback;
+    JSONObject jso;
+    List<Polyline> polylines = new ArrayList<Polyline>();
 
     private static final double RADIUS_OF_EARTH_KM = 6372.795;
     Agree acu;
     String idChef, idCliente;
-    LatLng Chef, Cliente;
+    LatLng Chef = null, Cliente = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +135,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.getUiSettings().setCompassEnabled(true);
         mMap.getUiSettings().setZoomGesturesEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
+
 
     }
 
@@ -197,6 +219,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     if(mMap != null){
                         mMap.addMarker(new MarkerOptions().position(Cliente).title("Posición Cliente.").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
                     }
+                    if(Chef != null)
+                        generarRuta();
                 }
             }
 
@@ -217,9 +241,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     UserChef s = snapshot.getValue(UserChef.class);
                     Chef = new LatLng(s.getLat(), s.getLongi());
-                    if(mMap != null){
+                    if(mMap != null) {
                         mMap.addMarker(new MarkerOptions().position(Chef).title("Posición Chef.").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Chef, 15));
                     }
+                    if(Cliente != null)
+                        generarRuta();
                 }
             }
 
@@ -230,4 +257,74 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
     };
+
+    private void generarRuta() {
+
+        String url ="https://maps.googleapis.com/maps/api/directions/json?origin="+Chef.latitude+","+Chef.longitude+"&destination="+Cliente.latitude+","+Cliente.longitude+"&key=AIzaSyBTQMUB3lxkHJIlQR28QDWtXFBLiabipj0";
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        Log.i("Peticion",url);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+
+                try {
+                    jso = new JSONObject(response);
+                    trazarRuta(jso);
+                    //Log.i("jsonRuta: ",""+response);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        queue.add(stringRequest);
+    }
+
+    private void trazarRuta(JSONObject jso) {
+        if(polylines.size()>0){
+            for (Polyline poli : polylines){
+                poli.remove();
+            }
+        }
+
+        JSONArray jRoutes;
+        JSONArray jLegs;
+        JSONArray jSteps;
+        try {
+            jRoutes = jso.getJSONArray("routes");
+            jLegs = ((JSONObject)(jRoutes.get(0))).getJSONArray("legs");
+            for (int j=0; j<jLegs.length();j++){
+                jSteps = ((JSONObject)jLegs.get(j)).getJSONArray("steps");
+                for (int k = 0; k<jSteps.length();k++){
+                    String polyline = ""+((JSONObject)((JSONObject)jSteps.get(k)).get("polyline")).get("points");
+                    Log.i("end",""+polyline);
+                    List<LatLng> list = PolyUtil.decode(polyline);
+                    Calendar rightNow = Calendar.getInstance();
+                    int hour = rightNow.get(Calendar.HOUR_OF_DAY);
+                    if(hour >= 18) {
+                        polylines.add(mMap.addPolyline(new PolylineOptions().addAll(list).color(Color.BLACK).width(10)));
+                    }else {
+                        if(sensorValue < 3){
+                            polylines.add(mMap.addPolyline(new PolylineOptions().addAll(list).color(Color.BLACK).width(10)));
+                        }
+                        else{
+                            polylines.add(mMap.addPolyline(new PolylineOptions().addAll(list).color(Color.BLACK).width(10)));
+                        }
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }
