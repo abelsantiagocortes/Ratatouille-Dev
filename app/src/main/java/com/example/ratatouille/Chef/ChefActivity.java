@@ -110,7 +110,7 @@ public class ChefActivity extends AppCompatActivity {
                     for(DataSnapshot dir : dataSnapshot.getChildren()){
                         Log.i("SP",dir.getValue(UserChef.class).getPhotoDownloadURL());
                         cargarImagen(dir, dbRatsStorage);
-                        disponible.setChecked(dir.getValue(UserChef.class).getStatus());
+                        disponible.setChecked(dir.getValue(UserChef.class).isStatus());
                     }
                 }
 
