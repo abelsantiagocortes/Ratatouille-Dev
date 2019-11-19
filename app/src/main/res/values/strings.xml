@@ -44,4 +44,6 @@
     </string-array>
     <string name="title_activity_map">Map</string>
     <string name="access_token_OSM">pk.eyJ1Ijoia3N0cm85NiIsImEiOiJjazM1eGJiNzAxa3VtM2NwYW92amx2OWc1In0.DdKJ-6EpJc7N4kXTiBJMjA</string>
+    <string name="user_location_permission_explanation">Para mejor funcionalidad por favor acepte los permisos de localización.</string>
+    <string name="user_location_permission_not_granted">No se han aceptado los permisos de localización.</string>
 </resources>

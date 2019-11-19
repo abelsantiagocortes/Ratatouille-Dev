@@ -26,12 +26,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.mapbox.android.core.permissions.PermissionsListener;
+import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.geometry.LatLngBounds;
+import com.mapbox.mapboxsdk.location.LocationComponent;
+import com.mapbox.mapboxsdk.location.modes.CameraMode;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
@@ -61,6 +65,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import android.util.Log;
+import android.widget.Toast;
 
 
 public class MapsActivityOSM extends AppCompatActivity {
@@ -73,6 +78,10 @@ public class MapsActivityOSM extends AppCompatActivity {
             .include(new LatLng(4.550024,  -74.127039))
             .include(new LatLng(4.766830,  -74.044250)).build();
     public static final MapLocale BOGOTAMAP = new MapLocale(MapLocale.SPANISH, BOGOTA_BBOX);
+
+    // variables for adding location layer
+    private PermissionsManager permissionsManager;
+    private LocationComponent locationComponent;
 
     private MapboxMap mapboxMap1;
 
@@ -126,6 +135,7 @@ public class MapsActivityOSM extends AppCompatActivity {
                         } catch (RuntimeException exception) {
                             Log.i("MAP Lang", exception.toString());
                         }
+                        enableLocationComponent(style);
                     }
                 });
 
@@ -135,16 +145,43 @@ public class MapsActivityOSM extends AppCompatActivity {
         String solicitud = acu.getSolicitudId();
         Query querySolicitud = FirebaseDatabase.getInstance().getReference("solicitud").orderByChild("idSolicitud").equalTo(solicitud);
         querySolicitud.addListenerForSingleValueEvent(valueEventListener);
+        PermissionsActions.askPermission(this, PermissionIds.REQUEST_LOCATION);
+    }
+
+    @SuppressWarnings( {"MissingPermission"})
+    private void enableLocationComponent(@NonNull Style loadedMapStyle) {
+        // Check if permissions are enabled and if not request
+        if (PermissionsManager.areLocationPermissionsGranted(this)) {
+            // Activate the MapboxMap LocationComponent to show user location
+            // Adding in LocationComponentOptions is also an optional parameter
+            locationComponent = mapboxMap1.getLocationComponent();
+            locationComponent.activateLocationComponent(this, loadedMapStyle);
+            locationComponent.setLocationComponentEnabled(true);
+            // Set the component's camera mode
+            locationComponent.setCameraMode(CameraMode.TRACKING);
+        } else {
+            permissionsManager = new PermissionsManager(new PermissionsListener() {
+                @Override
+                public void onExplanationNeeded(List<String> permissionsToExplain) {
+                    Toast.makeText(getBaseContext(), getString(R.string.user_location_permission_explanation), Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onPermissionResult(boolean granted) {
+                    if (granted) {
+                        enableLocationComponent(mapboxMap1.getStyle());
+                    } else {
+                        Toast.makeText(getBaseContext(), getString(R.string.user_location_permission_not_granted), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+            permissionsManager.requestLocationPermissions(this);
+        }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(PermissionsActions.checkPermission(this,PermissionIds.REQUEST_WRITE_EXTERNAL_STORAGE)){
-
-        }
-        if(PermissionsActions.checkPermission(this,PermissionIds.REQUEST_LOCATION)){
-
-        }
+        permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
