@@ -1,16 +1,17 @@
 package com.example.ratatouille.Map;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ratatouille.ClientChef.CalificationActivity;
 import com.example.ratatouille.Class.Agree;
 import com.example.ratatouille.Class.Solicitud;
 import com.example.ratatouille.Class.UserChef;
@@ -18,9 +19,8 @@ import com.example.ratatouille.Class.UserClient;
 import com.example.ratatouille.R;
 import com.example.ratatouille.permissions.PermissionIds;
 import com.example.ratatouille.permissions.PermissionsActions;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -28,8 +28,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
-import com.mapbox.geojson.Feature;
-import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.geometry.LatLng;
@@ -48,15 +46,10 @@ import com.mapbox.mapboxsdk.plugins.localization.MapLocale;
 import com.mapbox.mapboxsdk.plugins.markerview.MarkerView;
 import com.mapbox.mapboxsdk.plugins.markerview.MarkerViewManager;
 
-import com.mapbox.mapboxsdk.style.layers.PropertyFactory;
-import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
-import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
-
 import java.util.ArrayList;
 import java.util.List;
 
 // classes to calculate a route
-import com.mapbox.services.android.navigation.ui.v5.NavigationLauncherOptions;
 import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
 import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute;
 import com.mapbox.api.directions.v5.models.DirectionsResponse;
@@ -64,7 +57,7 @@ import com.mapbox.api.directions.v5.models.DirectionsRoute;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import android.util.Log;
+
 import android.widget.Toast;
 
 
@@ -102,12 +95,14 @@ public class MapsActivityOSM extends AppCompatActivity {
     Agree acu;
     String idChef, idCliente;
     LatLng Chef = null, Cliente = null;
+    Button Fin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Mapbox.getInstance(this, getString(R.string.access_token_OSM));
         setContentView(R.layout.activity_maps_osm);
+        Fin = (Button)findViewById(R.id.Finalizar);
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
@@ -146,6 +141,15 @@ public class MapsActivityOSM extends AppCompatActivity {
         Query querySolicitud = FirebaseDatabase.getInstance().getReference("solicitud").orderByChild("idSolicitud").equalTo(solicitud);
         querySolicitud.addListenerForSingleValueEvent(valueEventListener);
         PermissionsActions.askPermission(this, PermissionIds.REQUEST_LOCATION);
+        Fin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), CalificationActivity.class);
+                Bundle bund = new Bundle();
+                bund.putSerializable("solicitud",acu);
+                startActivity(intent);
+            }
+        });
     }
 
     @SuppressWarnings( {"MissingPermission"})

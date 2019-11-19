@@ -22,7 +22,27 @@
             android:layout_height="match_parent"
             mapbox:mapbox_cameraTargetLat="4.733793"
             mapbox:mapbox_cameraTargetLng="-74.05883"
-            mapbox:mapbox_cameraZoom="10" />
+            mapbox:mapbox_cameraZoom="10" >
+
+        </com.mapbox.mapboxsdk.maps.MapView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/Finalizar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg"
+                android:fontFamily="@font/raleway_extrabold"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="24dp"
+                android:text="Finalizar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
