@@ -147,6 +147,8 @@ public class MapsActivityOSM extends AppCompatActivity {
                 Intent intent = new Intent(view.getContext(), CalificationActivity.class);
                 Bundle bund = new Bundle();
                 bund.putSerializable("solicitud",acu);
+                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                intent.putExtras(bund);
                 startActivity(intent);
             }
         });
