@@ -58,6 +58,17 @@ public class PermissionsActions {
                     ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PermissionIds.REQUEST_READ_EXTERNAL_STORAGE);
                 }
                 break;
+            case PermissionIds.REQUEST_WRITE_EXTERNAL_STORAGE:
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    // Should we show an explanation?
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        // Show an expanation to the user *asynchronously   
+                        //Toast.makeText(context, "Se necesita el permiso para poder acceder a la localización!", Toast.LENGTH_LONG).show();
+                    }
+                    // Request the permission.
+                    ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PermissionIds.REQUEST_WRITE_EXTERNAL_STORAGE);
+                }
+                break;
         }
     }
 
@@ -80,6 +91,11 @@ public class PermissionsActions {
                 return false;
             case PermissionIds.REQUEST_READ_EXTERNAL_STORAGE:
                 if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    return true;
+                }
+                return false;
+            case PermissionIds.REQUEST_WRITE_EXTERNAL_STORAGE:
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     return true;
                 }
                 return false;

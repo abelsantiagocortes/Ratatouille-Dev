@@ -19,8 +19,16 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
+repositories {
+    mavenCentral()
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -41,5 +49,5 @@ dependencies {
     implementation 'com.android.volley:volley:1.1.1'
     implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.google.firebase:firebase-database:16.0.6'
-
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:8.5.0'
 }
