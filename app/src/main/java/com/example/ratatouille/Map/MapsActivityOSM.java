@@ -51,6 +51,17 @@ import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 import java.util.ArrayList;
 import java.util.List;
 
+// classes to calculate a route
+import com.mapbox.services.android.navigation.ui.v5.NavigationLauncherOptions;
+import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
+import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute;
+import com.mapbox.api.directions.v5.models.DirectionsResponse;
+import com.mapbox.api.directions.v5.models.DirectionsRoute;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import android.util.Log;
+
 
 public class MapsActivityOSM extends AppCompatActivity {
 
@@ -62,6 +73,13 @@ public class MapsActivityOSM extends AppCompatActivity {
             .include(new LatLng(4.550024,  -74.127039))
             .include(new LatLng(4.766830,  -74.044250)).build();
     public static final MapLocale BOGOTAMAP = new MapLocale(MapLocale.SPANISH, BOGOTA_BBOX);
+
+    private MapboxMap mapboxMap1;
+
+    // variables for calculating and drawing a route
+    private DirectionsRoute currentRoute;
+    private static final String TAG = "DirectionsActivity";
+    private NavigationMapRoute navigationMapRoute;
 
     private MapView mapView;
     private MarkerViewManager markerViewManager;
@@ -90,7 +108,7 @@ public class MapsActivityOSM extends AppCompatActivity {
                 mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
                     @Override
                     public void onStyleLoaded(@NonNull Style style) {
-
+                        mapboxMap1 = mapboxMap;
                         symbolManager = new SymbolManager(mapView, mapboxMap, style);
                         symbolManager.setIconAllowOverlap(true);  //your choice t/f
                         symbolManager.setTextAllowOverlap(true);  //your choice t/f
@@ -273,7 +291,44 @@ public class MapsActivityOSM extends AppCompatActivity {
     };
 
     private void generarRuta() {
-
+        Point destinationPoint = Point.fromLngLat(Cliente.getLongitude(), Cliente.getLatitude());
+        Point originPoint = Point.fromLngLat(Chef.getLongitude(),Chef.getLatitude());
+        getRoute(originPoint,destinationPoint);
     }
+    private void getRoute(Point origin, Point destination) {
+        NavigationRoute.builder(this)
+                .accessToken(Mapbox.getAccessToken())
+                .origin(origin)
+                .destination(destination)
+                .build()
+                .getRoute(new Callback<DirectionsResponse>() {
+                    @Override
+                    public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
+                        // You can get the generic HTTP info about the response
+                        Log.d(TAG, "Response code: " + response.code());
+                        if (response.body() == null) {
+                            Log.e(TAG, "No routes found, make sure you set the right user and access token.");
+                            return;
+                        } else if (response.body().routes().size() < 1) {
+                            Log.e(TAG, "No routes found");
+                            return;
+                        }
 
+                        currentRoute = response.body().routes().get(0);
+
+                        // Draw the route on the map
+                        if (navigationMapRoute != null) {
+                            navigationMapRoute.removeRoute();
+                        } else {
+                            navigationMapRoute = new NavigationMapRoute(null, mapView, mapboxMap1, R.style.NavigationMapRoute);
+                        }
+                        navigationMapRoute.addRoute(currentRoute);
+                    }
+
+                    @Override
+                    public void onFailure(Call<DirectionsResponse> call, Throwable throwable) {
+                        Log.e(TAG, "Error: " + throwable.getMessage());
+                    }
+                });
+    }
 }
