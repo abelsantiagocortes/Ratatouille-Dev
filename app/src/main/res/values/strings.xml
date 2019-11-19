@@ -43,4 +43,5 @@
         <item>cocktails</item>
     </string-array>
     <string name="title_activity_map">Map</string>
+    <string name="access_token_OSM">pk.eyJ1Ijoia3N0cm85NiIsImEiOiJjazM1eGJiNzAxa3VtM2NwYW92amx2OWc1In0.DdKJ-6EpJc7N4kXTiBJMjA</string>
 </resources>
