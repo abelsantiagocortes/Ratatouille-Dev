@@ -160,7 +160,7 @@ public class AgreementClass extends AppCompatActivity {
                 String userId = currentUser.getUid();
                 dbUsersClients = dbRats.getReference("userClient");
                 dbUsersChefs = dbRats.getReference("userChef");
-                cant= cant - acu.getReceta().getPrice();
+                cant= 100 - acu.getReceta().getPrice();
                 cant2= cant2+ acu.getReceta().getPrice();
 
                 dbUsersClients.child(acu.getIdClient()).child("cantRats").setValue(cant);
