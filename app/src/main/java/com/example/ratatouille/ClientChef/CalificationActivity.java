@@ -64,6 +64,7 @@ public class CalificationActivity extends AppCompatActivity {
 
     private void crearCalificacion() {
         Intent intent;
+        Calificacion cali;
         Agree solicitud = (Agree) intentAnterior.getExtras().getSerializable("solicitud");
         float estrellas = calificacion.getRating();
         String comen = comentario.getText().toString();
@@ -73,12 +74,14 @@ public class CalificationActivity extends AppCompatActivity {
         if(de.equals(solicitud.getIdChef())){
             intent = new Intent(this, ChefActivity.class);
             para = solicitud.getIdClient();
+            cali = new Calificacion(para,de,comen,estrellas,servicio);
+            dbCalificacion.child("cliente").child(cali.getIdSolicitud()).setValue(calificacion);
         }else{
             intent = new Intent(this,MainActivity.class);
             para = solicitud.getIdChef();
+            cali = new Calificacion(para,de,comen,estrellas,servicio);
+            dbCalificacion.child("chef").child(cali.getIdSolicitud()).setValue(calificacion);
         }
-        Calificacion calificacion = new Calificacion(para,de,comen,estrellas,servicio);
-        dbCalificacion.child(calificacion.getIdSolicitud()).setValue(calificacion);
         startActivity(intent);
     }
 

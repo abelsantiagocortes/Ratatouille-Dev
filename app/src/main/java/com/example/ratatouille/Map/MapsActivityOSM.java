@@ -1,8 +1,12 @@
 package com.example.ratatouille.Map;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,7 +14,9 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import com.example.ratatouille.Chef.PosicionChefRecorrido;
 import com.example.ratatouille.ClientChef.CalificationActivity;
 import com.example.ratatouille.Class.Agree;
 import com.example.ratatouille.Class.Solicitud;
@@ -19,10 +25,26 @@ import com.example.ratatouille.Class.UserClient;
 import com.example.ratatouille.R;
 import com.example.ratatouille.permissions.PermissionIds;
 import com.example.ratatouille.permissions.PermissionsActions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -71,6 +93,7 @@ public class MapsActivityOSM extends AppCompatActivity {
             .include(new LatLng(4.550024,  -74.127039))
             .include(new LatLng(4.766830,  -74.044250)).build();
     public static final MapLocale BOGOTAMAP = new MapLocale(MapLocale.SPANISH, BOGOTA_BBOX);
+    protected static final int REQUEST_CHECK_SETTINGS = 0x1;
 
     // variables for adding location layer
     private PermissionsManager permissionsManager;
@@ -97,11 +120,48 @@ public class MapsActivityOSM extends AppCompatActivity {
     LatLng Chef = null, Cliente = null;
     Button Fin;
 
+    FirebaseAuth loginAuth;
+    FirebaseDatabase dbRats;
+    DatabaseReference dbPosicionChef;
+
+    private boolean chefOrClient = true;
+
+    private static FusedLocationProviderClient mFusedLocationClient;
+    private LocationRequest mLocationRequest;
+    private LocationCallback mLocationCallback;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Mapbox.getInstance(this, getString(R.string.access_token_OSM));
         setContentView(R.layout.activity_maps_osm);
+
+        loginAuth = FirebaseAuth.getInstance();
+        dbRats = FirebaseDatabase.getInstance();
+        dbPosicionChef = dbRats.getReference("posicionChef");
+
+        acu = (Agree) getIntent().getSerializableExtra("Agreement");
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mLocationRequest = createLocationRequest();
+        PermissionsActions.askPermission(this,PermissionIds.REQUEST_LOCATION);
+        mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                Location location = locationResult.getLastLocation();
+                if (location != null) {
+                    //Nueva localizacion automática.
+                    if(chefOrClient){
+                        String solicitudId = acu.getSolicitudId();
+                        LatLng posicion = new LatLng(location.getLatitude(),location.getLongitude());
+                        PosicionChefRecorrido pos = new PosicionChefRecorrido(posicion,solicitudId);
+                        dbPosicionChef.child(solicitudId).setValue(pos);
+                    }
+                }
+            }
+        };
+
+
         Fin = (Button)findViewById(R.id.Finalizar);
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
@@ -136,7 +196,7 @@ public class MapsActivityOSM extends AppCompatActivity {
 
             }
         });
-        acu = (Agree) getIntent().getSerializableExtra("Agreement");
+
         String solicitud = acu.getSolicitudId();
         Query querySolicitud = FirebaseDatabase.getInstance().getReference("solicitud").orderByChild("idSolicitud").equalTo(solicitud);
         querySolicitud.addListenerForSingleValueEvent(valueEventListener);
@@ -152,6 +212,22 @@ public class MapsActivityOSM extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        FirebaseUser user = loginAuth.getCurrentUser();
+        String uid= user.getUid();
+        if(acu.getIdClient().equals(uid)){
+            //Cliente
+            chefOrClient = false;
+            getChefPosition();
+        }else{
+            //Chef
+            chefOrClient = true;
+        }
+    }
+
+    private void getChefPosition() {
+        String IdSolicitud = acu.getSolicitudId();
+        Query queryPosicion = dbPosicionChef.orderByChild("solicitudId").equalTo(IdSolicitud);
+        queryPosicion.addListenerForSingleValueEvent(valueEventListenerSolicitud);
     }
 
     @SuppressWarnings( {"MissingPermission"})
@@ -188,6 +264,45 @@ public class MapsActivityOSM extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PermissionIds.REQUEST_LOCATION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //Toast.makeText(this, "Acceso a localización!", Toast.LENGTH_LONG).show();
+                    LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(mLocationRequest);
+                    SettingsClient client = LocationServices.getSettingsClient(this);
+                    Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
+                    task.addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
+                        @Override
+                        public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+                            startLocationUpdates(); //Todas las condiciones para recibir localizaciones
+                        }
+                    });
+                    task.addOnFailureListener(this, new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            int statusCode = ((ApiException) e).getStatusCode();
+                            switch (statusCode) {
+                                case CommonStatusCodes.RESOLUTION_REQUIRED:
+                                    // Location settings are not satisfied, but this can be fixed by showing the user a dialog.
+                                    try {// Show the dialog by calling startResolutionForResult(), and check the result in onActivityResult().
+                                        ResolvableApiException resolvable = (ResolvableApiException) e;
+                                        resolvable.startResolutionForResult(MapsActivityOSM.this,
+                                                REQUEST_CHECK_SETTINGS);
+                                    } catch (IntentSender.SendIntentException sendEx) {
+                                        // Ignore the error.
+                                    }
+                                    break;
+                                case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                                    // Location settings are not satisfied. No way to fix the settings so we won't show the dialog.
+                                    break;
+                            }
+                        }
+                    });
+                } else {
+                    Toast.makeText(this, "Funcionalidad Limitada!", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 
     @Override
@@ -200,18 +315,21 @@ public class MapsActivityOSM extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         mapView.onResume();
+        startLocationUpdates();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mapView.onPause();
+        stopLocationUpdates();
     }
 
     @Override
     public void onStop() {
         super.onStop();
         mapView.onStop();
+        stopLocationUpdates();
     }
 
     @Override
@@ -224,6 +342,7 @@ public class MapsActivityOSM extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
+        stopLocationUpdates();
     }
 
     @Override
@@ -231,6 +350,26 @@ public class MapsActivityOSM extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
     }
+
+    ValueEventListener valueEventListenerSolicitud = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            if (dataSnapshot.exists())
+            {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    PosicionChefRecorrido s = snapshot.getValue(PosicionChefRecorrido.class);
+                    markerChef.withLatLng(s.getPosicion());
+                }
+            }
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
 
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
@@ -338,6 +477,7 @@ public class MapsActivityOSM extends AppCompatActivity {
         Point originPoint = Point.fromLngLat(Chef.getLongitude(),Chef.getLatitude());
         getRoute(originPoint,destinationPoint);
     }
+
     private void getRoute(Point origin, Point destination) {
         NavigationRoute.builder(this)
                 .accessToken(Mapbox.getAccessToken())
@@ -374,4 +514,41 @@ public class MapsActivityOSM extends AppCompatActivity {
                     }
                 });
     }
+
+    protected LocationRequest createLocationRequest() {
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(10000); //tasa de refresco en milisegundos
+        mLocationRequest.setFastestInterval(5000); //máxima tasa de refresco
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        return mLocationRequest;
+    }
+
+    private void startLocationUpdates() {
+        //Verificación de permiso!!
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null);
+        }
+    }
+
+    private void stopLocationUpdates(){
+        mFusedLocationClient.removeLocationUpdates(mLocationCallback);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CHECK_SETTINGS: {
+                if (resultCode == RESULT_OK) {
+                    startLocationUpdates(); //Se encendió la localización!!!
+                } else {
+                    Toast.makeText(this,
+                            "Sin acceso a localización, hardware deshabilitado!",
+                            Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
+    }
+
+
 }
