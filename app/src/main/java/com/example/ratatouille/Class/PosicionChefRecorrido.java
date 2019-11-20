@@ -1,4 +1,4 @@
-package com.example.ratatouille.Chef;
+package com.example.ratatouille.Class;
 
 
 import com.mapbox.mapboxsdk.geometry.LatLng;
@@ -6,6 +6,10 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 public class PosicionChefRecorrido {
     private LatLng posicion;
     private String solicitudId;
+
+    public PosicionChefRecorrido(String solicitudId) {
+        this.solicitudId = solicitudId;
+    }
 
     public PosicionChefRecorrido(LatLng posicion, String solicitudId) {
         this.posicion = posicion;

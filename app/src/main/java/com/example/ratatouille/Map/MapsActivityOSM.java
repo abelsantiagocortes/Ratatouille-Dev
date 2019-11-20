@@ -1,8 +1,7 @@
 package com.example.ratatouille.Map;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,33 +13,16 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.example.ratatouille.Chef.ChefActivity;
-import com.example.ratatouille.Chef.PosicionChefRecorrido;
-import com.example.ratatouille.ClientChef.CalificationActivity;
 import com.example.ratatouille.Class.Agree;
+import com.example.ratatouille.Class.PosicionChefRecorrido;
 import com.example.ratatouille.Class.Solicitud;
 import com.example.ratatouille.Class.UserChef;
 import com.example.ratatouille.Class.UserClient;
 import com.example.ratatouille.R;
 import com.example.ratatouille.permissions.PermissionIds;
 import com.example.ratatouille.permissions.PermissionsActions;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.CommonStatusCodes;
-import com.google.android.gms.common.api.ResolvableApiException;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResponse;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -49,6 +31,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.mapbox.android.core.location.LocationEngine;
+import com.mapbox.android.core.location.LocationEngineCallback;
+import com.mapbox.android.core.location.LocationEngineProvider;
+import com.mapbox.android.core.location.LocationEngineRequest;
+import com.mapbox.android.core.location.LocationEngineResult;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.geojson.Point;
@@ -69,6 +56,7 @@ import com.mapbox.mapboxsdk.plugins.localization.MapLocale;
 import com.mapbox.mapboxsdk.plugins.markerview.MarkerView;
 import com.mapbox.mapboxsdk.plugins.markerview.MarkerViewManager;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,8 +84,15 @@ public class MapsActivityOSM extends AppCompatActivity {
     public static final MapLocale BOGOTAMAP = new MapLocale(MapLocale.SPANISH, BOGOTA_BBOX);
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
 
+    // Variables needed to add the location engine
+    private LocationEngine locationEngine;
+    private long DEFAULT_INTERVAL_IN_MILLISECONDS = 1000L;
+    private long DEFAULT_MAX_WAIT_TIME = DEFAULT_INTERVAL_IN_MILLISECONDS * 5;
+    // Variables needed to listen to location updates
+    private MainActivityLocationCallback callback = new MainActivityLocationCallback(this);
 
-    private MapboxMap mapboxMap1;
+
+    private static MapboxMap mapboxMap1;
 
     // variables for calculating and drawing a route
     private DirectionsRoute currentRoute;
@@ -120,9 +115,11 @@ public class MapsActivityOSM extends AppCompatActivity {
 
     FirebaseAuth loginAuth;
     FirebaseDatabase dbRats;
-    DatabaseReference dbPosicionChef;
+    static DatabaseReference dbPosicionChef;
+
 
     private boolean chefOrClient = true;
+    private static PosicionChefRecorrido posChef;
 
     private LocationComponent locationComponent;
     private PermissionsManager permissionsManager;
@@ -133,11 +130,14 @@ public class MapsActivityOSM extends AppCompatActivity {
         Mapbox.getInstance(this, getString(R.string.access_token_OSM));
         setContentView(R.layout.activity_maps_osm);
 
+        PermissionsActions.askPermission(this, PermissionIds.REQUEST_LOCATION);
+
         loginAuth = FirebaseAuth.getInstance();
         dbRats = FirebaseDatabase.getInstance();
         dbPosicionChef = dbRats.getReference("posicionChef");
 
         acu = (Agree) getIntent().getSerializableExtra("Agreement");
+        posChef = new PosicionChefRecorrido(acu.getSolicitudId());
 
         Fin = (Button)findViewById(R.id.Finalizar);
         mapView = (MapView) findViewById(R.id.mapView);
@@ -192,14 +192,31 @@ public class MapsActivityOSM extends AppCompatActivity {
         }else{
             //Chef
             chefOrClient = true;
+            Query queryPosChef = FirebaseDatabase.getInstance().getReference("userChef").orderByChild("userId").equalTo(uid);
+            querySolicitud.addListenerForSingleValueEvent(valueEventListenerposChef);
         }
     }
 
 
+    /**
+     * Set up the LocationEngine and the parameters for querying the device's location
+     */
+    @SuppressLint("MissingPermission")
+    private void initLocationEngine() {
+        locationEngine = LocationEngineProvider.getBestLocationEngine(this);
+
+        LocationEngineRequest request = new LocationEngineRequest.Builder(DEFAULT_INTERVAL_IN_MILLISECONDS)
+                .setPriority(LocationEngineRequest.PRIORITY_HIGH_ACCURACY)
+                .setMaxWaitTime(DEFAULT_MAX_WAIT_TIME).build();
+
+        locationEngine.requestLocationUpdates(request, callback, getMainLooper());
+        locationEngine.getLastLocation(callback);
+    }
 
     @SuppressWarnings( {"MissingPermission"})
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
         // Check if permissions are enabled and if not request
+
         if (PermissionsManager.areLocationPermissionsGranted(this)) {
             // Activate the MapboxMap LocationComponent to show user location
             // Adding in LocationComponentOptions is also an optional parameter
@@ -208,6 +225,7 @@ public class MapsActivityOSM extends AppCompatActivity {
             locationComponent.setLocationComponentEnabled(true);
             // Set the component's camera mode
             locationComponent.setCameraMode(CameraMode.TRACKING);
+            initLocationEngine();
         } else {
             permissionsManager = new PermissionsManager(new PermissionsListener() {
                 @Override
@@ -269,6 +287,28 @@ public class MapsActivityOSM extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
     }
+
+    ValueEventListener valueEventListenerposChef = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            if (dataSnapshot.exists())
+            {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    double lat = snapshot.getValue(UserChef.class).getLat();
+                    double lon = snapshot.getValue(UserChef.class).getLongi();
+                    posChef.setPosicion(new LatLng(lat,lon));
+                    dbPosicionChef.child(posChef.getSolicitudId()).setValue(posChef);
+                }
+            }
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
 
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
@@ -413,4 +453,67 @@ public class MapsActivityOSM extends AppCompatActivity {
                     }
                 });
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PermissionIds.REQUEST_LOCATION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                }
+            }
+        }
+    }
+
+    private static class MainActivityLocationCallback
+            implements LocationEngineCallback<LocationEngineResult> {
+
+        private final WeakReference<MapsActivityOSM> activityWeakReference;
+
+        MainActivityLocationCallback(MapsActivityOSM activity) {
+            this.activityWeakReference = new WeakReference<>(activity);
+        }
+
+        /**
+         * The LocationEngineCallback interface's method which fires when the device's location has changed.
+         *
+         * @param result the LocationEngineResult object which has the last known location within it.
+         */
+        @Override
+        public void onSuccess(LocationEngineResult result) {
+            MapsActivityOSM activity = activityWeakReference.get();
+
+            if (activity != null) {
+                Location location = result.getLastLocation();
+
+                if (location == null) {
+                    return;
+                }
+                //Localizacion actualizada del CHEF
+                posChef.setPosicion(new LatLng(location.getLatitude(),location.getLongitude()));
+                dbPosicionChef.child(posChef.getSolicitudId()).setValue(posChef);
+                // Pass the new location to the Maps SDK's LocationComponent
+                if (MapsActivityOSM.mapboxMap1 != null && result.getLastLocation() != null) {
+                    activity.mapboxMap1.getLocationComponent().forceLocationUpdate(result.getLastLocation());
+                }
+            }
+        }
+
+        /**
+         * The LocationEngineCallback interface's method which fires when the device's location can not be captured
+         *
+         * @param exception the exception message
+         */
+        @Override
+        public void onFailure(@NonNull Exception exception) {
+            Log.d("LocationChangeActivity", exception.getLocalizedMessage());
+            MapsActivityOSM activity = activityWeakReference.get();
+            if (activity != null) {
+                Toast.makeText(activity, exception.getLocalizedMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
 }

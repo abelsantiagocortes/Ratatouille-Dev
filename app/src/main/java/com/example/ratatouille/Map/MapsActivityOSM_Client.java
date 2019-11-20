@@ -1,12 +1,9 @@
 package com.example.ratatouille.Map;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,9 +11,7 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-import com.example.ratatouille.Chef.PosicionChefRecorrido;
 import com.example.ratatouille.ClientChef.CalificationActivity;
 import com.example.ratatouille.Class.Agree;
 import com.example.ratatouille.Class.Solicitud;
@@ -25,21 +20,6 @@ import com.example.ratatouille.Class.UserClient;
 import com.example.ratatouille.R;
 import com.example.ratatouille.permissions.PermissionIds;
 import com.example.ratatouille.permissions.PermissionsActions;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.CommonStatusCodes;
-import com.google.android.gms.common.api.ResolvableApiException;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResponse;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -131,6 +111,8 @@ public class MapsActivityOSM_Client extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Mapbox.getInstance(this, getString(R.string.access_token_OSM));
         setContentView(R.layout.activity_maps_osm__client);
+
+        PermissionsActions.askPermission(this, PermissionIds.REQUEST_LOCATION);
 
         loginAuth = FirebaseAuth.getInstance();
         dbRats = FirebaseDatabase.getInstance();
@@ -416,5 +398,16 @@ public class MapsActivityOSM_Client extends AppCompatActivity {
                         Log.e(TAG, "Error: " + throwable.getMessage());
                     }
                 });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PermissionIds.REQUEST_LOCATION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                }
+            }
+        }
     }
 }
