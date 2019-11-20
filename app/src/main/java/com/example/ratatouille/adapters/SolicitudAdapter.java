@@ -2,6 +2,7 @@ package com.example.ratatouille.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -113,8 +114,12 @@ public class SolicitudAdapter extends ArrayAdapter<Solicitud> {
                     acuerdito = dir.getValue(Agree.class);
                     Intent intent2 = new Intent( getContext(), AgreementClass.class );
                     intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent2.putExtra("Agreement", (Serializable) acuerdito);
-                    intent2.putExtra("Viene","CHEF");
+                    Bundle bund = new Bundle();
+                    bund.putSerializable("Agreement", (Serializable) acuerdito);
+                    bund.putString("Viene","CHEF");
+                    //intent2.putExtra("Agreement", (Serializable) acuerdito);
+                    //intent2.putExtra("Viene","CHEF");
+                    intent2.putExtras(bund);
                     getContext().startActivity(intent2);
                 }
 

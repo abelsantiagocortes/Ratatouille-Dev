@@ -72,7 +72,7 @@ public class AgreementClass extends AppCompatActivity {
 
 
 
-        acu=((Agree) getIntent().getSerializableExtra("Agreement"));
+        acu=((Agree) getIntent().getExtras().getSerializable("Agreement"));
 
         Query queryAgree = FirebaseDatabase.getInstance().getReference("agreements").orderByChild("agreementId").equalTo(acu.getAgreementId());
         queryAgree.addValueEventListener(valueEventListener);
@@ -178,7 +178,7 @@ public class AgreementClass extends AppCompatActivity {
                 bund.putString("contenidoBoton", btnMsn);
                 bund.putString("sender", activityName );
                 bund.putSerializable("Agreement", acu);
-                bund.putString("Viene",getIntent().getStringExtra("Viene"));
+                bund.putString("Viene",getIntent().getExtras().getString("Viene"));
                 intent.putExtras(bund);
 
                 startActivity(intent);

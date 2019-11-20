@@ -140,8 +140,12 @@ public class RecipeAgreement extends AppCompatActivity {
 
                     dbAgreements.child(id).setValue(acuerdo);
                     Intent intent2 = new Intent(getApplicationContext(), AgreementClass.class);
-                    intent2.putExtra("Agreement", (Serializable) acuerdo);
-                    intent2.putExtra("Viene","CLIENTE");
+                    Bundle bund = new Bundle();
+                    bund.putSerializable("Agreement", (Serializable) acuerdo);
+                    bund.putString("Viene","CLIENTE");
+                    //intent2.putExtra("Agreement", (Serializable) acuerdo);
+                    //intent2.putExtra("Viene","CLIENTE");
+                    intent2.putExtras(bund);
                     startActivity(intent2);
                 }else{
                     Toast.makeText(getApplicationContext(),"Debe escoger receta para continuar",Toast.LENGTH_SHORT).show();
