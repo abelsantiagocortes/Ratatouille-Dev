@@ -12,6 +12,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ratatouille.Class.PosicionChefRecorrido;
 import com.example.ratatouille.ClientChef.CalificationActivity;
 import com.example.ratatouille.Class.Agree;
 import com.example.ratatouille.Class.Solicitud;
@@ -88,7 +89,8 @@ public class MapsActivityOSM_Client extends AppCompatActivity {
     private MarkerView markerViewChef;
 
     private SymbolManager symbolManager;
-    private List<Symbol> symbols = new ArrayList<>();
+    private Symbol symbolCliente;
+    private Symbol symbolChef;
     SymbolOptions markerClient, markerChef;
 
     private static final double RADIUS_OF_EARTH_KM = 6372.795;
@@ -123,6 +125,12 @@ public class MapsActivityOSM_Client extends AppCompatActivity {
         Fin = (Button)findViewById(R.id.Finalizar);
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
+        if(PermissionsActions.checkPermission(this, PermissionIds.REQUEST_LOCATION)) {
+            construirLayout();
+        }
+    }
+
+    private void construirLayout() {
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull MapboxMap mapboxMap) {
@@ -135,15 +143,16 @@ public class MapsActivityOSM_Client extends AppCompatActivity {
                         symbolManager.setIconAllowOverlap(true);  //your choice t/f
                         symbolManager.setTextAllowOverlap(true);  //your choice t/f
                         Bitmap bmChef = BitmapFactory.decodeResource(getResources(), R.drawable.chef);
-                        mapboxMap.getStyle().addImage("chefMarker",bmChef);
+                        mapboxMap.getStyle().addImage("chefMarker", bmChef);
                         Bitmap bmCliente = BitmapFactory.decodeResource(getResources(), R.drawable.client);
-                        mapboxMap.getStyle().addImage("clienteMarker",bmCliente);
+                        mapboxMap.getStyle().addImage("clienteMarker", bmCliente);
+
                         // Map is set up and the style has loaded. Now you can add data or make other map adjustments
                         LocalizationPlugin localizationPlugin = new LocalizationPlugin(mapView, mapboxMap, style);
                         markerViewManager = new MarkerViewManager(mapView, mapboxMap);
                         try {
                             localizationPlugin.matchMapLanguageWithDeviceDefault();
-                            localizationPlugin.setCameraToLocaleCountry(BOGOTAMAP,0);
+                            localizationPlugin.setCameraToLocaleCountry(BOGOTAMAP, 0);
                             MarkerViewManager markerViewManager = new MarkerViewManager(mapView, mapboxMap);
                         } catch (RuntimeException exception) {
                             Log.i("MAP Lang", exception.toString());
@@ -164,23 +173,55 @@ public class MapsActivityOSM_Client extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), CalificationActivity.class);
                 Bundle bund = new Bundle();
-                bund.putSerializable("solicitud",acu);
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                bund.putSerializable("solicitud", acu);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 intent.putExtras(bund);
                 startActivity(intent);
             }
         });
         FirebaseUser user = loginAuth.getCurrentUser();
-        String uid= user.getUid();
-        if(acu.getIdClient().equals(uid)){
+        String uid = user.getUid();
+        if (acu.getIdClient().equals(uid)) {
             //Cliente
             chefOrClient = false;
-        }else{
+            getChefPosition();
+        } else {
             //Chef
             chefOrClient = true;
         }
     }
 
+    private void getChefPosition() {
+        Query queryPosChef = dbPosicionChef.orderByChild("solicitudId").equalTo(acu.getSolicitudId());
+        queryPosChef.addValueEventListener(valueEventListenerposChef);
+    }
+
+    ValueEventListener valueEventListenerposChef = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            if (dataSnapshot.exists())
+            {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    PosicionChefRecorrido posChef = snapshot.getValue(PosicionChefRecorrido.class);
+                    Log.i("Cambio Posicion", posChef.getPosicion().toString());
+                    //if(Chef.getAltitude() == posChef.getPosicion().getAltitude() && Chef.getLongitude() == posChef.getPosicion().getLongitude()) {
+                        markerChef.withLatLng(posChef.getPosicion());
+                        Chef = posChef.getPosicion();
+                        symbolManager.deleteAll();
+                        symbolManager.create(markerChef);
+                        symbolManager.create(markerClient);
+                        generarRuta();
+                }
+            }
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
 
 
     @SuppressWarnings( {"MissingPermission"})
@@ -304,7 +345,8 @@ public class MapsActivityOSM_Client extends AppCompatActivity {
                                 .withTextOffset(new Float[] {0f, 1.5f})
                                 .withDraggable(false)
                                 .withTextSize(12f);
-                        symbolManager.create(markerClient);
+                        symbolCliente = symbolManager.create(markerClient);
+
                     }
                     if(Chef != null)
                         generarRuta();
@@ -342,7 +384,7 @@ public class MapsActivityOSM_Client extends AppCompatActivity {
                                 .withTextOffset(new Float[] {0f, 1.5f})
                                 .withDraggable(false)
                                 .withTextSize(12f);
-                        symbolManager.create(markerChef);
+                        symbolChef = symbolManager.create(markerChef);
                     }
                     if(Cliente != null)
                         generarRuta();
@@ -405,7 +447,7 @@ public class MapsActivityOSM_Client extends AppCompatActivity {
         switch (requestCode) {
             case PermissionIds.REQUEST_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
+                    construirLayout();
                 }
             }
         }

@@ -11,6 +11,9 @@ public class PosicionChefRecorrido {
         this.solicitudId = solicitudId;
     }
 
+    public PosicionChefRecorrido() {
+    }
+
     public PosicionChefRecorrido(LatLng posicion, String solicitudId) {
         this.posicion = posicion;
         this.solicitudId = solicitudId;

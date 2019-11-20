@@ -142,6 +142,12 @@ public class MapsActivityOSM extends AppCompatActivity {
         Fin = (Button)findViewById(R.id.Finalizar);
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
+        if(PermissionsActions.checkPermission(this,PermissionIds.REQUEST_LOCATION))
+            construirLayout();
+    }
+
+    private void construirLayout() {
+
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull MapboxMap mapboxMap) {
@@ -182,6 +188,8 @@ public class MapsActivityOSM extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), ChefActivity.class);
+                intent.putExtra("ChefId",loginAuth.getCurrentUser().getUid());
+                startActivity(intent);
             }
         });
         FirebaseUser user = loginAuth.getCurrentUser();
@@ -193,7 +201,7 @@ public class MapsActivityOSM extends AppCompatActivity {
             //Chef
             chefOrClient = true;
             Query queryPosChef = FirebaseDatabase.getInstance().getReference("userChef").orderByChild("userId").equalTo(uid);
-            querySolicitud.addListenerForSingleValueEvent(valueEventListenerposChef);
+            queryPosChef.addListenerForSingleValueEvent(valueEventListenerposChef);
         }
     }
 
@@ -459,7 +467,7 @@ public class MapsActivityOSM extends AppCompatActivity {
         switch (requestCode) {
             case PermissionIds.REQUEST_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
+                    construirLayout();
                 }
             }
         }

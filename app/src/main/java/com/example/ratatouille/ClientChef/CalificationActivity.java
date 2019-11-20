@@ -75,12 +75,12 @@ public class CalificationActivity extends AppCompatActivity {
             intent = new Intent(this, ChefActivity.class);
             para = solicitud.getIdClient();
             cali = new Calificacion(para,de,comen,estrellas,servicio);
-            dbCalificacion.child("cliente").child(cali.getIdSolicitud()).setValue(calificacion);
+            dbCalificacion.child("cliente").child(cali.getIdSolicitud()).setValue(cali);
         }else{
             intent = new Intent(this,MainActivity.class);
             para = solicitud.getIdChef();
             cali = new Calificacion(para,de,comen,estrellas,servicio);
-            dbCalificacion.child("chef").child(cali.getIdSolicitud()).setValue(calificacion);
+            dbCalificacion.child("chef").child(cali.getIdSolicitud()).setValue(cali);
         }
         startActivity(intent);
     }
