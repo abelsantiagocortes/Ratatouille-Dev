@@ -60,8 +60,14 @@ public class PopUpAdapter extends AppCompatActivity {
 
     private void senderNew( String sendActivity )
     {
+        String Viene = getIntent().getExtras().getString("Viene");
         System.out.println(sendActivity);
-        String activityToStart = "com.example.ratatouille.Map.MapsActivityOSM";
+        String activityToStart;
+        if(Viene.equals("CHEF")){
+            activityToStart = "com.example.ratatouille.Map.MapsActivityOSM";
+        }else{
+            activityToStart = "com.example.ratatouille.Map.MapsActivityOSM_Client";
+        }
         try {
             Class<?> aac = Class.forName(activityToStart);
             Intent intent = new Intent(this, aac);

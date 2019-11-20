@@ -52,8 +52,8 @@ public class AgreementClass extends AppCompatActivity {
     TextView rr;
     DatabaseReference dbUsersClients;
     DatabaseReference dbUsersChefs;
-    int cant;
-    int cant2;
+    int cant ;
+    int cant2 ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,6 +178,7 @@ public class AgreementClass extends AppCompatActivity {
                 bund.putString("contenidoBoton", btnMsn);
                 bund.putString("sender", activityName );
                 bund.putSerializable("Agreement", acu);
+                bund.putString("Viene",getIntent().getStringExtra("Viene"));
                 intent.putExtras(bund);
 
                 startActivity(intent);

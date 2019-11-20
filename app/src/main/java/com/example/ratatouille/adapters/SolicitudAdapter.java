@@ -114,6 +114,7 @@ public class SolicitudAdapter extends ArrayAdapter<Solicitud> {
                     Intent intent2 = new Intent( getContext(), AgreementClass.class );
                     intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent2.putExtra("Agreement", (Serializable) acuerdito);
+                    intent2.putExtra("Viene","CHEF");
                     getContext().startActivity(intent2);
                 }
 

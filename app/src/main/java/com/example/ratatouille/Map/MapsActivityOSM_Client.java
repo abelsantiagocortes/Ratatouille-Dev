@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.example.ratatouille.Chef.ChefActivity;
 import com.example.ratatouille.Chef.PosicionChefRecorrido;
 import com.example.ratatouille.ClientChef.CalificationActivity;
 import com.example.ratatouille.Class.Agree;
@@ -84,7 +83,7 @@ import retrofit2.Response;
 import android.widget.Toast;
 
 
-public class MapsActivityOSM extends AppCompatActivity {
+public class MapsActivityOSM_Client extends AppCompatActivity {
 
     private static final String SOURCE_ID = "SOURCE_ID";
     private static final String MARKER_SOURCE = "markers-source";
@@ -131,7 +130,7 @@ public class MapsActivityOSM extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Mapbox.getInstance(this, getString(R.string.access_token_OSM));
-        setContentView(R.layout.activity_maps_osm);
+        setContentView(R.layout.activity_maps_osm__client);
 
         loginAuth = FirebaseAuth.getInstance();
         dbRats = FirebaseDatabase.getInstance();
@@ -181,7 +180,12 @@ public class MapsActivityOSM extends AppCompatActivity {
         Fin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ChefActivity.class);
+                Intent intent = new Intent(view.getContext(), CalificationActivity.class);
+                Bundle bund = new Bundle();
+                bund.putSerializable("solicitud",acu);
+                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                intent.putExtras(bund);
+                startActivity(intent);
             }
         });
         FirebaseUser user = loginAuth.getCurrentUser();
