@@ -20,6 +20,7 @@ import com.example.ratatouille.Class.PosicionChefRecorrido;
 import com.example.ratatouille.Class.Solicitud;
 import com.example.ratatouille.Class.UserChef;
 import com.example.ratatouille.Class.UserClient;
+import com.example.ratatouille.ClientChef.CalificationActivity;
 import com.example.ratatouille.R;
 import com.example.ratatouille.permissions.PermissionIds;
 import com.example.ratatouille.permissions.PermissionsActions;
@@ -187,8 +188,11 @@ public class MapsActivityOSM extends AppCompatActivity {
         Fin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ChefActivity.class);
-                intent.putExtra("ChefId",loginAuth.getCurrentUser().getUid());
+                Intent intent = new Intent(view.getContext(), CalificationActivity.class);
+                Bundle bund = new Bundle();
+                bund.putSerializable("solicitud", acu);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                intent.putExtras(bund);
                 startActivity(intent);
             }
         });

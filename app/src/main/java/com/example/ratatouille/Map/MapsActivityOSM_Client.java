@@ -12,6 +12,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ratatouille.Chef.ChefActivity;
 import com.example.ratatouille.Class.PosicionChefRecorrido;
 import com.example.ratatouille.ClientChef.CalificationActivity;
 import com.example.ratatouille.Class.Agree;
@@ -171,11 +172,8 @@ public class MapsActivityOSM_Client extends AppCompatActivity {
         Fin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), CalificationActivity.class);
-                Bundle bund = new Bundle();
-                bund.putSerializable("solicitud", acu);
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                intent.putExtras(bund);
+                Intent intent = new Intent(view.getContext(), ChefActivity.class);
+
                 startActivity(intent);
             }
         });
