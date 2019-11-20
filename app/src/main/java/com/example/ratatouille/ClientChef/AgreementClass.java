@@ -163,7 +163,7 @@ public class AgreementClass extends AppCompatActivity {
                 cant= cant - acu.getReceta().getPrice();
                 cant2= cant2+ acu.getReceta().getPrice();
 
-                dbUsersClients.child(userId).child("cantRats").setValue(cant);
+                dbUsersClients.child(acu.getIdClient()).child("cantRats").setValue(cant);
                 dbUsersChefs.child(acu.getIdChef()).child("cantRats").setValue(cant2);
 
                 Bundle bund = new Bundle();
