@@ -200,10 +200,43 @@ public class MapsActivityOSM extends AppCompatActivity {
         }else{
             //Chef
             chefOrClient = true;
-            Query queryPosChef = FirebaseDatabase.getInstance().getReference("userChef").orderByChild("userId").equalTo(uid);
-            queryPosChef.addListenerForSingleValueEvent(valueEventListenerposChef);
+            getChefPosition();
         }
     }
+
+    private void getChefPosition() {
+        Query queryPosChef = dbPosicionChef.orderByChild("solicitudId").equalTo(acu.getSolicitudId());
+        queryPosChef.addValueEventListener(valueEventListenerposChef);
+    }
+
+    ValueEventListener valueEventListenerposChef = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            if (dataSnapshot.exists())
+            {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    PosicionChefRecorrido posChef = snapshot.getValue(PosicionChefRecorrido.class);
+                    Log.i("Cambio Posicion", posChef.getPosicion().toString());
+                    //if(Chef.getAltitude() == posChef.getPosicion().getAltitude() && Chef.getLongitude() == posChef.getPosicion().getLongitude()) {
+                    if(posChef != null && markerChef != null) {
+                        markerChef.withLatLng(posChef.getPosicion());
+                        Chef = posChef.getPosicion();
+                        symbolManager.deleteAll();
+                        symbolManager.create(markerChef);
+                        symbolManager.create(markerClient);
+                        generarRuta();
+                    }
+                }
+            }
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
 
 
     /**
@@ -295,28 +328,6 @@ public class MapsActivityOSM extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
     }
-
-    ValueEventListener valueEventListenerposChef = new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-
-            if (dataSnapshot.exists())
-            {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    double lat = snapshot.getValue(UserChef.class).getLat();
-                    double lon = snapshot.getValue(UserChef.class).getLongi();
-                    posChef.setPosicion(new LatLng(lat,lon));
-                    dbPosicionChef.child(posChef.getSolicitudId()).setValue(posChef);
-                }
-            }
-
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-
-        }
-    };
 
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
