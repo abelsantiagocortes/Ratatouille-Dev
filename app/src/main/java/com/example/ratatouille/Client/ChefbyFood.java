@@ -64,7 +64,7 @@ public class ChefbyFood extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chefby_food);
          type = getIntent().getStringExtra("foodType");
-
+        //System.out.println("Holii"+type);
         recyclerView = (RecyclerView) findViewById(R.id.rcy_chefs);
 
         // use this setting to improve performance if you know that changes
@@ -98,7 +98,7 @@ public class ChefbyFood extends AppCompatActivity {
                 user = dataSnapshot.getValue(UserClient.class);
                 lati=user.lat;
                 longit=user.longi;
-
+                //System.out.println("holi " + lati + "y longi " +longit);
                 loadNearbyChefs();
 
             }
@@ -114,9 +114,9 @@ public class ChefbyFood extends AppCompatActivity {
 
     }
     private void loadNearbyChefs() {
-
         Query query = FirebaseDatabase.getInstance().getReference("userChef");
         query.addListenerForSingleValueEvent(valueEventListener);
+
     }
 
     ValueEventListener valueEventListener = new ValueEventListener() {
@@ -128,7 +128,7 @@ public class ChefbyFood extends AppCompatActivity {
                 for (DataSnapshot snapshoti : dataSnapshot.getChildren()) {
                     final UserChef chef = snapshoti.getValue(UserChef.class);
                     final double distance = distance(chef.getLat(),chef.getLongi(),lati,longit);
-
+                   // System.out.println("Voy en el chef "+ chef.getName());
                     boolean vale=validarChefFoodType(chef);
                     if(vale){
                         FirebaseUser currentUser = current.getCurrentUser();
@@ -155,14 +155,20 @@ public class ChefbyFood extends AppCompatActivity {
 
     };
 
+    //Valida si el chef tiene el tipo de las recetas
     private boolean validarChefFoodType(UserChef chef) {
         List<String> foodTypeChef = new ArrayList<>();
         foodTypeChef=chef.getFoodTypes();
-        for (int i=0;i<foodTypeChef.size();i++){
-            if(foodTypeChef.get(i).equals(type)){
-                return true;
+
+
+        if(foodTypeChef!=null){
+            for (int i=0;i<foodTypeChef.size();i++){
+                if(foodTypeChef.get(i).equals(type)){
+                    return true;
+                }
             }
         }
+
         return false;
     }
 

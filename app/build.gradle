@@ -6,11 +6,18 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.ratatouille"
-        minSdkVersion 28
-        targetSdkVersion 29
+        minSdkVersion 20
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "android\n" +
+                "        at com.example.ratatouille.Chef.Chefs_tab.access\$000(Chefs_tab.java:44)\n" +
+                "        at com.example.ratatouille.Chef.Chefs_tab\$3.onDataChange(Chefs_tab.java:134)\n" +
+                "        at com.google.firebase.database.Query\$1.onDataChange(com.google.firebase:firebase-database@@16.0.6:183)\n" +
+                "        at com.google.firebase.database.core.ValueEventRegistration.fireEvent(com.google.firebase:firebase-database@@16.0.6:75)\n" +
+                "        at com.google.firebase.database.core.view.DataEvent.fire(com.google.firebase:firebase-database@@16.0.6:63)\n" +
+                "        at com.google.firebase.database.core.view.EventRaiser\$1.run(com.google.firebase:firebase-database@@16.0.6:55)\n" +
+                "        at android.os.Handler.handleCallback(Handler.java:751)x.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
